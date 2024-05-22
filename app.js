@@ -28,7 +28,6 @@ var profile = require("./routes/profile.js");
 var report = require("./routes/report.js");
 
 const { asyncify } = require("async");
-console.log(process.env.Mongo_URL);
 //!depreciate related stuff
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useFindAndModify", false);
