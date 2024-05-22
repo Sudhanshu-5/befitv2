@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BeFit</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/795a7791ee.js" crossorigin="anonymous"></script> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/stylesheets/header.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet"></head> 
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alegreya+SC:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+<body>
+<nav class="navbar main-nav navbar-expand px-0">
+  <!-- add '/' after dashboard is complete' -->
+  <a class="navbar-brand pl-4" id="brand" href="/addMeal">BeFit</a>
+  <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+  <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+
+    <ul class="navbar-nav ml-auto nav-right" >
+      <%if(!currentUser && loginLink!="/login"){%>
+      
+            <div class="nav-item pr-4" >
+              <a class="navbar-brand" href="/login">Sign In</a>
+            </div>
+     
+       <%}%>
+        <%if(currentUser){%>
+
+           <li id="greet"class="nav-item pr-3 ">
+             <%if(time>=5 && time<=11){%> Good Morning'  <%=currentUser.username%><%}%>
+             <%if(time>=12 && time<=15){%> Good Afternoon' <%=currentUser.username%><%}%>
+             <%if(time>=16 && time<=19){%> Good Evening' <%=currentUser.username%><%}%>
+             <%if(time>=20 || time<=4){%> Hello' <%=currentUser.username%><%}%>
+
+           
+          </li>
+           <li class="nav-item pr-4" class="navbar-nav ml-auto">
+           <a href="/logout">Logout</a>
+           </li>
+      
+    <% }%>
+    </ul>
+  <!-- </div> -->
+            
+ </nav>
+ <div id="child-nav"> 
+   <%if(currentUser){%>
+<nav class="navbar child-nav navbar-expand">
+<!--     
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+        <div class="navbar-collapse collapse" id="navbar">
+          
+            <ul class="navbar-nav nav-tabs nav-fill mx-auto navbar-main">
+                <li class="nav-item">
+                  <a class="tab nav-link "  id="h-meal"  href="/addMeal">Meal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link " id="h-exercise" href="/addExercise" >Exercise</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link " id="trends" href="/trends" >Trends</a>
+                </li>
+                <li class="nav-item">
+                     <a class="tab nav-link " id="report" href="/report">Report</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link " id="h-profile" href="/viewProfile" >Profile</a>
+                </li>
+            </ul>
+        </div>
+</nav>
+
+<%}%>
+
+ <header class="container-fluid " >
+   <%if(!currentUser){%>
+        <% if(error && error.length > 0) {%>
+          <div id="error" class="alert alert-danger  px-4 py-1">
+            <%=error %>
+            </div>
+        <% } %>
+        
+        <% if(success && success.length > 0) { %>
+          <div id="success"class="alert alert-success  px-4 py-1"><p><%= success %></p></div>
+        <% } %>
+          
+        <% if(info && info.length > 0) { %>
+                <p id="info"class="alert alert-success  px-4 py-1"> <%=info%></p>
+        <% } %>
+     <% } %>
+        </div>
+ <script>
+
+ var setDefaultActive = function() {
+   var path = window.location.pathname;
+
+    var element = $("#navbar a[href='" + path + "']");
+
+    element.addClass("activenav");
+}
+
+setDefaultActive();
+   $("#error").delay(5000)
+.fadeOut(function() {
+   $(this).remove()   
+});
+ $("#success").delay(5000)
+.fadeOut(function() {
+   $(this).remove() 
+});
+ $("#info").delay(5000)
+.fadeOut(function() { 
+   $(this).remove() 
+});
+        
+  </script> 

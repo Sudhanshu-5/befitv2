@@ -1,0 +1,410 @@
+<%- include ("../partials/mealHeader") %>
+    <link rel="stylesheet" href="/stylesheets/addmeal.css">
+  <link rel="stylesheet" href="/stylesheets/autocomplete.css"> 
+
+
+<!-- choice to add food -->
+<div class="container">     
+<div class="choice d-flex justify-content-center">
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="instant" name="addmeal" class="active custom-control-input form-control" value="instant">
+                <label class="custom-control-label" for="instant">Search Food instantly and then add</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                 <input type="radio" id="description" name="addmeal" class="custom-control-input"value="description">
+                <label class="custom-control-label" for="description">Add ur meal  by describing it</label>
+            </div>
+        
+</div>
+
+<!-- description block -->
+<div class="description">
+       <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <form class="form-group add-form-des" id="desc" action="/addMeal" method="POST">
+                    <textarea id="ta"type="text" name="query" placeholder="EG: 1 cup dal , 2 chapatis and 1 cup rice" class="form-control" required></textarea>
+                    <select id="label"class="form-control mt-2 mw-100" name="labelDescription" required>
+                    <option value="" disabled selected hidden>Choose a meal time</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Snacks">Snacks</option>
+                    </select>
+                    <!-- <div id="fromCustomFoods"> -->
+                         <!-- <button type="button" id="get-custom-foods" class="btn btn-secondary form-control" >get list</button> -->
+                    <div id="selectedFood-div" class="mt-1">
+                             
+                    </div>
+                     <div class="mt-3 d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn" style="background-color: rgba(227, 125, 95);color:white" id="submit-button" >Add Food</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 col-md-6 d-flex flex-column align-items-center"id="food-list">
+                <div id="user-food-list" class="d-flex flex-column align-items-center border px-2 ">
+                 <h4 class="py-3"style="color:rgba(227, 125, 95);">Custom Foods</h4>
+                    <%findedUser.userfood.forEach(function(food){%>
+                    <div>
+                        
+                            <li class="food-name pt-2" id="<%=food.food_name.replace(/\s+/g, "")%>">
+                                <%=food.food_name%>
+                            </li>
+                      
+                    </div>
+                    <%})%>
+                 </div>
+           </div>
+        </div>    
+</div>
+<!-- submit once -->
+<script>    
+ $('#desc').submit(function(){
+    $('button[type=submit]', this).attr('disabled', 'disabled');
+});
+
+function submitOnce(){
+    // alert("sjdnsajn")
+$("#desc").one("submit", submitFormFunction);
+
+function submitFormFunction(event) {
+    event.preventDefault(); 
+    $("#submit-button").submit();
+}
+}
+//     function submitOnce() {
+//         document.getElementById('desc').submit();
+//         document.getElementById("submit-button").setAttribute("disabled", "true")
+//         //document.getElementById('submit-button').removeAttribute('onclick');
+// }
+</script>
+
+    <!--instant block   -->
+<div class="instant container row mx-auto">
+                <div class="autocomplete col-md-8 col-sm-12 col-12 mx-auto w-100">
+                             <form  class="form-group add-form-instant" id="autocomplete-form">
+                                
+                                    <input id="search" class="form-control" type="text" name="query" placeholder="search from database" required>
+                                        <!-- <input id="message"class="form-control" type="text" name="message"> 
+                                        <button id="get-food-info" button">Submit</button> -->
+                                         <div id="cb-toggle" class="btn-group btn-group-toggle d-flex justify-content-around" data-toggle="buttons">
+                                            
+                                                <label class="btn btn-light ">
+                                                    <input type="radio" class="form-control" name="choice" value="common" id="common" checked> Common
+                                                </label>
+
+                                                <label class="btn btn-light ">
+                                                    <input type="radio"class="form-control" name="choice"value="branded" id="branded"> Branded
+                                                </label>
+
+                                                <label class="btn btn-light ">
+                                                    <input type="radio"class="form-control" name="choice" value="kitchen" id="kitchens"> Kitchen
+                                                </label>
+                                         </div>
+                             </form>
+                                         <div id="results"></div>
+                    
+                     <!-- Main add food -->
+                             <form id="instant-form"action="/addMeal" method="POST">
+                                <input id="food" class="form-control"type="text" name ="food" readonly required>
+                                <hr id="hr1">
+                                <div id="select">
+                                    
+                                    <select id="label-instant"class="form-control" name="labelInstant" required>
+                                                <option value="" disabled selected hidden>Choose a meal time</option>
+                                                <option value="Breakfast">Breakfast</option>
+                                                <option value="Lunch">Lunch</option>
+                                                <option value="Dinner">Dinner</option>
+                                                <option value="Snacks">Snacks</option>
+                                    </select>  
+                                </div>
+                                <div>Serving</div>
+                                <input id="qty"class="form-control serving" name="qty" type="number" value="1"onClick="this.select();" required>
+                                 <select id="instant-select-measure" class="form-control serving"name="measure"required> </select> 
+                                 <input type="number"id="instant-select-weight"class="form-control serving" name="weight" value="100" onClick="this.select();" step="0.01"required>
+                                 grams
+                                 <input type="text" id="nix-item-id" name="nixItemId" visibility:hidden position:absolute>
+                                 <div class="col-12">
+                                     <button id="add-instant" class="btn mt-3" >Add food</button>
+                                 </div>
+                                 
+                             </form>
+                             <!-- jump to add to kitchen page -->
+                             
+                </div>
+                
+   
+<div class="user-food col-md-4 col-sm-12" >
+                    <form id="addToCustomFoods" action="/customFoods" method="GET">
+                     <button type="submit" class="btn">Add to custom foods</button>
+                    </form>
+</div>
+<!-- show-hide and add user food -->
+<script>  
+     $('#instant-form').submit(function(){
+    $('#add-instant').attr('disabled', 'disabled');
+});
+        $(document).ready(function(){
+           
+            $("#instant").click();//display none of .instant and .description in css
+        });
+        $("#instant").prop('checked', true);
+        
+        $("#instant").on('click',(function(){
+            $(".instant").addClass("d-flex");
+            // $(".description").removeClass("d-flex").addClass("d-none");
+            $(".description").hide()
+            $(".instant").show();
+       }));
+        
+         $("#description").on('click',(function(){
+
+            //  $(".description").addClass("d-flex");
+             $(".instant").removeClass("d-flex").addClass("d-none");
+             $(".instant").hide();
+            $(".description").show();  
+        }));    
+        //$("#food-list").hide()  
+        
+        <!-- add food from userfoods  -->
+        $("#get-custom-foods").click(function (){
+            $("#food-list").toggle();
+             });
+
+    obj={};
+   //select particular food and hide it
+   
+    $("#food-list").on('click','li',function () {
+        
+        let options=""
+        let counter=0;
+         let food_name=$(this).text().trim();
+        //console.log("food_name"+food_name)
+         <%findedUser.userfood.forEach(function(food) {%>
+       if(<%-JSON.stringify(food.food_name)%>===$(this).text().trim()){
+               //console.log("foodEquals"+ <%-JSON.stringify(food.food_name)%>)
+           <% for(let i=0;i<food.serving_unit.length;i++){%>
+             //console.log("serving_unit"+<%-JSON.stringify(food.serving_unit[i])%>)
+               options+="<option>"+<%-JSON.stringify(food.serving_unit[i])%>+"</option>"//store weight in id of measure
+               obj[<%-JSON.stringify(food.serving_unit[i])%>]=<%-JSON.stringify(food.serving_weight[i])%>;
+               
+          <%}%>
+
+   
+       }
+   <%})%>    
+     console.log("OBJ"+JSON.stringify(obj))        
+    let foodField = "<li class='li'><span id='span-remove'><i class='far fa-times-circle' id='remove'></i></span><input type='text' class='form-control desc-food-name' id="+"\""+$(this).text().trim().replace(/\s+/g, "")+"\""+"name ='myfoodsName[]' value="+"\""+$(this).text().trim()+"\""+"readonly>"+
+                    "<span><br>Serving</span><input id='k-qty' class='form-control desc-serving' name='myfoodsQty[]' type='number' onClick='this.select();'value='1'>"+
+                    "<select class='myfood-measure form-control desc-serving' name='myfoodsMeasure[]'><option value='' disabled selected hidden>Choose a measure</option>"+options+"</select>"+
+                    "<input type='number' class='desc-food-weight desc-serving form-control' id="+"\""+"z"+$(this).text().trim().replace(/\s+/g, "")+"\""+" name='myfoodsWeight[]' onClick='this.select();' value='100'>grams</li>";
+     
+
+    $("#selectedFood-div").append(foodField);
+     $(".myfood-measure").on('change',function () {
+                       let val=$(this).val();
+                    //    console.log("------"+val);
+                    //    console.log("-----"+obj[val])                       
+                         
+                       $("#z"+food_name).val(obj[val])
+                   })
+           $(this).hide();
+
+    });
+
+
+//remove selected element and add to food-list
+$("#selectedFood-div").on('click','#remove',function(){
+    let foodname=$(this).parent().next().val()
+    
+     $(this).closest('.li').remove();
+    // // alert(foodname.trim().replace(/\s+/g, ""))
+    // // alert("#"+foodlistId);
+       $("#"+foodname.trim().replace(/\s+/g, "")).show();
+    
+    })
+
+</script>                    
+                            
+                        <!-- autocomplete -->
+                        <script>
+                            let userFood=[];//under kitchen
+                            let nix_item_id;
+                            $(document).ready(function(){
+                                
+                                 $("#common").click();
+                                <%findedUser.userfood.forEach(function(food){%>// kitchen
+                                      userFood.push(<%-JSON.stringify(food.food_name)%>);
+                                <%})%>
+                                })
+                                var remain=$("#search").val();
+                                  
+
+                                function searchKitchen(userFood){
+                                    $( "#search" ).autocomplete({  
+                                            source: userFood,
+                                            appendTo: "#results",
+                                            minLength: 1,
+                                             response: function (event, ui) {
+                                               if (!ui.content.length) {
+                                                var noResult = { value:"",label:"No results found--- Add food to kitchen" };
+                                                ui.content.push(noResult);
+
+                                                $(".user-food .btn").addClass("add-pulse");
+                                                
+                                                setTimeout(function(){
+                                                  $(".user-food .btn").removeClass("add-pulse")
+                                                },5000);
+                                                $(".user-food .btn").on('click',function(){
+                                                    $(".user-food .btn").removeClass("add-pulse")
+                                                })
+                                                //$("#message").text("No results found");
+                                            } 
+                                          }      
+                                             
+                                    });  
+  
+                                }
+                                $("#common").click(function(){
+                                console.log("common clicked");
+                                searchInstant("common","branded");
+                                });
+                                $("#branded").click(function(){
+                                console.log("branded clicked");
+                                searchInstant("branded","common");
+                                });
+                                 $("#kitchens").click(function(){
+                                console.log("kitchen clicked");
+                                searchKitchen(userFood);
+                                })
+
+                        </script>
+<!-- unit and measure section -->
+<script>
+$(document).ready(function () {
+    let  radioValue;
+    let options_measure="<option id='first' value='' disabled selected hidden>Choose a measure</option>";
+    let instant_select_weight;
+    let obj={};
+    let resultItems;
+    $("input[type='radio']").click(function(){
+            radioValue = $("input[name='choice']:checked").val();
+            //alert(radioValue)
+ });
+    $(".ui-menu").click(function (){
+
+        var selectedFood=$("#search").val();
+        document.getElementById("food").value=$("#search").val();
+        
+        //    console.log("selectedFood"+selectedFood);
+    if(radioValue=="kitchen"){
+         let user_options_measure="<option id='first' value='' disabled selected hidden>Choose a measure</option>";
+         let user_instant_select_weight;
+         let user_food_obj={};
+    <%findedUser.userfood.forEach(function(food) {%>
+    // alert(<%-JSON.stringify(food.food_name)%>+" "+selectedFood)
+       if(<%-JSON.stringify(food.food_name)%>===selectedFood){
+
+            <% for(let i=0;i<food.serving_unit.length;i++){%>
+
+
+                user_options_measure+="<option value="+<%-JSON.stringify(food.serving_unit[i])%>+" class="+<%-JSON.stringify(food.serving_unit[i])%>+">"+<%-JSON.stringify(food.serving_unit[i])%>+"</option>";
+                        user_instant_select_weight=<%-JSON.stringify(food.serving_weight[i])%>;
+                        user_food_obj[<%-JSON.stringify(food.serving_unit[i])%>]=<%-JSON.stringify(food.serving_weight[i])%>;
+                        <%}%>
+
+                       }
+                    <%})%>;
+                
+                   //document.getElementById("instant-select-measure").innerHTML=options_measure;
+                   $("#instant-select-measure").html(user_options_measure);
+                   $("#instant-select-measure").on('change',function () {
+                       let val=$(this).val();
+                      
+                       $("#instant-select-weight").val(user_food_obj[val])
+                   })
+
+           
+
+          
+       }
+    else{   
+        // if radioValue is common and branded
+            if(selectedFood.length > 0 && radioValue=="branded"){
+          //alert("branded")
+              $.ajax({
+                type: "get",
+                url: "https://trackapi.nutritionix.com/v2/search/item?nix_item_id="+nix_item_id,
+                dataType: "json",
+                headers: {
+                         "x-app-id": "4b34a3d8",
+                        "x-app-key": "6943cb151e2c8fb6a042ca0f342347da",
+                        "x-remote-user-id": "0"
+                        },
+
+                success: function (result, status, xhr) {
+                    options_measure="<option id='first' value='' disabled selected hidden>Choose a measure</option>";
+                    options_measure+=`<option value="${result.foods[0].serving_unit}" class="measure">${result.foods[0].serving_unit}</option>`
+                        instant_select_weight=result.foods[0].serving_weight_grams;
+                        obj[result.foods[0].serving_unit]=result.foods[0].serving_weight_grams;
+                     //document.getElementById("instant-select-measure").innerHTML=options_measure;
+                   $("#instant-select-measure").html(options_measure)
+                   $("#instant-select-measure").on('change',function () {
+                       let val=$(this).val();
+                      
+                       $("#instant-select-weight").val(obj[val])
+                   })
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: Usage limit exceeds")
+                }
+            });
+        }
+        else{
+            $.ajax({
+                type: "POST",
+                url: "https://trackapi.nutritionix.com/v2/natural/nutrients",
+                dataType: "json",
+                headers: {
+                         "x-app-id": "4b34a3d8",
+                        "x-app-key": "6943cb151e2c8fb6a042ca0f342347da",
+                        "x-remote-user-id": "0"
+                        },
+                        data:{
+                            "query":selectedFood
+                        },
+
+                success: function (result, status, xhr) {
+                  
+                   let options_measure="<option id='first' value='' disabled selected hidden>Choose a measure</option>";
+                   let instant_select_weight;
+                   let obj={};
+                   let resultItems=result.foods[0].alt_measures;
+                       resultItems.forEach(function(item) {
+                        options_measure+=`<option value="${item.measure}" class="measure">${item.measure}</option>`
+                        instant_select_weight=item.serving_weight;
+                        obj[item.measure]=item.serving_weight;
+                       });
+                
+                   //document.getElementById("instant-select-measure").innerHTML=options_measure;
+                   $("#instant-select-measure").html(options_measure)
+                   $("#instant-select-measure").on('change',function () {
+                       let val=$(this).val();
+                      
+                       $("#instant-select-weight").val(obj[val])
+                   })
+                },
+                error: function (xhr, status, error) {
+                    alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+        }
+   
+    }
+});
+});
+</script>
+ <script src="/script/searchInstant.js"></script>
+
+</div>
+</div>
+<%- include ("../partials/footer") %>

@@ -1,0 +1,53 @@
+body{
+    padding-top:0px;
+}
+#instant-search {
+
+     width: 50%;
+    margin: 1rem auto;
+
+}
+#results .ui-menu {
+    margin-top: 0;
+    width: 0%;
+}
+
+#search {
+    width: 70%;
+}
+
+#cb-toggle {
+    display: none !important;
+    height: 5%;
+     width:70% ;
+    margin-left:0;
+}
+
+.ui-helper-hidden-accessible {
+    z-index: 100;
+}
+
+@media (max-width:330px){
+    
+}
+@media (max-width: 575.98px) {
+    #instant-search {
+
+        width: 80%;
+        margin: 1rem auto;
+
+    }
+     
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+     
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {}
+
+@media (min-width: 1200px) {}

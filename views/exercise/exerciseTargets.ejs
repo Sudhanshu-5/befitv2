@@ -1,0 +1,15 @@
+<div class="row">
+     <div class="my-1 col-3 ">Energy</div> <div id="cal-bur-label" class="small col-9 pt-2 text-right"> </div>
+     <div id="calBurProgress" class="progress col p-0 ml-3"></div>
+</div>
+<script>
+ 
+    burnTarget=<%-energy%>
+
+    calorieBurnedPer = (<%-totals['totalCaloriesBurned']%>/burnTarget*100).toFixed(2);
+    calp="<div class='progress-bar bg-success' role='progressbar' aria-valuenow=" +calorieBurnedPer+ " aria-valuemin='0' aria-valuemax='100'"+ 
+   "style='width:"+calorieBurnedPer+"%;' ></div>";
+    $("#calBurProgress").append(calp);
+    $("#cal-bur-label").html((<%-totals['totalCaloriesBurned']%>).toFixed(2)+" kcal"+" / "+burnTarget.toFixed(2)+" kcal"+" ("+calorieBurnedPer+"%"+")");
+
+</script>

@@ -1,0 +1,172 @@
+<%- include ("../partials/header")%>
+<div class="container">
+<div class="row mx-auto">
+  <div class=" col-lg-6 col-md-8 col-sm-12 mt-5 border p-3 mx-auto">
+      <h4 class="text-center"> Calculate Body Fat % </h4>
+      <form action="/bodyfat" method="POST">
+          <div class="d-flex justify-content-around align-items-center p-0 mx-auto border px-2 my-2" >
+                <div  class="p-2">
+                  <label class="mb-0">
+                  <input type="radio" name="gender" id="maleradio" value="male" required>
+                  Male
+                  </label>
+                </div>
+                <div class="p-2">
+                  <label  class="mb-0">
+                  <input type="radio"  name="gender" id="femaleradio" value="female">
+                  Female
+                </label>
+                </div>
+            </div>
+            <div class="divheight pb-2 row mt-2"  >
+              <div class="col-md-4 col-sm-3 col-2">Height</div>
+               <div class="col-md-4 col-sm-3 col-5 row">
+                    <div class="col-8 pr-0">
+                      <input class="input cms form-control "id="height" name="height" type="number" onkeyup="toFeetAndInches(0)"   onChange="toFeetAndInches(0)" max="272" placeholder="0" required >
+                    </div>
+                    <span class="col-4 pt-1 px-1">cm</span>
+                </div>   
+                  <div class="col-md-4 col-sm-6 col-5 px-0">
+                  <select  class="feets  form-control px-0 d-inline " style="width: 30%;"  name="height-feets" onChange="toCMS(0)" placeholder="0">
+                  <option >0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option  >5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  
+                </select>
+                  &nbsp;'&nbsp;
+                <select class="inches  form-control px-0 d-inline "style="width: 30%;" name="height-inches" onChange="toCMS(0)" placeholder=0>
+                  <option >0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option  >5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                  <option>11</option>
+                </select>
+                      &nbsp;" &nbsp;</div> 
+                  
+              
+
+          </div>
+                <div class="form-group row mb-0">
+                      <label for="neck" class="col-sm-6 col-form-label">Neck</label>
+                      <div class="col-sm-6">
+                        <input type="number" id="neck"class="form-control text-center my-1" name="neck" onClick="this.select()" value="<%=info.neck%>"  >
+                      </div>
+                </div>
+      
+               <div class="form-group row mb-0">
+                <label for="waist" class="col-sm-6 col-form-label">Waist</label>
+                 <div class="col-sm-6">
+                    <input type="number" id="waist"class="form-control text-center my-1" name="waist" onClick="this.select()" value="<%=info.waist%>"  >
+                   
+                 </div>
+               </div>
+
+              <div class="form-group row mb-0">
+                <label for="hip" class="col-sm-6 col-form-label">Hip</label>
+                 <div class="col-sm-6">
+                    <input type="number" id=hip" class="form-control text-center my-1" name="hip" onClick="this.select()" value="<%=info.hip%>"  >
+                    
+                 </div>
+              </div>
+      
+     
+      <button class="btn" style="background-color: rgba(227, 125, 95);color:white" onclick="knowBodyFat()">Calculate</button>
+      <!-- <button class="btn" style="background-color: rgba(227, 125, 95);color:white"onclick="window.location.href='/editProfile';">update ur info</button> -->
+      
+              
+        
+      </div>
+      </form>
+  </div>
+  
+</div>
+
+<%- include ("../partials/footer")%>
+
+
+<script>
+   function toCMS(n){
+               console.log("cms index"+n);
+               var cms=Math.round(parseFloat(document.getElementsByClassName('feets')[n].value)*30.48)
+               +Math.round(parseFloat(document.getElementsByClassName('inches')[n].value)*2.54);
+                document.getElementsByClassName('cms')[n].value=cms;
+              }
+
+             function toFeetAndInches(n){
+  
+               if(document.getElementsByClassName('cms')[n].value<273){
+               var feet=parseFloat(document.getElementsByClassName('cms')[n].value)*0.032808;
+               console.log(Math.round((feet%1)*12));
+               var inch=Math.round((feet%1)*12);
+               document.getElementsByClassName('feets')[n].value=Math.floor(feet);
+               document.getElementsByClassName('inches')[n].value=inch;
+               }
+               else{
+                  document.getElementsByClassName('feets')[n].value=0;z 
+                  document.getElementsByClassName('inches')[n].value=0;
+                
+               }
+               }
+            var gender;
+            $(function(){
+            $('input[type="radio"]').click(function(){
+              gender=$(this).val();
+            })
+          }) 
+        function knowBodyFat(){
+                    if(!gender){
+                      alert("choose gender first ")
+                    }
+                  
+                      if(gender=="male"){
+                      
+                        var height=parseFloat($("#height").val());
+                        var w= parseFloat($("#waist").val());
+                        var n= parseFloat($("#neck").val());
+                        
+                          
+                        var fLog=calculateLog(10,(w-n));
+                        
+                      
+                        var sLog=calculateLog(10,parseFloat(height));
+
+                      var denominator=1.0324 - (0.19077*fLog)  + (0.15456*sLog);
+                      var bfp=(495/denominator)-450;
+                      $("#bodyfat").val(bfp.toFixed(2));
+                        
+                      }
+                        if(gender=="female"){
+                        var height=parseFloat($("#height").val());
+                      var w= parseFloat($("#waist").val());
+                        var h= parseFloat($("#hip").val());
+                        var n= parseFloat($("#neck").val());
+                        
+                          
+                        var fLog=calculateLog(10,(w+h-n));
+                        var sLog=calculateLog(10,parseFloat(height));
+                        var denominator=1.29579 - 0.35004*fLog + 0.22100*sLog
+                      var bfp=(495/denominator)-450;
+                      $("#bodyfat").val(bfp.toFixed(1));
+                        
+
+                    }
+
+                    function calculateLog(x,y){
+                      console.log("y="+Math.log(y)+" "+"x"+Math.log(x) )
+                      return Math.log(y) / Math.log(x)
+                    }
+                }
+ </script>

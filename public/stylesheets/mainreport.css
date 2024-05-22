@@ -1,0 +1,70 @@
+ #no-record-r,
+ #custom-range-r {
+     display: none;
+ }
+ .alert {
+     width: 50%;
+ }
+#report1,#report2{
+    width:25vw;
+    height:25vh
+}
+ #report1{
+     max-height: 300px;
+ }
+ .goal{
+     display: none;
+ }
+ .efficiency-div{
+     margin-left:10%;
+     display: none;
+ }
+
+
+
+  @media (max-width: 575.98px) {
+      nav {
+          width: 200vw;
+      }
+        
+    #custom-range-r{
+        margin-top:2%;
+    }
+
+    #suggestionModal{
+        width:50%;
+    }
+
+    .report {
+        position: relative;
+         width: 180vw;
+         height:40vh; 
+     }
+     #report1,#report2{
+         width:100vw;
+         height:15vh
+     }
+
+      .alert {
+          width: 75%;
+      }
+       .footer {
+           width: 200vw !important;
+       }
+
+
+  }
+
+  @media (min-width: 576px) and (max-width: 767.98px) {
+     
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+   
+  }
+
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+   
+  }
+
+  @media (min-width: 1200px) {}

@@ -1,0 +1,120 @@
+<%- include ("../partials/mealHeader") %>
+    <link rel="stylesheet" href="/stylesheets/autocomplete.css">
+    <link rel="stylesheet" href="/stylesheets/instantSearchFood.css">
+     <link rel="stylesheet" href="/stylesheets/nutritionalFacts.css">
+<div  style="min-height: 100%;">
+<div class="container">                              
+  <div id="instant-search"> 
+      <input id="search" type="text" class=" form-control d-inline p-2" placeholder="search from database" required>
+      <button type="button" class="btn border d-inline mb-1" style="background-color: rgba(227, 125, 95);color:white"  id="instant-search-btn">Search</button>
+        <div id="cb-toggle" class="btn-group btn-group-toggle" data-toggle="buttons">
+                                       
+                                                  <label class="btn border btn-light">
+                                                      <input type="radio" class="form-control"  name="choice" value="common" id="common-instant" checked> Common
+                                                  </label>
+                                              
+                             
+                                                  <label class="btn ml-1 border btn-light">
+                                                      <input type="radio"class="form-control"  name="choice"value="branded" id="branded-instant"> Branded
+                                                  </label>
+                                        
+        </div>
+  </div>
+    <div id="results">
+    </div>
+
+    <div id="facts" class="d-flex justify-content-center"></div>
+  
+</div>
+</div>
+<script>
+  let instantRadioValue;
+   let inix_item_id;
+  $(document).ready(function(){
+  $("#common-instant").click();
+
+  })
+
+  $("input[type='radio']").click(function(){
+            instantRadioValue = $("input[name='choice']:checked").val();
+            //alert(radioValue)
+ });
+
+  $("#search").on('click',function(){
+  
+    $('#cb-toggle').attr('style','display:flex !important');
+  //     $("#cb-toggle").css({
+  //   'width': ($("#search").width() + 'px')
+  // });
+  
+  $("#results .ui-menu").css({
+      'max-width': ($("#search").width() + 'px')
+    })
+    
+
+    
+  })
+  let carbs_obj={};
+  let fats_obj={};
+  let general_obj={};
+  let minerals_obj={};
+  let protiens_obj={};
+  let vitamins_obj={};
+     let factor;
+    let tempObj;
+
+     let nix_item_id=null;
+   let i_options_measure; 
+   let qty,measure,weight;
+                                $("#common-instant").click(function(){
+                                console.log("common clicked");
+                                searchInstant("common","branded");
+                                });
+                                $("#branded-instant").click(function(){
+                                console.log("branded clicked");
+                                searchInstant("branded","common");
+                                });
+                  function showNutritionalFacts(){
+                   
+                  }              
+   $(document).bind('keypress', function(e) {
+            if(e.keyCode==13){
+                 $('#instant-search-btn').trigger('click');
+             }
+        });
+
+    $("#instant-search-btn").on('click',function(){
+      if(!$("#search").val().length){
+        alert("enter a food")
+      }
+      else{
+       
+      let item=$("#search").val();
+      //alert(item)
+      $("#facts").html("<img id='gif' src='images/spinner.gif' width='5%' height='5%' >")
+      $.ajax({
+                url: "/searchNutrients",
+                type: "post",
+                data:{"query":item,"id":nix_item_id},
+           
+            
+                success:function (result) {
+                 
+                     $("#facts").html(result)
+                },
+                 error: function (xhr, status) {
+                   console.log(status)
+                        alert("Provided food name does not exist in our database.");
+                    },
+    })
+  }
+  })
+                          
+</script>
+
+
+  <script src="/script/searchInstant.js"></script>
+
+
+<%- include ("../partials/footer") %>
+

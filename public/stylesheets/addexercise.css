@@ -1,0 +1,108 @@
+.exercise-description {
+    font-size: 1em;
+    color: #2e3033;
+    font-family: 'Oxygen',
+        sans-serif;
+}
+
+#exercise-desc textarea {
+    width: 60%;
+    height: 20vh;
+}
+#exercise-label{
+    width:60%;
+}
+
+
+#selectedExercise-div li {
+    list-style: none;
+}
+
+#selectedExercise-div li input {
+    width: 50%;
+    display: inline;
+}
+
+#selectedExercise-div #u-duration {
+    width: 25%;
+
+}
+
+#exercise-desc select {
+    width: 60%;
+}
+
+/* #body-info {
+    /* font-size: .8rem; 
+    width: 60%;
+/* } */
+
+/* #body-info p {
+    font-size: 1.5rem;
+    margin-bottom: .1rem;
+    margin-top: .1rem;
+
+} */
+#body-info{
+    width:30%
+}
+#body-info input {
+   
+    border: none;
+    outline: none;
+    background: transparent;
+    /* font-size: .8rem; */
+}
+#selectedExercise-div input{
+     /* border: none;
+     outline: none; */
+     background: transparent;
+}
+#exercise-list{
+    overflow: auto;
+    height:50vh;
+    
+        background-clip: content-box;
+        background-color: rgba(227, 125, 95, .2);
+  
+}
+#exercise-list p {
+    font-size: 1.2rem;
+    font-weight: lighter;
+    text-align: center
+}
+
+#exercise-list  {
+    list-style: none;
+    text-align: center;
+}
+ @media (max-width: 575.98px) {
+     #exercise-desc textarea {
+         
+         height: 10vh;
+         
+     }
+    #body-info {
+        width: 60%
+    }
+    #exercise-list{
+        width:75%;
+        margin:0 auto;
+    }
+
+ }
+
+ @media (min-width: 576px) and (max-width: 767.98px) {
+      #body-info {
+          width: 60%
+      }
+      .exercise-ta{
+          margin:0 auto;
+      }
+ }
+
+ @media (min-width: 768px) and (max-width: 991.98px) {}
+
+ @media (min-width: 992px) and (max-width: 1199.98px) {}
+
+ @media (min-width: 1200px) {}

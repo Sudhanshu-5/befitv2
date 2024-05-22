@@ -1,0 +1,51 @@
+.container {
+    margin: 0 auto
+}
+
+#add input {
+    max-width: 90%;
+}
+
+
+#add-icon,
+#remove-icon {
+    color: #E27D60;
+    font-size: larger;
+}
+
+#icon {
+    background-color: rgba(227, 125, 95, .2);
+}
+
+#servingDiv label[for="qty"] {
+    width: 20%;
+
+}
+
+#servingDiv label[for="measure"] {
+    width: 60%;
+
+}
+
+#servingDiv label[for="weight"] {
+    width: 20%;
+
+}
+
+#servingDiv input {
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+#add-btn {
+    background-color: #E27D60;
+    color: white;
+}
+
+#kitchen-list {
+    background-clip: content-box;
+    background-color: rgba(227, 125, 95, .2);
+    height:50vh;
+    overflow:auto;
+}

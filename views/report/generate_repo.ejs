@@ -1,0 +1,420 @@
+    <div class="col-md-9 col-sm-12 pr-0 row">
+      <div class="col-lg-3 col-sm-3 col-4"></div>
+    <div class="alert py-2 w-50 mt-2" style="background-color: rgba(227, 125, 95,.2);" role="alert"  id="date-absence-r">
+      No records are found !!
+    </div>
+    </div>
+ 
+<div class="row mt-5 report ">
+    <div class="col-12">
+    <canvas id="report1" class=" m-auto"></canvas>
+</div>
+   
+    <div  class=" py-4 goal border col-md-8 col-12 mt-5 mx-auto ">
+    </div>
+      <div class="modal fade mt-5" id="suggestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Suggestions..</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body mx-auto" id="suggestions-result" >
+                 <img src="images/spinner.gif" width="40%" height="40%">
+              </div> 
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal" style="background-color: rgba(227, 125, 95);color:white"> Close</button>
+              </div>
+            </div>
+          </div>
+        </div>   
+     
+  
+</div>
+<script>
+    avg=0;
+    efficiency=0;
+    sum=0;
+    sum2=0;
+    efficiency2=0;
+    avg2=0;
+  <% let fromIndex=0;%>
+  <% let toIndex=0; %>
+          
+ data=[];
+ data2=[];
+ data3=[];
+ data4=[];
+ dates=[]
+  $("#date-absence-r").hide();
+		length = <%-calorieinfo.macroNutrientInfo.length%>;
+var ctx = document.getElementById("report1").getContext("2d");
+
+
+            function getSuggestions(calories){
+              
+               
+              $.ajax({
+                    type: "get", 
+                    url: "/suggestion",
+                    data:{calories:calories},
+                    
+                    //dataType: "html",
+                    success: function (result) {
+                    $('#suggestions-result').html(result);
+                    
+                    },
+                    error: function (xhr, status) {
+                        alert("Sorry, there was a problem :(");
+                    },
+                
+                });
+            }
+function setData(goal,con,bur,target){
+                           let goal_stmt; 
+                       
+                           if(target > con-bur){
+                            data[0]=(con-bur).toFixed(2);
+                            data[1] =(target-(con-bur)).toFixed(2);
+                            goal_stmt= "<li>"+bur+" KCal are burned.</li>"+
+                                       "<li>"+con+" KCal are Consumed.</li>"+"<li>Your target is to maintain "+target+" KCal</li>" 
+                          }
+
+                          else if(target == (con-bur)){
+
+                            data[0]=target.toFixed(2);
+                            data[1]=0;
+                            goal_stmt="Congrats!!!!!! You just did it ... we have taken a small step to your weight " +goal+ ".<br>Now dont overdo it. Rest and be best for tommorow's challenge"  
+
+                          }
+
+                          else if(target < (con-bur)){
+
+                            data[0]=(con-bur).toFixed(2);
+                            data[1]=0;
+                            remain = (con-bur)-target;
+                            goal_stmt= "<li>"+bur+" KCal are burned.</li>"+
+                                       "<li>"+con+" KCal are Consumed.</li>"+"<li>Your target is to maintain "+target+" KCal</li>" 
+                                       "<button type='button' class='btn mx-4' data-toggle='modal'style='background-color: rgba(227, 125, 95);color:white' data-target='#suggestionModal'onclick='getSuggestions("+remain+")'>Suggestions</button> ";
+
+                          }
+
+                           text=(con-bur)/target
+                          
+                           label=['Calories Consumed','Calories to maintain'];
+                           $(".goal").html(goal_stmt)    
+                        
+                       }
+                       
+                    
+	if(<%-JSON.stringify(selected)%> == "today"){
+            let today_dates  ;
+            let info_date;
+            let count=0;
+    $(".goal").show();
+    $(".efficiency-div").hide();
+      <%calorieinfo.macroNutrientInfo.forEach(function(info){%>
+        today_dates=today.toLocaleDateString();
+        info_date=<%-JSON.stringify((new Date(info.createdAt)).toLocaleDateString())%>;
+                  if(  today_dates === info_date){
+                    
+                    setData(<%-JSON.stringify(calorieinfo.goal)%>,(<%-info.totalCaloriesConsumed%>).toFixed(2),(<%-info.totalCaloriesBurned%>).toFixed(2), <%-calorieinfo.goal_calories%>)
+                        count++;
+                        $(".progress").html(p_bar)        
+               }
+                 
+        <%})%>
+                  if(!count){
+                    $("#date-absence-r").show();
+                  }
+		}
+	
+
+		else if(<%-JSON.stringify(selected)%> == "yesterday"){    
+            let count=0;
+            $(".goal").show();
+            $(".efficiency-div").hide();
+            <%calorieinfo.macroNutrientInfo.forEach(function(info){%>
+                   if( yesterday.toLocaleDateString() == '<%-(new Date(info.createdAt)).toLocaleDateString()%>'){
+                   setData(<%-JSON.stringify(calorieinfo.goal)%>,<%-info.totalCaloriesConsumed%>,<%-info.totalCaloriesBurned%>, <%-calorieinfo.bmr%>)
+                 count++;
+                }
+                  
+             <%})%>
+            if(!count){
+               $("#date-absence-r").show();
+             }
+			      
+      }
+     
+    else if(<%-JSON.stringify(selected)%> == "custom" && <%-JSON.stringify(from)%> && <%-JSON.stringify(to)%>){
+      $(".goal").hide();
+        <% for(let i=0 ; i<calorieinfo.macroNutrientInfo.length ;i++){ %>
+            <%if(JSON.stringify(calorieinfo.macroNutrientInfo[i]["createdAt"].toLocaleDateString()) === JSON.stringify(from)){%> 
+              <%-fromIndex=i%>;
+              valid_from=<%-i%>;
+            <% }%>
+
+          <%if(JSON.stringify(calorieinfo.macroNutrientInfo[i]["createdAt"].toLocaleDateString()) === JSON.stringify(to)){%>
+            <%-toIndex=i%>
+            valid_to=<%-i%>;
+            <%}%>
+
+        <%}%>
+             if(valid_to >=0){
+               <% for(let i=fromIndex;i<=toIndex; i++){%>
+                          if(<%-JSON.stringify((new Date(info.createdAt)).toLocaleDateString())%>!==(new Date()).toLocaleDateString()){
+                
+
+                       data3.push(<%-calorieinfo.macroNutrientInfo[i].totalCaloriesConsumed%> - <%-calorieinfo.macroNutrientInfo[i].totalCaloriesBurned%>);
+                       dates.push(<%-JSON.stringify((new Date(calorieinfo.macroNutrientInfo[i].createdAt)).toLocaleDateString())%>);
+                      //  sum+=<%-calorieinfo.macroNutrientInfo[i].totalCaloriesConsumed%>-<%-calorieinfo.bmr%>
+
+                    //  }
+                      // else if(<%-JSON.stringify(calorieinfo.goal)%>=="Loss"){
+
+                      //  data3.push(<%-calorieinfo.macroNutrientInfo[i].totalCaloriesBurned%>-<%-calorieinfo.bmr%>);
+                      //  dates.push(<%-JSON.stringify((new Date(calorieinfo.macroNutrientInfo[i].createdAt)).toLocaleDateString())%>);
+                      //   sum+=<%-calorieinfo.macroNutrientInfo[i].totalCaloriesBurned%>-<%-calorieinfo.bmr%>
+
+                    //  }
+                      // else if(<%-JSON.stringify(calorieinfo.goal)%>=="Maintain"){
+
+                        // data3.push(<%-calorieinfo.macroNutrientInfo[i].totalCaloriesConsumed%>);
+                        // data4.push(<%-calorieinfo.macroNutrientInfo[i].totalCaloriesBurned%>);
+                        // dates.push(<%-JSON.stringify((new Date(calorieinfo.macroNutrientInfo[i].createdAt)).toLocaleDateString())%>);
+                        // sum+=<%-calorieinfo.macroNutrientInfo[i].totalCaloriesConsumed%>;
+                        // sum2+=<%-calorieinfo.macroNutrientInfo[i].totalCaloriesBurned%>;
+                     
+                      // }
+                    }
+
+                    
+               <%}%>
+            }
+            else{
+              $("#date-absence-r").show();
+            }
+          //  getEfficiency(data3.length)
+    	}
+
+else{
+  $(".goal").hide();
+  //  $(".efficiency-div").show();
+    <%calorieinfo.macroNutrientInfo.forEach(function(info){%>
+              if(<%-JSON.stringify((new Date(info.createdAt)).toLocaleDateString())%>!==(new Date()).toLocaleDateString()){
+                
+		                //  if(<%-JSON.stringify(calorieinfo.goal)%>=="wGain"){
+                       data3.push(<%-info.totalCaloriesConsumed%> - <%-info.totalCaloriesBurned%>);
+                       dates.push(<%-JSON.stringify((new Date(info.createdAt)).toLocaleDateString())%>);
+                       
+                      //  sum+=<%-info.totalCaloriesConsumed%>-<%-calorieinfo.bmr%>
+                    //  }
+                    //   else if(<%-JSON.stringify(calorieinfo.goal)%>=="wLoss"){
+                    //    data3.push(<%-info.totalCaloriesBurned%>-<%-calorieinfo.bmr%>);
+                    //    dates.push(<%-JSON.stringify((new Date(info.createdAt)).toLocaleDateString())%>);
+                    //     sum+=<%-info.totalCaloriesBurned%>-<%-calorieinfo.bmr%>
+                    //  }
+                    //   else if(<%-JSON.stringify(calorieinfo.goal)%>=="wMaintain"){
+                    //    data3.push(<%-info.totalCaloriesConsumed%>);
+                    //     data4.push(<%-info.totalCaloriesBurned%>);
+                    //      dates.push(<%-JSON.stringify((new Date(info.createdAt)).toLocaleDateString())%>);
+                    //     sum+=<%-info.totalCaloriesConsumed%>;
+                    //     sum2+=<%-info.totalCaloriesBurned%>;
+                    //  }
+                    }
+                    else if(!(<%-calorieinfo.macroNutrientInfo.length%>-1)){
+                       $("#date-absence-r").show();
+                    }
+                    
+    <%})%>
+      // getEfficiency(<%-calorieinfo.macroNutrientInfo.length%>)
+    }
+  //    function getEfficiency(length){
+  //   avg=sum/length;
+  //   if(<%-JSON.stringify(calorieinfo.goal)%>=="wLoss"){
+  //      efficiency=(avg/500).toFixed(2);
+  //      $("#efficiency").html(efficiency)
+  //   }
+  //    else if(<%-JSON.stringify(calorieinfo.goal)%>=="wGain"){
+  //      efficiency=(avg/250).toFixed(2);
+  //      $("#efficiency").html(efficiency)
+  //   }
+  //    else if(<%-JSON.stringify(calorieinfo.goal)%>=="wMaintain"){
+  //      avg2=(sum2/length).tofixed(2);
+  //      efficiency=avg/<%-calorieinfo.bmr%>;
+  //      efficiency2=avg2/<%-calorieinfo.bmr%>;
+  //      $("#efficiency").html(efficiency)
+  //   }
+  
+  // }
+if(data.length){
+ var myChart = new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: label,
+    datasets: [{
+      label: 'calories',
+      data: data,
+      backgroundColor: [
+       "rgba(231, 113, 125, 1)",//consumed
+        'rgba(194, 202, 208, 1)'
+       ],
+      
+     
+      borderWidth: 1
+    }]
+  },
+  options: {
+   	 elements: {
+      center: {
+        text:Math.round(text*100)+"%" 
+                // Default is #000000
+        // fontStyle: 'Arial', // Default is Arial
+        // sidePadding: 20, // Default is 20 (as a percentage)
+        // minFontSize: 25, // Default is 20 (in px), set to false and text will not wrap.
+        // lineHeight: 25 // Default is 25 (in px), used for when text wraps
+      }
+    },
+    responsive: false,
+    maintainAspectRatio: true
+  }
+});
+}
+if (data3.length){
+    // if(<%-JSON.stringify(calorieinfo.goal)%>=="wMaintain"){
+      // $("#efficiency-text").html("Efficiency for <a class='px-2' href='#' role='button' data-trigger='focus' data-html='true' data-toggle='popover' data-placement='right' data-content='Value for eficiency must be near to 1. It denotes you progress. ' ></a>calories consumed and calories burned")
+     dataset=[{
+            label: 'Energy (KCal)', 
+            data:data3,
+            fill: false,
+            borderColor: "#FF652F", // Add custom color border (Line)
+            backgroundColor: "#FF652F", // Add custom color background (Points and Fill)
+            borderWidth: 1 // Specify bar border width
+        }]
+    // }else if(<%-JSON.stringify(calorieinfo.goal)%>=="wLoss"){
+    //    $("#efficiency-text").html("Efficiency for <a class='px-2' href='#' role='button' data-trigger='focus' data-html='true' data-toggle='popover' data-placement='right' data-content='Value for eficiency must be near to 1. It denotes you progress.'> <i class='fas fa-info-circle'  style='color: rgba(227, 125, 95)' ></i></a>")
+    //      dataset=[ 
+    //        {
+    //           label: 'Calorie Deficit',
+    //         data:data3,
+    //         fill: false,
+    //         borderColor: '#FF652F', // Add custom color border (Line)
+    //         backgroundColor: '#FF652F', // Add custom color background (Points and Fill)
+    //         borderWidth: 1 // Specify bar border width
+    // }]    
+    // }
+    // else if(<%-JSON.stringify(calorieinfo.goal)%>=="wGain"){
+    //    $("#efficiency-text").html("Efficiency for calorie-surplus")
+    //  dataset= [{
+    //         label: 'Calories Surplus', 
+    //         data:data3,
+    //         fill: false,
+    //         borderColor: "#FF652F", // Add custom color border (Line)
+    //         backgroundColor: "#FF652F", // Add custom color background (Points and Fill)
+    //         borderWidth: 1 // Specify bar border width
+    //     }]
+    // }
+ var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: dates,
+        datasets: dataset
+    },
+    options: {
+       responsive: true ,// Instruct chart js to respond nicely.
+       maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
+    }
+});
+}
+//text center pluggin
+   
+Chart.pluginService.register({
+      beforeDraw: function(chart) {
+        if (chart.config.options.elements.center) {
+          // Get ctx from string
+          var ctx = chart.chart.ctx;
+
+          // Get options from the center object in options
+          var centerConfig = chart.config.options.elements.center;
+          var fontStyle = centerConfig.fontStyle || 'Arial';
+          var txt = centerConfig.text;
+          var color = centerConfig.color || '#000';
+          var maxFontSize = centerConfig.maxFontSize || 75;
+          var sidePadding = centerConfig.sidePadding || 20;
+          var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+          // Start with a base font of 30px
+          ctx.font = "30px " + fontStyle;
+
+          // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+          var stringWidth = ctx.measureText(txt).width;
+          var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+          // Find out how much the font can grow in width.
+          var widthRatio = elementWidth / stringWidth;
+          var newFontSize = Math.floor(30 * widthRatio);
+          var elementHeight = (chart.innerRadius * 2);
+
+          // Pick a new font size so it will not be larger than the height of label.
+          var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+          var minFontSize = centerConfig.minFontSize;
+          var lineHeight = centerConfig.lineHeight || 25;
+          var wrapText = false;
+
+          if (minFontSize === undefined) {
+            minFontSize = 20;
+          }
+
+          if (minFontSize && fontSizeToUse < minFontSize) {
+            fontSizeToUse = minFontSize;
+            wrapText = true;
+          }
+
+          // Set font settings to draw it correctly.
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+          var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+          ctx.font = fontSizeToUse + "px " + fontStyle;
+          ctx.fillStyle = color;
+
+          if (!wrapText) {
+            ctx.fillText(txt, centerX, centerY);
+            return;
+          }
+
+          var words = txt.split(' ');
+          var line = '';
+          var lines = [];
+
+          // Break words up into multiple lines if necessary
+          for (var n = 0; n < words.length; n++) {
+            var testLine = line + words[n] + ' ';
+            var metrics = ctx.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > elementWidth && n > 0) {
+              lines.push(line);
+              line = words[n] + ' ';
+            } else {
+              line = testLine;
+            }
+          }
+
+          // Move the center up depending on line height and number of lines
+          centerY -= (lines.length / 2) * lineHeight;
+
+          for (var n = 0; n < lines.length; n++) {
+            ctx.fillText(lines[n], centerX, centerY);
+            centerY += lineHeight;
+          }
+          //Draw text in center
+          ctx.fillText(line, centerX, centerY);
+        }
+      }
+    });
+
+</script>
+
+

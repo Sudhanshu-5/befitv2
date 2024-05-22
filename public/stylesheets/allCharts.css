@@ -1,0 +1,72 @@
+.container canvas {
+    max-width: 80%;
+    height: 80vh;
+
+}
+.alert{
+    width:50%;
+}
+ #type-graph-div,
+ #range-div,
+ #custom-range {
+     padding: .3em;
+ }
+ .chart-container{
+    /* position: relative; */
+    height:50vh;
+    width:70vw;
+   
+} 
+@media (width: 320px){
+    
+}
+  @media (max-width: 575.98px) {
+    nav{
+        width: 200vw;
+    }
+     .footer {
+         width:200vw !important;
+     }
+    #type-graph-div,#range-div,#custom-range{
+        padding:.2em;
+    }
+
+     .chart-container {
+         height: 40vh;
+         width: 180vw; 
+     }
+     .alert{
+         width:75%;
+     }
+   
+
+  }
+
+  @media (min-width: 576px) and (max-width: 767.98px) {
+      .chart-container {
+          position: relative;
+          height: 50vh;
+          width: 90vw;
+
+      }
+  }
+
+  @media (min-width: 768px) and (max-width: 991.98px) {
+       .chart-container {
+           position: relative;
+           height: 50vh;
+           width: 100vw;
+
+       }
+  }
+
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+        .chart-container {
+            position: relative;
+            height: 50vh;
+            width: 70vw;
+
+        }
+  }
+
+  @media (min-width: 1200px) {}

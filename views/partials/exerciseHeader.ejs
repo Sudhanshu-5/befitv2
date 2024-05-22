@@ -1,0 +1,67 @@
+<%- include ("./header") %>
+<!-- <link rel="stylesheet" href="/stylesheets/exercise-header.css"/>		   -->
+<nav class="navbar child-nav navbar-expand">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-exercise">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar-exercise">
+            <ul class="navbar-nav nav-tabs nav-fill mx-auto navbar-exercise">
+                <li class="nav-item">
+                  <a class="tab nav-link"  id="exercise"   href= "/addExercise">Add Exercise</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link" id="exercise-diary" href= "/exerciseDiary">Exercise Diary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link" id="gym" href="/customExercise" >Custom Exercise</a>   
+                </li>
+                <!-- <li class="nav-item">
+                     <a class="tab nav-link" id="instant-exercise" href="/addExercise">Insert search</a>
+                </li> -->
+               
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="container-fluid " >
+   <%if(currentUser){%>
+        <% if(error && error.length > 0) {%>
+          <div id="error" class="alert alert-danger  px-4 py-1">
+            <%=error %>
+            </div>
+        <% } %>
+        
+        <% if(success && success.length > 0) { %>
+          <div id="success"class="alert alert-success  px-4 py-1"><p><%= success %></p></div>
+        <% } %>
+          
+        <% if(info && info.length > 0) { %>
+                <p id="info"class="alert alert-success  px-4 py-1"> <%=info%></p>
+        <% } %>
+     <% } %>
+
+ <script>
+   $("#error").delay(5000)
+.fadeOut(function() {
+   $(this).remove() 
+});
+ $("#success").delay(5000)
+.fadeOut(function() {
+   $(this).remove() 
+});
+ $("#info").delay(5000)
+.fadeOut(function() {
+   $(this).remove() 
+});
+ var setDefaultActive3 = function() {
+    var path3 = window.location.pathname;
+
+    var element3 = $("#navbar-exercise a[href='" + path3 + "']");
+    element3.addClass("active-exercise");
+ }
+ setDefaultActive3();
+ $(".activenav").removeClass("activenav");
+ $("#h-exercise").addClass("activenav");
+        
+  </script> 

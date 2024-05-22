@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="/stylesheets/footer.css"/>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+ 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <script>
+$(function () {
+    $('[data-toggle="popover"]').popover();
+ 
+  })
+   
+ 
+ </script>
+  </body>
+ <div class="mb-0 mt-5 row px-2 footer">
+
+  <div class="col-4 text-center my-auto " >
+    <%if(currentUser){%>
+            <% if(!currentUser.isme){%>
+          <button class="btn border rounded" data-toggle="modal" data-target="#suggestion-modal"style="color:white;font-weight:700" >Suggestions</button>
+        <%}%>
+
+        <%if(currentUser.isme){%>
+            <form action="/appsuggestion" method="get">
+                  <button class="btn border rounded" style="color:white;font-weight:700;letter-spacing:.1rem;" >Look suggestions</button>
+            </form>
+        <%}%>
+    <%}%>
+  </div>
+
+    <div class="col-4 text-center my-auto">
+    <h3 class="brand-footer" > BEFIT</h3>
+  </div>
+
+    <div class="col-4 text-center my-auto">
+    <img src="images/nutritionix.png" id="n-img" alt="">
+  </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="suggestion-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Suggest Befit :)</h5>
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="/appsuggestion" method="POST">
+            <textarea name="suggestion" id="ta-suggestion" cols="30" rows="10" class="form-control" placeholder="Enter your suggestion here"></textarea>
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light border" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn" style="background-color: rgba(227, 125, 95);color:white">submit</button>
+     </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+ 
+</script>
+</html>

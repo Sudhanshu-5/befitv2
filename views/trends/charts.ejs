@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "dark2",
+	exportFileName: "Doughnut Chart",
+	exportEnabled: true,
+	animationEnabled: true,
+	title:{
+		text: "<%=data.food%>"
+	},
+	legend:{
+		cursor: "pointer",
+		itemclick: explodePie
+	},
+	data: [{
+		type: "doughnut",
+		innerRadius: 90,
+		showInLegend: true,
+		toolTipContent: "<b>{name}</b>: {y} (#percent%)gms",
+		indexLabel: "{name} - #percent%",
+		dataPoints: [
+			{ y: <%-Number(data.total_fat)%> , name: "total fats" },
+			{ y:<%-Number(data.saturated_fat)%>, name: "saturated fat" },
+			{ y: <%-Number(data.cholestrol)/1000%>, name: "cholesterol" },
+			{ y:<%-Number(data.carbs)%> , name: "carbohydrates" },
+			{ y:<%-Number(data.sugar)%>, name: "sugars" },
+			{ y: <%-Number(data.fiber)%>, name: "fiber"},
+			{ y: <%-Number(data.protiens)%>, name: "Protiens" }
+		]
+	}]
+});
+chart.render();
+
+function explodePie (e) {
+	if(typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+		e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+	} else {
+		e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+	}
+	e.chart.render();
+}
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>

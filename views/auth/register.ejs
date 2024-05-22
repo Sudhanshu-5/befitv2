@@ -1,0 +1,585 @@
+<%- include ("../partials/header")%>
+
+ <link rel="stylesheet" href="/stylesheets/register.css"/>
+  <p class="register-here mt-3 mb-0 text-center">Create Account</p>
+
+<form class="container" action="/register" method="POST" >
+<div class="main-form row form-group container mx-auto">
+    <div class="profile d-flex flex-column border align-items-center col-12 col-md-6 mt-3 m" >
+        <input id="username" class="input-group form-control"  data-content="Username already exists, choose a unique one." type="text" placeholder="username" name="username" autocomplete="given-name" required>
+        <span id="username-err"class="alert py-0 mt-1 mb-0 px-2" role="alert" style="background-color:rgba(227, 125, 95,.2);color:rgba(227, 125, 95)">Username already taken</span><br>
+        <input class="input-group form-control" type="text" placeholder="First name" name="firstName" autocomplete="given-name" required><br>
+        <input class="input-group form-control" type="text" placeholder="Last name" name="lastName" autocomplete="family-name"><br>
+        <input id="email"class="input-group form-control" type="email"    placeholder="your e-mail address" name="email" autocomplete="email" required>
+        <span id="email-err"class="alert py-0 mt-1 mb-0 px-2" role="alert" style="background-color:rgba(227, 125, 95,.2);color:rgba(227, 125, 95)">Email id is already in use</span><br>
+        <input class="input-group form-control" type="password" placeholder="password" name="password"required><br>
+        <input class="input-group form-control" type="password" placeholder="confirm password" name="confirmPass" required><br>
+        <lable for="date">Date Of Birth</lable>
+        <input type="date" id="date" name="date" class="form-control" onchange="getAge()" required><br>
+        <label for="age">Age</label> 
+        <input type="number" id="age" name="age" class="form-control" readonly="readonly">
+    </div>
+
+    <div class="body-info d-flex  flex-column flex-fill border align-items-between col-12 col-md-6 mt-3">
+        
+              <div class="d-flex justify-content-around align-items-center p-0 mx-auto border px-2" >
+                <div  class="p-2">
+                  <label class="mb-0">
+                  <input type="radio" name="gender" id="maleradio" value="male" required>
+                  Male
+                  </label>
+                </div>
+                <div class="p-2">
+                  <label  class="mb-0">
+                  <input type="radio"  name="gender" id="femaleradio" value="female">
+                  Female
+                  <!-- <select class="d-inline form-control w-50 small px-0" name="bodyType" id="female-type">
+                  <option>Normal</option>
+                  <option>pregnant</option>
+                  <option>Breastfeading</option>
+                </select> -->
+            
+              </label>
+                </div>
+            </div>
+              
+              <div class="divheight pb-0" >
+                  <lable class="pt-2">Height</lable>
+                  <input class="input cms mx-1 form-control w-50" id="height" name="height" type="number" onkeyup="toFeetAndInches(0)"   onChange="toFeetAndInches(0)" max="272" placeholder="0" required >
+                    <span class="px-2 pt-1">cm</span>
+                  
+              <select  class="feets mx-1 form-control w-25 d-inline px-0"  name="height-feets" onChange="toCMS(0)" placeholder="0">
+                  <option >0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option  >5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  
+                </select>
+                  &nbsp;'&nbsp;
+                <select class="inches mx-1 form-control w-25 d-inline px-0" name="height-inches" onChange="toCMS(0)" placeholder=0>
+                  <option >0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option  >5</option>
+                  <option>6</option>
+                  <option>7</option>
+                  <option>8</option>
+                  <option>9</option>
+                  <option>10</option>
+                  <option>11</option>
+                </select>
+                      &nbsp;" &nbsp;
+
+          </div>
+              
+          
+          <div class="divweight pb-0">
+            <lable class="pt-2">Weight</lable>
+            <input type="number" id="kgs" class="input form-control mx-1 " name="kgs" min="10" max="500"onkeyup="toLbs()"   onchange="toLbs()" step="0.01" placeholder="0" required>
+            <span class="px-2 pt-1">Kgs</span>
+              <input type="number" id="lbs" class="input form-control mx-1" name="lbs" onkeyup="toKgs()"   onchange="toKgs()" step="0.01" placeholder="0">
+             <span class="px-2 pt-1">lbs</span>
+          </div>
+
+          <div class="pb-0">
+            <lable>Activity factor</lable>    <i class="fas fa-question-circle px-2" style="color: rgba(227, 125, 95) ;"data-toggle="modal" data-target="#activity-modal"></i>
+             <select id="activity-factor"  class="form-control" name="activityFactor" required>
+                  <option selected="selected">1.2</option>
+                  <option>1.375</option>
+                  <option>1.55</option>
+                  <option>1.72</option>
+                  <option>1.9</option>
+                  </select>
+           
+          </div>
+         
+<div class="modal fade w-100" id="activity-modal">
+    <div class="modal-dialog">
+      <div class="modal-content activity-factor-modal w-100">
+  
+        <div class="modal-header">
+          <h4 class="modal-title">Know your activity-factor</h4>
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </div>
+        <div class="modal-body border ">
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Amount of Exercise/Activity</div>
+            <div class="col-6 p-1 pl-4 ">Description</div>
+            <div class="col-2 p-1">Activity Factor</div>
+          </div>
+          <div class="row p-0">
+            <hr class="col-12 p-0 m-0">
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Sedentary</div>
+            <div class="col-6 p-1">Little or no Exercise / desk job</div>
+            <div class="col-2 p-1 text-center font-weight-bold">1.2</div>
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Lightly active</div>
+            <div class="col-6 p-1">Light exercise / sports 1 – 3 days / week</div>
+            <div class="col-2 p-1 text-center font-weight-bold">1.375</div>
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Moderately active</div>
+            <div class="col-6 p-1">Moderate Exercise, sports 3 – 5 days / week</div>
+            <div class="col-2 p-1 text-center font-weight-bold">1.55</div>
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Very active</div>
+            <div class="col-6 p-1">Heavy Exercise/ sports 6 – 7 days / week</div>
+            <div class="col-2 p-1 text-center  font-weight-bold">1.72</div>
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Extremely active</div>
+            <div class="col-6 p-1">Moderate Exercise, sports 3 – 5 days / week</div>
+            <div class="col-2 p-1 text-center font-weight-bold">1.9</div>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn"  style="background-color: rgba(227, 125, 95);color:white" data-dismiss="modal">Close</button>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+            <div class="pb-0" >
+              <lable class="d-flex justify-content-center">Body Type</lable>
+            
+            <select id="body" name="body" class="form-control" required>
+            <option value="select" >Select...</option>
+            <option value="normal">Normal body</option>
+            <option value="muscular">Muscular body</option>
+            <option  value="lean">lean body</option>
+            </select>
+            </div>
+            
+            <div class="bmi pb-0 row">
+             
+                <button type="button" class="btn btn-light border col-2" onclick="KnowBmi()">Bmi</button>
+                  
+                <input name="bmi" id="bmi" class="form-control col-8 w-50" type="number" step="0.01" placeholder="click on bmi to know">
+                 <i class="fas fa-question-circle col-2 py-2"  style="color: rgba(227, 125, 95)"  data-toggle="modal" data-target="#bmi-modal"></i>
+              
+         
+                <div class="container p-0" id="modal">
+                  
+        <div class="modal fade" id="bmi-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+        
+              <div class="modal-header">
+                <h4 class="modal-title">BMI here....</h4>
+              </div>
+              
+              <!-- Modal body -->
+              <div class="modal-body">
+                  <div class="row">
+                    <div class="col-12 text-center"> Underweight   <b> < 18.5 </b> </div>
+                    <div class="col-12 text-center"> Normal weight <b> 18.5–24.9 </b></div>
+                    <div class="col-12 text-center"> Overweight    <b> 25–29.9 </b></div>
+                    <div class="col-12 text-center">   Obesity  BMI of <b> 30 </b>or greater </div>
+                  </div>
+              </div>
+              <div id="note">
+              <div class="bmi-note"> *If you have a lean or muscular body or if you are a sportsman or a bodybuilder BMI will <b>NOT HELP</b></div>
+            </div>  
+      </div>
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal" style="background-color: rgba(227, 125, 95);color:white">Close</button>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="leanModal" tabindex="-1" role="dialog" aria-labelledby="leanModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content w-100">
+            <div class="modal-header">
+                      <div class="alert py-2" id="bfp-alert" style="background-color: rgba(227, 125, 95,.2);display:none;" role="alert" >
+                        Information Added !!
+                      </div>
+            </div>
+            <div class="modal-body row px-0">
+                <div class="leanBody p-0">
+                <div class="px-0">
+                            <label>Neck</label> 
+                            <input type="number" class="cms input form-control d-inline" id="neck" name="neck" onkeyup="toFeetAndInches(1)" onchange="toFeetAndInches(1)" onClick="this.select()" value="0" >
+                                cms
+                                <select  class="feets form-control d-inline px-0"  name="neck-feets" onchange="toCMS(1)">
+                          <option selected="selected">0</option>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option >5</option>
+                          <option>6</option>
+                          <option>7</option>
+                          <option>8</option>
+                          
+                        </select>
+                              
+                              &nbsp;'&nbsp;
+                              <select class="inches form-control  d-inline px-0" name="neck-inches" onchange="toCMS(1)" >
+                          <option selected="selected">0</option>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                          <option>6</option>
+                          <option>7</option>
+                          <option>8</option>
+                          <option>9</option>
+                          <option>10</option>
+                          <option>11</option>
+                        </select>
+                              
+                                        &nbsp;"&nbsp;
+
+               </div>
+                <div  class="px-0">
+                          <label>Waist</label> 
+                          <input type="number" class="cms input form-control d-inline" id="waist"name="waist" onkeyup="toFeetAndInches(2)" onchange="toFeetAndInches(2)" onClick="this.select()" value="0" >
+                              cms
+                              <select  class="feets  form-control  d-inline px-0"  name="waist-feets" onchange="toCMS(2)">
+                        <option selected="selected">0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        
+                      </select>
+                            
+                            &nbsp;'&nbsp;
+                            <select class="inches input form-control  d-inline px-0" name="waist-inches" onchange="toCMS(2)" >
+                        <option selected="selected">0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                      </select>
+                            
+                                      &nbsp;"&nbsp;
+              </div> 
+              <div class="px-0">
+                        <label>Hip</label> 
+                        <input type="number" class="cms input form-control d-inline" id="hip" name="hip" onkeyup="toFeetAndInches(3)" onchange="toFeetAndInches(3)" onClick="this.select()" value="0" >
+                            cms
+                            <select  class="feets form-control  d-inline px-0"  name="hip-feets" onchange="toCMS(3)">
+                      <option selected="selected">0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      
+                    </select>
+                          
+                          &nbsp;'&nbsp;
+                          <select class="inches form-control  d-inline px-0" name="hip-inches" onchange="toCMS(3)" >
+                      <option selected="selected" >0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                    </select>
+                          
+                                    &nbsp;"&nbsp;
+              </div> 
+              <div id="bodyFat">
+                  <label>
+                    <button type="button" class="btn border mb-1" onclick="knowBodyFat()">Know body fat percentage</button>
+                    <input name="bodyfat" class="input form-control d-inline " id="bodyfat"  type="number" step="0.01">
+                 
+                  </label>
+              </div>
+          </div>
+        </div>
+            
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light" id="colse-bfp" data-dismiss="modal">Close</button>
+              <button type="button" id="save-bfp" class="btn" style="background-color: rgba(227, 125, 95);color:white">Save</button>
+            </div>
+          </div>
+        </div>
+    </div>
+            <div class="pb-0">
+            <lable>Set Goal</lable>
+            </div>
+            <div class="pt-1 border row pb-0 px-0" style="width:80%"> 
+               <select id="goal"  class="form-control" name="goal" required>
+                  <option value="-1.0">Lose 1 kilogram per week</option>
+                  <option value="-0.75">Lose .75 kilograms per week</option>
+                  <option value="-0.5">Lose .5 kilograms per week</option>
+                  <option value="-0.25">Lose .25 kilograms per week</option>
+                  <option selected value="0.0">Maintain my current weight</option>
+                  <option value="0.25">Gain .25 kilograms per week</option>
+                  <option value="0.5">Gain .5 kilograms per week</option>
+                  <option value="1.0">Gain 1 kilograms per week</option>
+               </select>
+              
+        </div>
+    </div>
+   </div>
+
+<div id="submit"class="d-flex justify-content-center" >
+  <button  class="btn btn-submit" style="background-color: rgba(227, 125, 95);color:white">Submit</button> 
+</div> 
+</form>
+<script>
+  $("#save-bfp").on('click',function(){
+    if($("#bodyfat").val()){
+       $("#bfp-alert").show();
+    }
+    else{
+      alert("povide measurments !!")
+    }
+  })
+  $("#close-bfp").on('click',function(){
+    $("#bfp-alert").hide();
+  })
+$(document).ready(function(){
+  $("#username-err,#email-err").each(function () {
+  $(this).hide();
+})
+  
+  $('[data-toggle="popover"]').popover();   
+});
+
+  $("#username").on('blur',function(){
+    let username=$("#username").val();
+    let email="";
+    validate(username,email)
+  })
+    $("#email").on('blur',function(){
+    let username="";
+    let email=$("#email").val();
+    validate(username,email)
+  })
+  function validate(username,email){
+ $.ajax({
+                type: "Get", 
+                url: "/validate",
+                data:{Username:username,Email:email},
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result, status, xhr) {
+                    if(result && email.length>0){
+                    $("#email-err").show();
+                     }
+                     
+                  else if(result && username.length>0){
+                     $("#username-err").show();
+                     }
+
+                    else{
+                       $("#email-err").hide();
+                        $("#username-err").hide();
+                     }
+                  },
+                error: function (xhr, status, error) {
+                }
+            });    
+  }
+    $('#body').change(function() { 
+        var val = $(this).val();
+        if(val=="lean"||val=="muscular"){ 
+            $('#leanModal').modal("show"); 
+        }
+    });
+function getAge() {
+   var dateString=document.getElementById("date").value;
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+ 
+    document.getElementById("age").value=age;
+}
+
+
+              function toCMS(n){
+               var cms=Math.round(parseFloat(document.getElementsByClassName('feets')[n].value)*30.48)
+               +Math.round(parseFloat(document.getElementsByClassName('inches')[n].value)*2.54);
+                document.getElementsByClassName('cms')[n].value=cms;
+              }
+
+             function toFeetAndInches(n){
+  
+               if(document.getElementsByClassName('cms')[n].value<273){
+               var feet=parseFloat(document.getElementsByClassName('cms')[n].value)*0.032808;
+               var inch=Math.round((feet%1)*12);
+               document.getElementsByClassName('feets')[n].value=Math.floor(feet);
+               document.getElementsByClassName('inches')[n].value=inch;
+               }
+               else{
+                  document.getElementsByClassName('feets')[n].value=0;z 
+                  document.getElementsByClassName('inches')[n].value=0;
+                
+               }
+               }
+               function toLbs(){ 
+                 
+                var lbs = (parseFloat(document.getElementById('kgs').value)*2.2).toFixed(2) ;
+                 document.getElementById('lbs').value=lbs;
+               }
+               function toKgs(){
+                  
+                var kgs = (parseFloat(document.getElementById('lbs').value)*0.453592).toFixed(2) ;
+                 document.getElementById('kgs').value=kgs;
+               }
+
+               function KnowBmi(){
+                       var bmi = (document.getElementById('kgs').value) /
+              ((document.getElementsByClassName('cms')[0].value / 100) *
+                  (document.getElementsByClassName('cms')[0].value / 100));
+                  console.log("bmmi"+bmi);
+          document.getElementById('bmi').value = bmi.toFixed(2);
+                     }
+         $(document).ready(function(){
+            var data= $("#body").val();
+          if(data==="select"){
+            $(".bmi").hide();
+            $(".leanBody").hide();
+
+          }
+
+             $('#body').on("change",function (){
+
+                    var data= $(this).val();
+                       if(data==="select"){
+                          $(".bmi").hide();
+                         $(".leanBody").hide();
+                       }
+                        if (data === "normal") {
+                          $(".leanBody").hide();
+                            $(".bmi").show();
+                            KnowBmi();
+                          
+                             } 
+if(data==="muscular" || data==="lean"){
+  $(".bmi").hide();
+   $(".leanBody").show();
+}
+          })
+       })
+
+var gender;
+  $(function(){
+  $('input[type="radio"]').click(function(){
+    gender=$(this).val();
+  })
+})
+function knowBodyFat(){
+ if(!gender){
+   alert("choose gender first ")
+ }
+//  if( ! ($("#height").val() && $("#waist").val() && $("#neck").val() ) ){
+//    alert("Fill in the values first ... ")
+//  }
+  if(gender=="male"){
+  
+    var height=parseFloat($("#height").val());
+   var w= parseFloat($("#waist").val());
+    var n= parseFloat($("#neck").val());
+    // if(w==n){
+    //   alert("Enter real and proper values");
+    // }
+    // if(height==0 || w==0 || n==0){
+    //   alert("enter properly ur nek height waist values")
+    // }
+    // else{
+      
+    var fLog=calculateLog(10,(w-n));
+    
+   
+    var sLog=calculateLog(10,parseFloat(height));
+
+   var denominator=1.0324 - (0.19077*fLog)  + (0.15456*sLog);
+   var bfp=(495/denominator)-450;
+   $("#bodyfat").val(bfp.toFixed(2));
+    // }
+  }
+     if(gender=="female"){
+    var height=parseFloat($("#height").val());
+   var w= parseFloat($("#waist").val());
+    var h= parseFloat($("#hip").val());
+    var n= parseFloat($("#neck").val());
+    // if(w==n){
+    //   alert("Enter real and proper values");
+    // }
+    // if(height==0 || w==0 || n==0 || h==0){
+    //   alert("enter properly ur nek height waist values")
+    // }
+    // else{
+      
+    var fLog=calculateLog(10,(w+h-n));
+     var sLog=calculateLog(10,parseFloat(height));
+    var denominator=1.29579 - 0.35004*fLog + 0.22100*sLog
+   var bfp=(495/denominator)-450;
+   $("#bodyfat").val(bfp.toFixed(1));
+    // }
+
+ }
+
+ function calculateLog(x,y){
+   return Math.log(y) / Math.log(x)
+ }
+ }
+
+</script>
+
+
+<%- include ("../partials/footer")%>
+<!-- <div class="col-4 p-1"> 
+                    <label class="px-2 ">
+                    <input type="radio"  name="goal" id="loss-radio" value="wLoss" required>
+                    Weight Loss
+                    </label>
+             </div>
+              <div class="col-4 p-1">
+                <label  class="px-2 ">
+                  <input type="radio" name="goal" id="maintain-radio" value="wMaintain">
+                  Maintain
+                </label>
+              </div>
+              <div class="col-4 p-1">
+                  <label  class="px-2 ">
+                  <input type="radio" name="goal" id="gain-radio" value="wGain">
+                  Weight gain
+                  </label>
+              </div> -->

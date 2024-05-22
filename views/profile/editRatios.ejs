@@ -1,0 +1,209 @@
+<%- include ("../partials/profileHeader") %>
+<!-- <link rel="stylesheet" href="/stylesheets/editRatio.css"/> -->
+
+<!-- Button trigger modal -->
+<div class="continer m-5">
+	 <div id="no-bmr" class="alert py-2 w-50" style="background-color: rgba(227, 125, 95,.2);" role="alert">
+       Activity factor is unknown!!
+	 </div>
+	<div id="canvas" class="mt-5">
+		<canvas id="ratioChart" width="300" height="350"></canvas>
+	</div>
+	<div class="d-flex justify-content-center align-items-center">
+		<button type="button" class="btn mx-aut mt-3" data-toggle="modal" data-target="#exampleModal" style="background-color: rgba(227, 125, 95);color:white">
+		  Customize macronutrients ratio
+		</button>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+						<form action="/editRatios?_method=PUT" method="POST"> 
+							<div  class="d-flex flex-wrap justify-content-around input-ratios">
+							<div>
+							<label>Carbs:
+							<input class="per form-control" id="carbs" type="number"  name="eratio[carbs]" value="<%=ratio.carbs%>">
+							</label>
+							</div>
+							<div>
+							<label>Fats:
+							<input class="per form-control" id="fats" type="number" name="eratio[fats]" value="<%=ratio.fats%>">
+							</label> 
+							</div>
+							<div>
+							<label>Protiens:
+							<input class="per form-control" id="protiens" type="number"  name="eratio[protiens]" value="<%=ratio.protiens%>">
+							</label>
+							</div>
+							</div>
+							<div class="d-flex justify-content-center align-items-center">
+								<button id="ratio-submit"class="btn mx-0" type="button" style="background-color: rgba(227, 125, 95);color:white">save</button>
+							</div>
+					
+						</form>
+						<div id="message" class="alert py-2 w-50 mt-2" style="background-color: rgba(227, 125, 95,.2);" role="alert">
+						Ratio must add to 100!!
+						</div>
+						<!-- <div id="message">Ratio must add to 100!!</div> -->
+						<div id="help">
+					
+						</div>
+						<!-- <div id="help"></div> -->
+						<a href="/bmr">change activity factor</a>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn" data-dismiss="modal" style="background-color: rgba(227, 125, 95);color:white">Close</button>
+				</div>
+				</div>
+			</div>
+		</div>
+
+			<script>
+				let html="";
+				if(<%=findeduser.activityFactor%>== 1.2){
+					html="<p>Recommended macronutrient ratios for your activity factor,<b> "+<%=JSON.stringify(findeduser.activityFactor)%>+"</b></p>"+
+							"<p><span style='font-size:1.3rem'>Carbs</span>: 45 to 50 percent of total carbohydrates.</p>"+
+							"<p><span style='font-size:1.3rem'>Fats</span>: 20 to 25 percent of total fats.</p>"+
+							"<p><span style='font-size:1.3rem'>Protiens</span>: 25 to 30 percent of total protiens.</p>"
+					$("#help").append(html);
+				}
+				else if(<%=findeduser.activityFactor%> == 1.375 || <%=findeduser.activityFactor%> == 1.55){
+					html="<p>Recommended macronutrient ratios for your activity factor, "+<%=JSON.stringify(findeduser.activityFactor)%>+"</p>"+
+							"<p><span style='font-size:1.3rem'>Carbs 55 to 65 percent of total carbohydrates.</p>"+
+							"<p><span style='font-size:1.3rem'>Fats 30 percent of total fats.</p>"+
+							"<p><span style='font-size:1.3rem'>Protiens 20-30 percent of total protiens.</p>"
+					$("#help").append(html);
+				}
+				else{
+					html="<p>Recommended macronutrient ratios for your activity factor, "+<%=JSON.stringify(findeduser.activityFactor)%>+"</p>"+
+							"<p><span style='font-size:1.3rem'>Carbs: 45 to 55 percent of total carbohydrates.</p>"+
+							"<p><span style='font-size:1.3rem'>Fats:  25 to 35 percent of total fats.</p>"+
+							"<p><span style='font-size:1.3rem'>Protiens: 10 to 15 percent of total protiens.</p>"
+					$("#help").append(html);
+				}
+				$("#no-bmr").hide();
+				$("#message").hide();
+				if(<%=findeduser.bmr%>==0){
+				$("#no-bmr").show();
+				$("#canvas").hide();
+				}
+			$("#ratio-submit").on("click",function(){
+				let total= parseInt($("#carbs").val())+parseInt($("#protiens").val())+parseInt($("#fats").val());
+				if(total==100){
+					$("#message").hide();
+					$("#ratio-submit").prop("type", "submit");
+					$("#ratio-submit").submit();
+					
+
+				}
+				else{
+					$("#message").show();
+					}
+			})
+
+			</script>
+			<script>
+	        var ratioCanvas = document.getElementById("ratioChart");
+			var selectedIndex=null;
+			Chart.defaults.global.defaultFontFamily = "Lato";
+			Chart.defaults.global.defaultFontSize = 18;
+
+			var ratioData = {
+				labels: [
+					"Carbs",
+					"Fats",
+					"Protiens"
+				],
+				datasets: [
+					{
+						data: [<%-Number(ratio.carbs)%>, <%-Number(ratio.fats)%>, <%-Number(ratio.protiens)%>],
+						backgroundColor: [
+							// 'rgba(41, 50, 83, 1)',
+							'rgba(40, 51, 80, 1)',
+							// 'rgba(255, 213, 90, 1)',
+							'rgba(249, 56, 0, 1)',
+							// 'rgba(109, 212, 126, 1)'
+							'rgba(255, 181, 0, 1)'
+						]
+					}]
+			};
+
+			var pieChart = new Chart(ratioCanvas, {
+			type: 'pie',
+			data: ratioData,
+			options: {
+					onClick: function (evt, elements) {
+						if (elements && elements.length) {
+							var segment = elements[0];
+							pieChart.update();
+							if (selectedIndex !== segment["_index"]) {
+								selectedIndex = segment["_index"];
+								segment._model.outerRadius += 10;
+							}
+							else {
+								selectedIndex = null;
+							}
+						}
+				},
+				maintainAspectRatio: false
+			},
+
+				
+			})
+			</script>
+
+</div>
+<%- include ("../partials/footer") %>
+
+<!-- <script>
+window.onload = function () {
+var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "light2",
+	animationEnabled: true,
+	title: {
+		text: "Macronutrients ratio"
+	},
+	// subtitles: [{
+	// 	text: "United Kingdom, 2016",
+	// 	fontSize: 16
+	// }],
+	data: [{
+		type: "pie",
+		indexLabelFontSize: 18,
+		radius: 80,
+		indexLabel:  "{label} - #percent%",
+		yValueFormatString: "###0.0\"%\"",
+		click: explodePie,
+		dataPoints: [
+			{ y: <%-Number(ratio.carbs)%>*100, label: "Carbs" },
+			{ y: <%-Number(ratio.fats)%>*100, label: "Fats" },
+			{ y: <%-Number(ratio.protiens)%>*100, label: "Protiens" }
+		]
+	}]
+});
+chart.render();
+
+function explodePie(e) {
+	for(var i = 0; i < e.dataSeries.dataPoints.length; i++) {
+		if(i !== e.dataPointIndex)
+			e.dataSeries.dataPoints[i].exploded = false;
+	}
+}
+
+}
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</body>
+</html> -->

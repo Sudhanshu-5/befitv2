@@ -1,0 +1,83 @@
+
+ <div class="alert py-2" style="background-color: rgba(227, 125, 95,.2);" role="alert" id="graphOdate-absence">
+       No record are added !!
+    </div>
+
+<!-- <div class="conatiner">
+  <canvas  id="graphOdateChart" ></canvas>
+</div> -->
+   <div class="chart-container">
+    <canvas id="graphOdateChart"  class="m-0" ></canvas>
+    </div>
+
+<script>
+ dataset=[];
+ dates=[];
+
+// type = weight/ height
+ type=<%-JSON.stringify(type)%> 
+
+  $("#graphOdate-absence").hide();
+
+	length = <%-ondateinfo.ondate.length%>;
+var ctx_weight = document.getElementById("graphOdateChart").getContext("2d");
+
+	<%ondateinfo.ondate.forEach(function(info){%>
+			        dates.push('<%-(new Date(info.createdAt)).toLocaleDateString()%>');
+		        	dataset.push(<%-JSON.stringify(info)%>[type]);
+         
+    <%})%>
+    if(!dataset[0]){
+        $("#graphOdate-absence").show();
+    }
+    
+var data = {
+  labels:dates,
+  datasets: [{
+    label: $( "#type-graph-div option:selected" ).text(),
+    fill: false,
+    borderColor: "#FF652F", // Add custom color border (Line)
+    backgroundColor: "#FF652F", // Add custom color background (Points and Fill)
+    borderWidth: 1 ,// Specify bar border width,
+    data:dataset
+  }]
+};
+unit={
+
+  weight:"Kg",
+  height:"cms",
+  neck:"cms",
+  waist:"cms",
+  hip:"cms",
+  bodyfat:"%",
+ 
+}
+
+var myBarChart = new Chart(ctx_weight, {
+  type: 'line',
+  data: data,
+  options: {
+    responsive:true,
+    maintainAspectRatio: false,
+       scales: {
+       xAxes: [{
+         	scaleLabel: {
+					display: true,
+					labelString: 'Dates'
+				}
+        }],
+      yAxes: [{
+          	scaleLabel: {
+					display: true,
+					labelString: $("#type-graph-div option:selected").val()+"  in  "+unit[$("#type-graph-div option:selected").val()]
+				},
+        ticks: {
+          min: 0
+        }
+      }]
+    }
+   }
+});
+</script>
+
+

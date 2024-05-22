@@ -1,0 +1,190 @@
+<%- include ("../partials/exerciseHeader") %>
+<link rel="stylesheet" href="/stylesheets/addexercise.css">
+
+
+<!-- description block -->
+
+<div class="container exercise-description">
+        
+        <form id="exercise-desc" action="/addExercise" method="POST">
+            <div class="row">
+                <div class="col-md-9 col-sm-12 mx-auto w-100 d-flex flex-column mt-5">
+                    
+                        <div class="form-group row mx-1">
+                            <textarea type="text" class="form-control exercise-ta col-sm-6 col-12" name="query" placeholder="30 min walk / 20 min yoga / 45 seconds crunches " class="form-control" ></textarea>
+                             <div id="selectedExercise-div"class="col-sm-6 col-12">
+                                
+                             </div>
+                        </div>
+                       <div class="form-group row mx-1">
+                        <select id="exercise-label" class="form-control col-sm-6 col-12" name="xlabelDescription" required>
+                             <option class="form-control" value="" disabled selected hidden>Exercise session</option>
+                             <option class="form-control" value="Morning">Morning</option>
+                             <option class="form-control"value="Afternoon">Afternoon</option>
+                             <option class="form-control" value="Evening">Evening</option>
+                        </select>
+                        </div>
+                       <!-- <div>
+                             <div class="form-group content row mb-0 w-50">
+                                <label for="time" class="col-sm-4 col-form-label">Height</label>
+                                <div class="col-sm-8">
+                                <input type="time" id="time"class="form-control w-75 mb-0" name="time">
+                                <hr class="m-0">
+                                </div>
+                            </div>
+                       </div> -->
+                <!-- <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+    </div>
+  </div> -->
+                    
+                        <div id="body-info"class="form-group">
+                            <h4 class="mt-3">For body with</h4>
+                            <div class="form-group row">
+                                <label for="weight" class="col-md-6 col-4 col-form-label">Weight</label>
+                                <div class="col-md-4 col-4 px-0">
+                                <input type="text" name="weight"  class="form-control" id="weight" value="<%=findedUser.weight%>" readonly> 
+                                </div>
+                                <div class="col-md-2 col-4 px-0 pt-2">kg</div>
+                                <hr class="m-0 col-12">
+                            </div>
+                              <div class="form-group row">
+                                <label for="height" class="col-md-6 col-4 col-form-label">Height</label>
+                                <div class="col-md-4 col-4 px-0">
+                                <input type="text" name="height"  class="form-control" id="height" value="<%=findedUser.height%>" readonly> 
+                                </div>
+                                <div class="col-md-2 col-4 px-0 pt-2">cm</div>
+                                <hr class="m-0 col-12">
+                            </div>
+                            <!-- <div>
+                            <label for="height" class="m-1">Height</label>
+                            <input type="text" name="height"  class="form-control mr-1" id="height" value="<%=findedUser.height%>"readonly> cm
+                            <hr class="m-0">
+                            </div> -->
+                            <div class="form-group row" >
+                                <label for="age" class="col-md-6 col-4 col-form-label">Age</label>
+                                <div class="col-md-4 col-4 px-0">
+                                <input type="text" name="age"  class="form-control" id="age" value="<%=findedUser.age%>" readonly> 
+                                </div>
+                                <hr class="m-0 col-6">
+                            </div>
+                            <!-- <div>
+                            <label for="age" class="m-1">Age</label>
+                            <input type="text" name="age"  class="form-control" id="age" value="<%=findedUser.age%>"readonly>
+                            <hr class="m-0">
+                            </div> -->
+                        <div>
+                            <a href="/editProfile">Update details</a>
+                        </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center align-items-center">
+                          <button type="submit" class="btn" style="background-color: rgba(227, 125, 95);color:white">Add</button>
+                       </div>
+                </div>
+                
+
+                        <div id="fromCustomExercises" class="col-md-3 col-sm-12 mx-auto ">
+                             <!-- <button type="button" id="get-custom-exercises" class="btn btn-secondary" >get list</button> -->
+                        
+                            <div id="exercise-list" class="border mt-5 px-2">
+                                <h4 class="text-center py-3" style='color: rgba(227, 125, 95);'>Custom Exercises</h4>
+                                <%if(findedUser.userexercise.length==0){%>
+                                    <p class="mt-2">No custom foods</p>
+                                <%}%>
+                                <%findedUser.userexercise%>
+                                        <%findedUser.userexercise.forEach(function(exercise){%>
+                                                   
+                                                        <li class="exercise-name mt-1" id="<%=exercise.exercise_name%>">
+                                                            <%=exercise.exercise_name%>
+                                                        </li>
+                                                        
+                                                    
+                                                    <%})%>
+                            </div>
+                            
+
+                        </div>
+                </div>
+                    
+
+         </form>
+    
+        
+</div>
+<!-- add exercise from userexercise -->
+<script>  
+  $('#exercise-desc').submit(function(){
+    $('button[type=submit]', this).attr('disabled', 'disabled');
+});
+$(document).ready(function() {
+    //toggle exercise list
+    // $("#get-custom-exercises").click(function (){
+    //         $("#exercise-list").toggle();
+    //          });
+
+         
+    obj={};
+   //select particular food and hide it
+    $("#exercise-list").on('click','li',function () {
+        
+        let options=""
+        let counter=0;
+        let exercise_name=$(this).text().trim();
+        console.log("food_name"+exercise_name)
+           
+     console.log("OBJ"+JSON.stringify(obj))        
+    let exerciseField = $(document.createElement('div'))
+        .attr("class", "selectedExercise");  
+    
+    exerciseField.after().html(
+   "<li><div><input class='form-control mx-2' type='text' id="+"\""+$(this).text().trim()+"\""+"name ='myExerciseName[]' value="+"\""+$(this).text().trim()+"\""+"readonly>"+
+      "<input class='form-control' id='u-duration' name='myExerciseDuration[]' type='number' placeholder='min' required>"+
+      "<i class='far fa-times-circle px-1' style='color: rgba(227, 125, 95);' id='remove'></li></div>");
+     
+
+    exerciseField.appendTo("#selectedExercise-div");
+
+     $(this).hide();
+
+    });
+
+
+//remove selected element and add to exercise-list
+$("#selectedExercise-div").on('click','#remove',function(){
+    $(this).parentsUntil("#selectedExercise-div").remove();
+
+    let exerciselistId=$(this).siblings().val();
+    console.log("#"+exerciselistId.trim());
+      $("#"+exerciselistId.trim()).show();
+    
+    })
+          
+      
+
+        
+})
+</script> 
+<!-- show hide script -->
+ <script>
+    $(document).ready(function(){
+        $(".description").hide();   
+        $(".instant").hide();
+        $("#instant").click(function(){
+            $(".description").hide();
+            $(".instant").show();
+            $("#addToCustomExercises").hide();
+        })
+         $("#description").click(function(){
+            $(".description").show();
+            $(".instant").hide();
+                        $("#addToCustomExercises").hide();
+
+        })  
+        $("#food-list").hide()
+     })
+        
+</script>
+<%- include ("../partials/footer") %>
+

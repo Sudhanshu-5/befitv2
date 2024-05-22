@@ -1,0 +1,147 @@
+<%- include ("../partials/header")%>
+<div class="container">
+<div class="row">
+  <div class="col-md-4 col-sm-1"></div>
+  <div class="col-md-4 col-sm-10 mt-5 border p-3">
+      <h4 class="text-center">Calculate BMR</h4>
+      <form action="/bmr" method="POST">
+                <div class="form-group row mb-0">
+                      <label for="age" class="col-sm-6 col-form-label">Age</label>
+                      <div class="col-sm-6">
+                        <input type="text" id="age"class="form-control text-center my-1" name="age" value="<%=info.age%>"  >
+                        
+                      </div>
+                </div>
+      
+               <div class="form-group row mb-0">
+                <label for="height" class="col-sm-6 col-form-label">Height</label>
+                 <div class="col-sm-6">
+                    <input type="text" id="height"class="form-control text-center my-1" name="height" value="<%=info.height%>"  >
+                   
+                 </div>
+               </div>
+
+              <div class="form-group row mb-0">
+                <label for="weight" class="col-sm-6 col-form-label">Weight</label>
+                 <div class="col-sm-6">
+                    <input type="text" id=weight" class="form-control text-center my-1" name="weight" value="<%=info.weight%>"  >
+                    
+                 </div>
+              </div>
+
+              <div class="form-group row mb-0">
+                 
+                <label for="factor" class="col-sm-6 col-form-label">
+                  <i class="fas fa-question-circle mx-1 px-1 pt-1" style="color:rgba(227, 125, 95);" data-toggle="modal" data-target="#myModal"></i>Activity factor
+                </label> 
+                <div class="col-sm-6">
+                    <input type="text" id="factor" class="form-control text-center my-1" name="factor" vaue="<%=info.activityFactor%>" required >
+                 </div>
+              </div>
+
+       <div>
+            
+
+           
+            <div class="modal fade" id="myModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+            
+                  <div class="modal-header">
+                    <h4 class="modal-title">Get  your calorie requirement</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                       <div class="col-4">
+                           Amount of Exercise/Activity
+                       </div>
+                        <div class="col-4">
+                          Description
+                       </div>
+                        <div class="col-4">
+                           Activity-factor
+                       </div>
+                       <hr class="col-12">
+                       
+
+                       <div class="col-4">
+                         Sedentary
+                       </div>
+                       <div class="col-4">
+                        <ul>
+                          <li>little or no Exercise</li>
+                          <li>desk job</li>
+                        </ul>
+                         
+                       </div>
+                       <div class="col-4 d-flex justify-content-center align-item-center">
+                        1.2
+                       </div>
+
+                       <div class="col-4">
+                         Lightly active
+                       </div>
+                       <div class="col-4">
+                         <ul>
+                          <li>light exercise</li>
+                          <li>sports 1 – 3 days/ week</li>
+                        </ul>
+                        
+                       </div>
+                       <div class="col-4 d-flex justify-content-center align-item-center">
+                         1.375
+                       </div>
+
+                        <div class="col-4">
+                       Very active
+                       </div>
+                       <div class="col-4">
+                         <ul>
+                          <li>heavy Exercise</li>
+                          <li>sports 6 – 7 days/ week</li>
+                        </ul>
+                        
+                       </div>
+                       <div class="col-4 d-flex justify-content-center align-item-center">
+                        1.72
+                       </div>
+
+                       <div class="col-4">
+                       Extremely active
+                       </div>
+                       <div class="col-4">
+                          <ul>
+                          <li> very heavy exercise</li>
+                          <li> physical job</li>
+                          <li> training 2 x/ day</li>
+                        </ul>
+                   
+                       </div>
+                       <div class="col-4 d-flex justify-content-center align-item-center">
+                       1.9
+                       </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn" data-dismiss="modal"style="background-color: rgba(227, 125, 95);color:white">Close</button>
+                  </div> 
+                </div>
+              </div>
+            </div>
+          
+      </div>
+      <div class="d-flex justify-content-between mt-3">
+      <button class="btn" style="background-color: rgba(227, 125, 95);color:white">Calculate</button>
+      <!-- <button class="btn" style="background-color: rgba(227, 125, 95);color:white"onclick="window.location.href='/editProfile';">update ur info</button> -->
+      
+    </div>
+      </form>
+  </div>
+  <div class="col-md-4 col-sm-1"></div>
+</div>
+</div>
+<%- include ("../partials/footer")%>
+      

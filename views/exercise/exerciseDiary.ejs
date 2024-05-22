@@ -1,0 +1,378 @@
+
+<%-include ("../partials/exerciseHeader")%>
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+/>
+     <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/calender.css"/>
+        <link rel="stylesheet" href="/stylesheets/exerciseDiary.css"/>
+
+<div class="container p-0">
+  <div id="del-mssg"></div>
+ <div id="contents" class="row mt-5">
+      <div class="col-md-4 col-sm-12 mx-auto">
+        <div class="calender px-0">
+              <div class="date d-flex justify-content-between align-items-center ">
+                      <i class="prev-date fa fa-angle-left  ml-3" aria-hidden="true"></i>
+                        <div class="dateString">
+                        </div> 
+                      <i class="next-date fa fa-angle-right  mr-3" aria-hidden="true"></i>
+              </div>
+              <div class="showCalender">
+                <div class="year-month d-flex justify-content-between align-items-center" >
+                  <div>
+                        <i class="prev-year fas fa-angle-double-left ml-3"></i>
+                        <i class="prev-month fas fa-angle-left "></i>
+                  </div>
+                      <div class="myString">
+                        
+                      </div>
+                      <div>
+                        <i class="next-month fas fa-angle-right "></i>
+                        <i class="next-year fas fa-angle-double-right mr-3"></i>
+                    </div>
+                 
+               </div>
+                   <div class="weekdays d-flex justify-content-around ">
+                    <div>Sun</div> 
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                   </div>
+                  
+                  <div class="days d-flex flex-wrap">
+                    
+                  </div> 
+                  
+              </div>
+          </div>
+          <!-- <div id="showresults" class="d-flex flex-column justify-content-around mt-5"> 
+                <img src="images/spinner.gif" width="20%" height="20%" class="mx-auto my-5">
+
+           </div> -->
+      </div>  
+         <!-- diary -->
+          <div id="exercise-info"class="col-md-8 col-sm-12" >
+            <div id="diary" class="border mx-auto">
+            <div class="row info">
+                          <div class="col">
+                            Cal Burned
+                          </div>
+                          <div class="col">
+                            duration
+                          </div>
+                          <div class="col">
+                            MET
+                          </div>
+                        
+             </div>
+               <div class="row info">
+                          <div class="col small">
+                           KCal
+                          </div>
+                          <div class="col small ">
+                            min
+                          </div>
+                          <div class="col small">
+                           
+                          </div>
+                         
+             </div>
+            <div class="exercise-items">
+                 <div id="morning" class="row strip">
+                     
+                         <div class="col-2">
+                          <p class="exercise-time">Morning</p> 
+                          
+                        </div> 
+
+                        <!-- <div class="col-2 d-flex flex-column align-items-start">
+                          <div id="m-time" class="exercise-time">
+
+                          </div>
+                        </div> -->
+
+                        <div class="col-4 d-flex  justify-content-between">
+                          <div id="m-exercise" class="exercise-names">
+
+                          </div>
+                        </div>
+                   
+                        <div class="col-6 px-0">
+                          <div id="m-info" class="row meduca small px-0 mx-0"></div>
+                      </div>
+                  
+                 </div>
+                <div id="afternoon"class="row strip">
+                        <div class="col-2">
+                          <p class="exercise-time">Afternoon</p> 
+                        </div>
+
+                        <!-- <div class="col-2 d-flex flex-column align-items-start">
+                          <div id="a-time" class="exercise-time">
+
+                          </div>
+                        </div> -->
+
+                        <div class="col-4 d-flex  justify-content-between">
+                          <div id="a-exercise" class="exercise-names"></div>
+                           
+                        </div>
+                        <div class="col-6 px-0">
+                          <div id="a-info" class="row meduca small px-0 mx-0"></div>
+                        </div>
+                      
+                </div>
+                <div id="evening" class="row strip">
+                        <div class="col-2">
+                          <p class="exercise-time">Evening</p> 
+                        </div>
+                        <!-- <div class="col-2 d-flex flex-column align-items-start">
+                          <div id="e-time" class="exercise-time">
+
+                          </div>
+                        </div> -->
+
+                        <div class="col-4 d-flex  justify-content-between">
+                          <div id="e-exercise" class="exercise-names"></div>
+                           
+                        </div>
+                        
+                        <div class="col-6 px-0">
+                          <div id="e-info" class="row small meduca px-0 mx-0"></div>
+                        </div>
+                      
+                </div>
+                
+            </div>
+            
+          </div>
+    </div>
+    
+</div>
+
+</div>
+    
+    
+    
+    <script>  
+      let dc;
+      let mcalorieArray=[]; // to check uniqness of food if food name and qty are same
+      let acalorieArray=[];
+      let ecalorieArray=[];
+      let calorieBurnedPer=[];
+      let  calp=[];
+       function extractWithDate(mm, dd, yy) {
+       
+
+        let dateFromDatabase;
+        let minfo="";
+        let ainfo="";
+        let einfo="";
+        let morningExerciseItems="";
+        let afternoonExerciseItems="";
+        let eveningExerciseItems="";
+        let calorieBunedPer;
+         let burnTarget;
+        let dateSelectedFromCalender= (mm + 1) + "/" + dd + "/" + yy;
+              mcalorieArray=[]; // to check uniqness of food if food name and qty are same
+          acalorieArray=[];
+        ecalorieArray=[];
+             
+        
+        let m=0,a=0,e=0;
+        dc=dateSelectedFromCalender;
+        
+        <%findedUser.exerciseinfo.forEach(function (exercise){%>
+             dateFromDatabase = <%-JSON.stringify(exercise.createdAt.toLocaleDateString())%>
+
+            if (dateSelectedFromCalender === dateFromDatabase) {
+                                   
+                                   if(<%-JSON.stringify(exercise.session)%>==="Morning"){ 
+                                     let label=0;
+                                     
+                                    let emillisecondsTilldate=new Date(<%-JSON.stringify(exercise.createdAt)%>).getTime();
+                                    <% for(var i=0; i < exercise.exerciseName.length; i++) {%>
+
+                                      if(<%-JSON.stringify(exercise.exerciseName[i])%>){
+                                         morningExerciseItems+="<div  id='<%-exercise.exerciseName[i]%>' class='e-item morning-items "+<%-i%>+"m-"+m+"' onclick='func(this.id,"+m+","+label+","+emillisecondsTilldate+")'><i class='far fa-times-circle "+emillisecondsTilldate+"'></i><%-exercise.exerciseName[i]%></div>";
+                                                            
+                                    minfo +="<div class='"+<%-i%>+"m-"+m+"' ><%-JSON.stringify(exercise.caloriesBurnedPerExercise[i])%></div>"+
+                                            "<div class='"+<%-i%>+"m-"+m+"' ><%-JSON.stringify(exercise.duration[i])%></div>"+
+                                            "<div class='"+<%-i%>+"m-"+m+"' ><%-JSON.stringify(exercise.met[i])%></div>";
+                                            
+
+                                      }
+                                     
+                                    mcalorieArray.push(<%-JSON.stringify(exercise.caloriesBurnedPerExercise[i])%>);
+                                    m++;
+                                       <%}%>
+                                      //  $("#m-time").append("<div class='"+<%-i%>+"m-"+m+"'><%-JSON.stringify(exercise.time)%></div>");
+                                       document.getElementById("m-exercise").innerHTML=morningExerciseItems; 
+                                       document.getElementById("m-info").innerHTML=minfo;
+                                     
+                                        }
+                                    else if(<%-JSON.stringify(exercise.session)%>==="Afternoon"){ 
+                                     let label=1;
+                                     
+                                    let emillisecondsTilldate=new Date(<%-JSON.stringify(exercise.createdAt)%>).getTime();
+                                    <% for(var i=0; i < exercise.exerciseName.length; i++) {%>
+
+                                      if(<%-JSON.stringify(exercise.exerciseName[i])%>){
+                                        afternoonExerciseItems+="<div id='<%-exercise.exerciseName[i]%>' class='a-item afternoon-items "+<%-i%>+"a-"+a+"' onclick='func(this.id,"+a+","+label+","+emillisecondsTilldate+")'><i class='far fa-times-circle "+emillisecondsTilldate+"'></i><%-exercise.exerciseName[i]%></div>";
+                                                            
+                                    ainfo +="<div class='"+<%-i%>+"a-"+a+"' ><%-JSON.stringify(exercise.caloriesBurnedPerExercise[i])%></div>"+
+                                            "<div class='"+<%-i%>+"a-"+a+"' ><%-JSON.stringify(exercise.duration[i])%></div>"+
+                                            "<div class='"+<%-i%>+"a-"+a+"' ><%-JSON.stringify(exercise.met[i])%></div>";
+                                      }
+                                    acalorieArray.push(<%-JSON.stringify(exercise.caloriesBurnedPerExercise[i])%>);
+                                    a++;
+                                       <%}%>
+                                      //  $("#a-time").append("<div class='"+<%-i%>+"m-"+m+"' ><%-JSON.stringify(exercise.time)%></div>");
+                                       document.getElementById("a-exercise").innerHTML=afternoonExerciseItems;
+                                       document.getElementById("a-info").innerHTML=ainfo;
+                                     
+                                        }                                      
+                                       else if(<%-JSON.stringify(exercise.session)%>==="Evening"){
+                                         let label=2;
+                                     
+                                    let emillisecondsTilldate=new Date(<%-JSON.stringify(exercise.createdAt)%>).getTime();
+                                   // console.log(emillisecondsTilldate);
+
+                                    <% for(var i=0; i < exercise.exerciseName.length; i++) {%>
+
+                                      if(<%-JSON.stringify(exercise.exerciseName[i])%>){
+                                         eveningExerciseItems+="<div id='<%-exercise.exerciseName[i]%>' class='e-item evening-items "+<%-i%>+"e-"+e+"' onclick='func(this.id,"+e+","+label+","+emillisecondsTilldate+")'><i class='far fa-times-circle "+emillisecondsTilldate+"'></i><%-exercise.exerciseName[i]%></div>";
+                                                            
+                                    einfo +="<div class='"+<%-i%>+"e-"+e+"' ><%-JSON.stringify(exercise.caloriesBurnedPerExercise[i])%></div>"+
+                                            "<div class='"+<%-i%>+"e-"+e+"' ><%-JSON.stringify(exercise.duration[i])%></div>"+
+                                            "<div class='"+<%-i%>+"e-"+e+"' ><%-JSON.stringify(exercise.met[i])%></div>";
+                                      }
+                                    ecalorieArray.push(<%-JSON.stringify(exercise.caloriesBurnedPerExercise[i])%>);
+                                    e++;
+                                  <%}%>
+                                      //  $("#e-time").append("<div class='"+<%-i%>+"m-"+m+"' ><%-JSON.stringify(exercise.time)%></div>");
+                                       document.getElementById("e-exercise").innerHTML=eveningExerciseItems;
+                                       document.getElementById("e-info").innerHTML=einfo;
+                                                
+                                    }
+                               }
+                        <%})%>
+                              
+  let milliForTargets=(new Date(dc)).getTime();
+                //  getTargetProgress(milliForTargets);
+            let sessionArray =[];
+           <%findedUser.exerciseinfo.forEach(function (exercise){%>
+             
+             dateFromDatabase = <%-JSON.stringify(exercise.createdAt.toLocaleDateString())%>
+                if (dateSelectedFromCalender === dateFromDatabase) {
+                     sessionArray.push(<%-JSON.stringify(exercise.session)%>)
+                     }
+            <%})%>
+            // console.log("sessionArray for date: "+dateSelectedFromCalender+" is"+sessionArray) 
+            let sessionFrequency={};
+            for(key of sessionArray ){
+              sessionFrequency[key]=(sessionFrequency[key]||0)+1;
+            }
+            console.log("sessionFrequency"+JSON.stringify(sessionFrequency));
+              if(!sessionFrequency.Morning) {
+                document.getElementById("m-info").innerHTML="";
+                document.getElementById("m-exercise").innerHTML="";
+              }
+               if(!sessionFrequency.Afternoon) {
+                document.getElementById("a-info").innerHTML="";
+                document.getElementById("a-exercise").innerHTML="";
+              }
+               if(!sessionFrequency.Evening) {
+                document.getElementById("e-info").innerHTML="";
+                document.getElementById("e-exercise").innerHTML="";
+              }
+
+              
+
+            }
+
+ function func(exercisename,index,label,millisecondsTilldate){
+   let date= new Date(millisecondsTilldate);
+   let time=date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+
+   //alert(date +" "+ time);
+  
+   let count=1;
+  // console.log("index-------"+index)
+
+
+  $(".e-item i").unbind().click(function () {
+    let millisecondsOfItemsToBeRemoved=$(this).prop('className').split(' ').pop();//get last classname 
+    let classOfItemsToBeRemoved=$(this).parent().prop('className').split(' ').pop();//get last classname 
+    // alert(classOfItemsToBeRemoved)
+    let deleteThisIndexExercise=classOfItemsToBeRemoved.split('-').pop();//get n from b-n
+     //alert(indexOfItemsToBeRemoved)
+    let labelOfItemsToBeRemoved=classOfItemsToBeRemoved.slice(1,2);//get b from b-n
+    // alert(labelOfItemsToBeRemoved)
+    let indexOfItemsToBeRemoved=classOfItemsToBeRemoved.slice(0,1);
+   //alert(indexOfItemsToBeRemoved)
+    //alert(indexOfItemsToBeRemoved)
+    millisecondsOfItemsToBeRemoved=parseInt(millisecondsOfItemsToBeRemoved)
+    
+    // alert(new Date(millisecondsOfItemsToBeRemoved))
+  
+  $("."+classOfItemsToBeRemoved).hide();
+  removeFromDatabse(millisecondsOfItemsToBeRemoved,parseInt(indexOfItemsToBeRemoved));
+   
+          function removeFromDatabse(millisecondsOfItemsToBeRemoved,indexOfItemsToBeRemoved){
+            console.log(typeof(indexOfItemsToBeRemoved) + "iiiiiiiiiiiiiiiiiiiiiiiiiiiiii" + millisecondsOfItemsToBeRemoved + " milliseconds")
+ 
+           $.ajax({ 
+                type: "DELETE", 
+                url: "/deleteExercise"+ '?' + $.param({"millisecondsOfItemsToBeRemoved":millisecondsOfItemsToBeRemoved, "indexOfItemsToBeRemoved":indexOfItemsToBeRemoved}),
+              
+              
+                success: function (result, status, xhr) {
+                 if(result){
+                   console.log(result)
+                  getTargetProgress(result);
+                 }
+                       
+                },
+                error: function (xhr, status, error) {
+                    // alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                }
+            });
+          }
+        
+  }) 
+ 
+ }
+//   function getTargetProgress(milliForTargets){
+//              //$('.container #showresults').append()  
+//          $.ajax({
+//                 type: "GET", 
+//                 url: "/targets",
+//                 data:{milliForTargets:milliForTargets,type:"exercise"},
+//                  //dataType: "html",
+//                   success: function (data) {
+//                 //  var result = $('<div />').append(data).find('#showresults').html();
+//                  $('.container #showresults').html(data);
+//                   },
+//                   error: function (xhr, status) {
+//                       alert("Sorry, there was a problem! Please reload the page");
+//                   },
+              
+//             });
+//           }
+</script>
+       <script src="/script/calender.js"></script>
+<script>getCalendar(0)</script>
+    
+    <%-include ("../partials/footer")%>
+
+
+

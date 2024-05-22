@@ -1,0 +1,72 @@
+.calender {
+    max-width: 100%;
+
+}
+
+
+.year-month {
+    font-size: .9rem;
+}
+
+.weekdays {
+    font-size: .9rem;
+    text-align: center;
+}
+
+.dateString {
+    max-width: 100%;
+}
+
+.myString {
+    max-width: 100%;
+}
+
+.weekdays div {
+    width: calc(100%/7);
+    align-items: center;
+    justify-content: arounds
+}
+
+
+
+.my-class0,.my-class1 {
+    background-color: rgba(227, 125, 95, 0.5);
+    color:white
+}
+
+.prev0,
+.next0,
+.prev1,
+.next1 {
+    opacity: .5;
+}
+.calender {
+    max-width: 100%;
+
+}
+
+.date {
+    height: 50px;
+    background-color: rgba(227, 125, 95);
+    cursor: pointer;
+    color: #F2F9FB;
+}
+
+.date i,
+.dateString {
+    color: #F2F9FB;
+    font-weight: bold;
+}
+
+.days div {
+    width: calc(100%/7);
+    cursor: pointer;
+    text-align: center;
+}
+
+.today0,.today1 {
+    background-color: rgba(227, 125, 95);
+    color:white;
+
+}
+

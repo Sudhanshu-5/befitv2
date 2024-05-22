@@ -1,0 +1,71 @@
+<%- include ("./header") %>
+		  <!-- <link rel="stylesheet" href="/stylesheets/meal-header.css"/> -->
+
+<nav class="navbar child-nav navbar-expand">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-meal">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar-meal">
+            <ul class="navbar-nav nav-tabs nav-fill  mx-auto navbar-meal">
+                <li class="nav-item">
+                  <a class="tab nav-link "  id="meal"   href= "/addMeal">Add Meal</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link"   id="diary" href= "/diary">Meal Diary</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link"  id="kitchen" href="/customFoods" >Custom foods</a>
+                </li>
+                <li class="nav-item">
+                     <a class="tab nav-link " id="instant-search-tab" href="/searchInstant">Instant search</a>
+                </li>
+               
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="container-fluid " >
+   <%if(currentUser){%>
+        <% if(error && error.length > 0) {%>
+          <div id="error" class="alert alert-danger  px-4 py-1">
+            <%=error %>
+            </div>
+        <% } %>
+        
+        <% if(success && success.length > 0) { %>
+          <div id="success"class="alert alert-success  px-4 py-1"><p><%= success %></p></div>
+        <% } %>
+          
+        <% if(info && info.length > 0) { %>
+                <p id="info"class="alert alert-success  px-4 py-1"> <%=info%></p>
+        <% } %>
+     <% } %>
+
+ <script>
+   $("#error").delay(5000)
+.fadeOut(function() {
+   $(this).remove() 
+});
+ $("#success").delay(5000)
+.fadeOut(function() {
+   $(this).remove() 
+});
+ $("#info").delay(5000)
+.fadeOut(function() {
+   $(this).remove() 
+});
+      
+	 var setDefaultActive2 = function() {
+    var path2 = window.location.pathname;
+
+    var element2 = $("#navbar-meal a[href='" + path2 + "']");
+
+    element2.addClass("active-meal");
+     }
+setDefaultActive2();
+ $(".activenav").removeClass("activenav");
+  $("#h-meal").addClass("activenav");
+
+
+	</script>

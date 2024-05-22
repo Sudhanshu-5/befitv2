@@ -1,0 +1,95 @@
+.register-here {
+    
+    font-size: 2rem;
+    font-weight: 500;
+    color:rgba(227, 125, 95);
+}
+
+.profile {
+
+    /* border: .2rem solid gray; */
+    box-sizing: border-box;
+    padding: 2% 0;
+
+}
+
+.body-info {
+    box-sizing: border-box;
+    /* border: .2rem solid gray; */
+    padding: 1.5%;
+  
+}
+.body-info div{
+  margin:0 auto;
+}
+
+.divheight,.divweight{
+    display:flex;
+    justify-content: center;
+    flex: wrap;
+}
+.profile input:not(#date):not(#age) {
+
+ max-width: 70%;
+
+}
+
+ .activity-factor-modal {
+     width: 160%;
+ }
+
+.profile #age {
+
+width: 15%;
+
+}
+
+.profile #date {
+    width: 35%
+}
+
+.body-info p {
+    font-size: 2rem;
+    margin: 0 auto;
+
+}
+
+.body-info div {
+    padding: 1.2rem;
+
+}
+
+.input {
+
+    max-width: 20%;
+}
+.leanBody select{
+    width:20%;
+}
+
+
+
+ @media (max-width: 575.98px) {
+.register-here{
+    font-size:1rem;
+}
+.divheight,
+.divweight {
+   
+    padding:0;
+    width:100%
+}
+.profile #date{
+    width:60%
+}
+
+ }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+      
+     :root{
+        font-size: 12px;
+     } 
+     .activity-factor-modal{
+         width:100%;
+     }
+  }

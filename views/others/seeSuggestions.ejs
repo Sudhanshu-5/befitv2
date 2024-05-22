@@ -1,0 +1,25 @@
+<%- include ("../partials/header")%>
+<div class="container">
+    <div class="row parent">
+        
+    </div>
+</div>
+
+
+<script>
+  let list=""
+     <% users.forEach(function(user){ %>
+               if(<%-JSON.stringify(user.username)%> !== <%-JSON.stringify(currentUser.username)%>){
+              $(".parent").append("<div class='col-lg-6 col-12 mt-3'><p class='username'>From  "+<%-JSON.stringify(user.username)%>+"</p><div  id="+<%-JSON.stringify(user.username)%>+" class='form-control' style='height:20vh' ></div> </div>")
+                <% user.suggestion.forEach(function(item){ %>
+                   list+="<li>"+<%-JSON.stringify(item)%>+"</li>";
+                 <% }) %>
+                $("#"+<%-JSON.stringify(user.username)%>).append(list);
+                 list="";
+            }
+     <%})%>
+
+</script>
+
+<%- include ("../partials/footer")%>
+      

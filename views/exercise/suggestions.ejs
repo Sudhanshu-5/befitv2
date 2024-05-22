@@ -1,0 +1,32 @@
+
+
+
+<div class="w-100">
+             <div class="box-title">
+              How long would it take to burn off <%=calories%> KCal?
+            </div>
+            <div class="row">
+              <div class="col-6">
+                Walking (3mph)
+              </div>
+              <div id="walk" class="col-6">
+                  <%=JSON.stringify(duration["walking_duration"])%> minutes
+              </div>
+
+               <div class="col-6">
+                Running (6mph)
+              </div>
+              <div id="running" class="col-6">
+                 <%=JSON.stringify(duration["running_duration"])%> minutes
+              </div>
+
+               <div class="col-6">
+                Cycling (10mph)
+              </div>
+              <div id="cycling" class="col-6">
+               <%=JSON.stringify(duration["cycling_duration"])%> minutes
+              </div>
+              
+            </div>
+</div>
+

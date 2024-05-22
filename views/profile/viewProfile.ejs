@@ -1,0 +1,352 @@
+<%- include ("../partials/profileHeader") %>
+<link rel="stylesheet" href="/stylesheets/viewProfile.css"/>
+
+<div class="container" id="profile">
+      <!-- genral -->
+ <div class="row">
+
+    <div class="col-12 mx-auto row">
+     <div id="general" class="px-2 py-3 mx-auto col-10 col-md-6 ">
+          
+          <div class="form-group row mb-0">
+            <label for="username" class="col-3 col-form-label ">Username</label>
+            <div class="col-9">
+              <input type="text"class="form-control text-center" id="username"  name="username" value="<%=founduser.username%>" readonly="readonly" >
+              <hr class="m-0 ml-3">
+            </div>
+          </div>
+
+          <div class="form-group row mb-0">
+            <label for="email" class="col-3 col-form-label">Email</label>
+            <div class="col-9">
+              <input type="email" id="email"class="form-control text-center" name="email" value="<%=currentUser.email%>" readonly="readonly" >
+            <hr class="m-0">
+          </div>
+          </div>  
+
+           <!-- <div class="form-group row mb-0">
+            <label for="forgot" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9 py-2 text-center">
+               <a href="/forgotPass" id="forgot">Update password</a> 
+            <hr class="m-0">
+          </div>
+          </div>  -->
+
+           <div class="form-group row mb-0">
+                <label for="dob" class="col-3 col-form-label">DOB</label>
+                 <div class="col-9">
+                <input type="text" id="dob"class="form-control text-center" name="DOB" value="<%=founduser.DOB%>" readonly="readonly" >
+                <hr class="m-0">
+              </div>
+          </div>
+           <div class="form-group row mb-0 ">
+                <label for="gender" class="col-3 col-form-label">Gender</label>
+                 <div class="col-9">
+                <input type="text" id="gender"class="form-control  text-center" name="gender" value="<%=currentUser.gender%>" readonly="readonly" >
+                <hr class="m-0">
+              </div>
+          </div>
+      
+     </div>
+     </div>
+  
+    <div class="col-12 row mx-auto">
+     <div class=" mx-auto col-12 col-md-10 row mt-4 d-flex justify-content-around" id="targets">
+          <!-- <div class="col-12 text-right small">
+           *All units are in Kgs and cms
+          </div> -->
+           <div class="form-group content row mb-0 mt-4 col-6">
+                <label for="goal" class="col-sm-4 col-12 col-form-label text-center">Goal</label>
+                 <div class="col-sm-8 col-12 px-0">
+                   <!-- <input type="text" id="goal"class="form-control text-center px-0" name="goal" readonly="readonly" > -->
+                <select id="select"  class="form-control" name="goal" disabled>
+                  <option value="-1.0">Lose 1 kilogram per week</option>
+                  <option value="-0.75">Lose .75 kilograms per week</option>
+                  <option value="-0.5">Lose .5 kilograms per week</option>
+                  <option value="-0.25">Lose .25 kilograms per week</option>
+                  <option value="0">Maintain my current weight</option>
+                  <option value="0.25">Gain .25 kilograms per week</option>
+                  <option value="0.5">Gain .5 kilograms per week</option>
+                  <option value="1.0">Gain 1 kilograms per week</option>
+               </select>
+               <hr class="m-0"> 
+              </div>
+            </div>
+
+             <div class="form-group content row mb-0 mt-4 col-6">
+                <label for="target" class="col-sm-4 col-12 text-center col-form-label ">Target
+                  <!-- <a class="px-2"href="#" role="button" data-trigger="focus" data-html="true" data-toggle="popover" data-placement="right" data-content="Basal metabolic rate (BMR)  is a minimum number of calories required for basic functions at rest,<br>  <a href='/bmr'>  calculate BMR</a>" >
+                    <i class="fas fa-edit"  style="color: rgba(227, 125, 95)" ></i>
+                  </a> -->
+                </label>
+                <div class="col-sm-8 col-12 px-0 row ml-1">
+                  <input id="target"type="number" class="form-control  w-100 mb-0 text-right col-6 pr-0  text-center" value="<%=founduser.goal_calories%>" name="bmr"  readonly="readonly" >
+                  <input class="form-control w-100 mb-0 text-left col-6 pl-0" value="Kcal" readonly>
+                  <hr class="m-0 col-12 px-0">
+               </div>
+                
+             </div>
+            
+           
+
+     <!-- </div> -->
+     <!-- <div class="col-2"></div> -->
+     <!-- <div id="body" class="row col-4 mt-2 mr-auto"> -->
+            
+            <div class="form-group content row mb-0 col-6">
+                <label for="height" class="col-sm-4 col-12 text-center col-form-label">Height</label>
+                 <div class="col-sm-8 col-12 px-0 row ml-1">
+                <input type="number" id="height" class="form-control w-100 mb-0 text-right col-6 pr-0" name="height" value="<%=founduser.height%>" readonly="readonly">
+                <input class="form-control w-100 mb-0 text-left col-6 pl-0" value="cm" readonly>
+                <hr class="m-0 col-12 px-0">
+                </div>
+            </div>
+
+            <div class="form-group content row mb-0 col-6">
+                  <label for="weight" class="col-sm-4 col-12 text-center col-form-label">weight</label>
+                  <div class="col-sm-8 col-12 px-0 row ml-1">
+                  <input type="number" id="weight" class="form-control w-100 text-right col-6 pr-0" name="weight" value="<%=founduser.weight%>" readonly="readonly" >
+                  <input class="form-control w-100 mb-0 text-left col-6 pl-0" value="kg" readonly>
+                  <hr class="m-0 col-12">
+                </div>
+            </div>
+
+            
+            <div class="form-group content row mb-0 col-6">
+                <label for="neck" class="col-sm-4 col-12 text-center col-form-label">Neck</label>
+                <div class="col-sm-8 col-12 px-0 row  ml-1">
+                <input type="number"class="form-control w-100 text-right col-6 pr-0" id="neck"  name="neck" placeholder="Not added" readonly="readonly" >
+                <input class="form-control w-100 mb-0 text-left col-6 pl-0" id="neck-cm" readonly>
+<hr class="m-0 col-12">
+              </div>
+            </div>
+
+            <div class="form-group content row mb-0 col-6">
+                <label for="waist" class="col-sm-4 col-12 text-center col-form-label">Waist</label>
+                <div class="col-sm-8 col-12 px-0 row ml-1">
+                 <input type="number"class="form-control w-100 text-right col-6 pr-0" id="waist"  name="waist" placeholder="Not added" readonly="readonly" >
+                <input class="form-control w-100 mb-0 text-left col-6 pl-0" id="waist-cm" readonly>
+
+                <hr class="m-0 col-12">
+              </div>
+            </div> 
+
+            <div class="form-group content row mb-0 col-6">
+                <label for="hip" class="col-sm-4 col-12 text-center col-form-label">Hip</label>
+                <div class="col-sm-8 col-11 px-0 row ml-1">
+                <input type="number"class="form-control w-100 text-right pr-0 col-6" id="hip"  name="hip" placeholder="Not Added" readonly="readonly" >
+                 <input class="form-control w-100 mb-0 text-left col-6 pl-0" id="hip-cm" readonly>
+                 <hr class="m-0 col-12">
+              </div>
+            </div>
+
+              <div class="form-group content row mb-0 col-6">
+                <label for="activityFactor" class="col-sm-4 col-12 text-center col-form-label">PAF
+                   <i class="fas fa-question-circle px-2" style="color: rgba(227, 125, 95) ;"data-toggle="modal" data-target="#activity-modal"></i>
+                  <div class="modal fade w-100" id="activity-modal">
+    <div class="modal-dialog">
+      <div class="modal-content activity-factor-modal w-100">
+  
+        <div class="modal-header">
+          <h4 class="modal-title">Know your activity-factor</h4>
+          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        </div>
+        <div class="modal-body border ">
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Amount of Exercise/Activity</div>
+            <div class="col-6 p-1 pl-4 ">Description</div>
+            <div class="col-2 p-1">Activity Factor</div>
+          </div>
+          <div class="row p-0">
+            <hr class="col-12 p-0 m-0">
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Sedentary</div>
+            <div class="col-6 p-1">Little or no Exercise / desk job</div>
+            <div class="col-2 p-1 text-center font-weight-bold">1.2</div>
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Lightly active</div>
+            <div class="col-6 p-1">Light exercise / sports 1 – 3 days / week</div>
+            <div class="col-2 p-1 text-center font-weight-bold">1.375</div>
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Moderately active</div>
+            <div class="col-6 p-1">Moderate Exercise, sports 3 – 5 days / week</div>
+            <div class="col-2 p-1 text-center font-weight-bold">1.55</div>
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Very active</div>
+            <div class="col-6 p-1">Heavy Exercise/ sports 6 – 7 days / week</div>
+            <div class="col-2 p-1 text-center  font-weight-bold">1.72</div>
+          </div>
+          <div class="row p-1 pb-0">
+            <div class="col-4 p-1">Extremely active</div>
+            <div class="col-6 p-1">Moderate Exercise, sports 3 – 5 days / week</div>
+            <div class="col-2 p-1 text-center font-weight-bold">1.9</div>
+          </div>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn"  style="background-color: rgba(227, 125, 95);color:white" data-dismiss="modal">Close</button>
+        </div> 
+      </div>
+    </div>
+  </div>
+  <!-- <a class="px-0" href="#" role="button" data-trigger="focus" data-html="true" data-toggle="popover" data-placement="right" data-content="Physical Activity Factor (PAF) is a way of expressing a person's daily physical activity in a number. <a href='/bmr'>  Edit activity factor</a>" >
+                    <i class="fas fa-edit"  style="color: rgba(227, 125, 95)" ></i>
+                  </a> -->
+  
+                </label>
+                <div class="col-sm-8 col-12 px-0">
+                 <!-- <input type="number"class="form-control w-100 text-center " id="activityFactor"  name="activityFactor" value="<%=founduser.activityFactor%>" readonly="readonly" > -->
+                <select id="select2"  class="form-control" name="activityFactor" disabled>
+                  <option value="1.2">1.2</option>
+                  <option value="1.375">1.375</option>
+                  <option value="1.55">1.55</option>
+                  <option value="1.72">1.72</option>
+                  <option value="1.9">1.9<option>
+                  </select>
+                 <hr class="m-0 col-12">
+              </div>
+              </div>
+
+              <div class="form-group content row mb-0 col-6">
+                <label for="bmi" class="col-sm-4 col-12 text-center col-form-label">BMI</label>
+                <div class="col-sm-8 col-12 px-0">
+                 <input type="text" id="bmi" class="form-control w-100 text-center" name="bmi" value="<%=founduser.bmi%>"  readonly="readonly" >
+                <hr class="m-0">
+              </div>
+              </div>
+              
+              <div class="form-group content row mb-0 col-6">
+                <label for="fat-per" class="col-sm-4 col-12 text-center col-form-label">Body Fat
+                  <i class="fas fa-info-circle col-2 py-2 "  style="color: rgba(227, 125, 95)"  data-toggle="modal" data-target="#fmp-modal"></i>
+
+                </label>
+                <div class="col-sm-8 col-12 px-0">
+
+                  <input type="text" id="fat-per" class="form-control w-100 text-center" name="fat-per" placeholder="Not Added" readonly="readonly" >
+                   <hr class="m-0">
+                  </div>
+              
+            </div>
+
+            <div class="form-group content row col-12 mx-auto mb-0 mt-3 pad0">
+              <div class="col-5"></div>
+              <div class="col-7 row">
+                    <div class="col-sm-3 col-4  text-center  px-0">Carbs</div>
+                    <div class="col-sm-3 col-4 text-center  px-0">Fats</div>
+                    <div class="col-sm-3 col-4 text-center  px-0">Protiens</div>
+              </div>
+           </div>
+
+              <div class="form-group content row col-12 mb-0 mt-2 pad0">
+                <label  class="col-5 col-form-label pr-2">Macronutrient Ratio</label>
+                <div class="col-7 row">
+                    <div class="col-sm-3 col-4  d-flex justify-content-center pt-2 px-0" id="carbs"></div>
+                    <div class="col-sm-3 col-4  d-flex justify-content-center pt-2 px-0" id="fats"></div>
+                    <div class="col-sm-3 col-4  d-flex justify-content-center pt-2 px-0" id="protiens"></div>
+                </div>
+              </div>
+               <div class="form-group content row col-12 mb-0 pad0">
+                <label for="mn-target" class="col-5  col-form-label pr-2">Macronutrient Targets</label>
+                <div class="col-7 row">
+                  <div class="col-sm-3 col-4 d-flex justify-content-center pt-2  px-0"><%=founduser.c_target%> g</div>
+                  <div class="col-sm-3 col-4 d-flex justify-content-center pt-2  px-0"><%=founduser.f_target%> g</div>
+                  <div class="col-sm-3 col-4 d-flex justify-content-center pt-2  px-0"><%=founduser.p_target%> g</div>
+                </div>
+              </div>  
+        </div>
+        </div>
+         <button class="btn mx-auto mt-2"onclick="window.location.href='/editProfile';" style="background-color:rgba(227, 125, 95);color:white">Edit profile</button>
+</div>
+
+
+<div class="modal fade" id="fmp-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table class="cinfoT mx-auto mb-2"  width="320">
+                          <tbody><tr><td class="cinfoHd">Description</td><td class="cinfoHdL">Women</td><td class="cinfoHdL">Men</td></tr>
+                        
+                          <tr><td>Essential fat</td><td class="cinfoBodL">10-13%</td><td class="cinfoBodL">2-5%</td></tr>
+                          <tr><td>Athletes</td><td class="cinfoBodL">14-20%</td><td class="cinfoBodL">6-13%</td></tr>
+                          <tr><td>Fitness</td><td class="cinfoBodL">21-24%</td><td class="cinfoBodL">14-17%</td></tr>
+                          <tr><td>Average</td><td class="cinfoBodL">25-31%</td><td class="cinfoBodL">18-25%</td></tr>
+                          <tr><td>Obese</td><td class="cinfoBodL">32+%</td><td class="cinfoBodL">25+%</td></tr>
+                        </tbody>
+                      </table>
+                        <div class="text-center">
+                          <a href='/bodyfat'>Calculate Body fat percentage here</a>
+                        </div>
+      </div>
+   
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  
+
+    if(<%-JSON.stringify(founduser.bodyfat)%>)
+       $("#fat-per").val(<%=founduser.bodyfat%>+" %")
+ 
+
+       if(<%-JSON.stringify(founduser.neck)%>){
+       $("#neck").val(<%=founduser.neck%>+" %")
+       $("#neck-cm").val("cm")
+       }
+   
+
+     if(<%-JSON.stringify(founduser.waist)%>){
+       $("#waist").val(<%=founduser.waist%>+" %")
+       $("#waist-cm").val("cm")
+     }
+
+    if(<%-JSON.stringify(founduser.hip)%>){
+       $("#hip").val(<%=founduser.hip%>+" %")
+       $("#hip-cm").val("cm")
+    }
+                      
+
+      
+     $("#select").val(<%- JSON.stringify(founduser.goal_number)%>);
+     $("#select2").val(<%- JSON.stringify(founduser.activityFactor)%>);
+
+    // if(<%-JSON.stringify(founduser.goal_number)%> > 0){
+    //   $("#goal").val("Gain "+<%-JSON.stringify(founduser.goal_number)%>+"kg per week")
+    // }
+    // else if(<%-JSON.stringify(founduser.goal)%> < 0){
+    //   $("#goal").val("Loose "+<%-JSON.stringify(founduser.goal_number)%>+"kg per week")
+    // }
+    // else if(<%-JSON.stringify(founduser.goal)%> == 0){
+    //   $("#goal").val("Maintain current weight")
+    // }
+
+     if (<%-founduser.activityFactor%> == 1.2) {
+         $("#carbs").html(<%-founduser.inactive_carbsRatio%>)
+         $("#fats").html(<%-founduser.inactive_fatsRatio%>)
+         $("#protiens").html(<%-founduser.inactive_protiensRatio%>)
+      } 
+       else if (<%-founduser.activityFactor%>== 1.375 || <%-founduser.activityFactor%> == 1.55) {
+         $("#carbs").html(<%-founduser.med_carbsRatio%>)
+         $("#fats").html(<%-founduser.med_fatsRatio%>)
+         $("#protiens").html(<%-founduser.med_protiensRatio%>) 
+
+        } else if (<%-founduser.activityFactor%> == 1.72 || <%-founduser.activityFactor%> == 1.9) {
+          $("#carbs").html(<%-founduser.high_carbsRatio%>)
+         $("#fats").html(<%-founduser.high_fatsRatio%>)
+         $("#protiens").html(<%-founduser.high_protiensRatio%>)
+        }
+  
+      
+</script>
+       
+<%- include ("../partials/footer") %>

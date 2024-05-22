@@ -1,0 +1,37 @@
+<%- include ("../partials/header") %>
+
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+<div class="container">
+  <div class="row mt-5 h-75">
+    
+      <div id="login"class="col-md-6  col-sm-10 col-10 px-2 mx-auto" class="border border-success">
+          <h1>Login </h1>
+          <div>
+                <form action="/login" method="POST">
+                  <input class="form-control form-control-lg" type="text" name="username" placeholder="username"><br>
+                  <input class="form-control form-control-lg"type="password" name="password" placeholder="password"><br>
+                  
+                    <button  class="btn form-control" style="background-color: rgba(227, 125, 95);color:white">Sign in</button>
+                
+              </form>
+          </div>
+       <div class="container">
+            <div class="row mt-2">
+              <div class="col-6 px-0">
+                  <span>Not a member</span>
+                  <a href="/register" >Get registered</a>
+              </div>
+              <div class="col-6 px-0">
+                        <a href="/forgotPass" id="forgot">forgot password ...?</a> 
+              </div>
+            </div>
+          </div>
+      
+      </div>
+    
+  </div> 
+</div>
+
+
+<%- include ("../partials/footer") %>

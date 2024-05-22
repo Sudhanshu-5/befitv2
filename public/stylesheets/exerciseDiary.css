@@ -1,0 +1,141 @@
+
+#contents {
+    width: 100%;
+
+    font-size: 1rem;
+}
+
+
+
+#exercise-info {
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+#diary {
+    
+    width:75%;
+    
+}
+
+#exercise-info .info {
+    margin-left: 50%;
+    width: 50%;
+}
+
+.info div {
+    padding: 0;
+    text-align: center;
+
+}
+
+#m-info,
+#a-info,
+#e-info {
+    text-align: center;
+}
+
+#m-exercise i,
+#a-exercise i,
+#e-exercise i
+ {
+    background-color: white;
+    color: red;
+    text-align: center;
+    display: inline-block;
+
+    opacity: 0;
+
+    transition: 0.1s linear;
+    margin-right: .3rem
+}
+
+#m-exercise div:hover i,
+#a-exercise div:hover i,
+#e-exercise div:hover i
+ {
+
+    opacity: 1;
+    margin-right: .3rem
+}
+
+.strip {
+    padding: 10px 0;
+    width: 100%;
+    margin: 0;
+}
+
+.meduca {
+    
+    width: 100%;
+
+}
+
+.meduca div {
+
+    padding: 0px;
+    width: calc(100%/3);
+    height: 24px;
+}
+
+.exercise-info div {
+    cursor: pointer;
+}
+
+
+@media (max-width:330px) {
+    #diary {
+        
+  
+    }
+     
+}
+
+@media (max-width: 575.98px) {
+
+    .calender {
+        margin-top: 10%;
+        width: 70%;
+        font-size: .8rem;
+         margin: 0 auto;
+    }
+  
+
+    .date {
+        height: 3em;
+    }
+
+    #exercise-info {
+        padding-left: 0;
+        padding-right: 0;
+       
+    }
+
+    #diary {
+        margin-top: 10%;
+        width: 100%;
+        
+    }
+
+    .info div {
+        width: 60%;
+    }
+}
+
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .calender {
+        width: 50%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    :root {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {}
+
+@media (min-width: 1200px) {}

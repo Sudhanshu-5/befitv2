@@ -1,0 +1,57 @@
+.calender {
+    max-width: 100%;
+
+}
+
+.date {
+    height: 50px;
+    background-color: rgba(227, 125, 95);
+    cursor: pointer;
+    color: #F2F9FB;
+}
+
+.date i,
+.dateString {
+    color: #F2F9FB;
+    font-weight: bold;
+}
+
+.dateString {
+    max-width: 100%;
+}
+
+.myString {
+    max-width: 100%;
+}
+
+.weekdays {
+    text-align: center;
+}
+
+.weekdays div {
+    width: calc(100%/7);
+    align-items: center;
+}
+
+.days div {
+    width: calc(100%/7);
+    cursor: pointer;
+    text-align: center;
+}
+
+.today0 {
+    background-color: rgba(227, 125, 95, .2 );
+
+}
+
+.my-class {
+    color:rgba(227, 125, 95);
+    font-weight: 800;
+}
+
+.prev0,
+.next0,
+.prev1,
+.next1 {
+    opacity: .5;
+}

@@ -1,0 +1,267 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@keyframes radial-pulse {
+    0% {
+        box-shadow: 0 0 0 0rem rgba(0, 0, 0, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 0 0 1rem rgba(0, 0, 0, 0);
+    }
+
+}
+body{
+    /* font-size:1em */
+}
+.choice {
+    margin: 4%;
+}
+
+.description,
+.instant {
+    display: none;
+
+}
+
+/* description block */
+#ta {
+    height: 10rem;
+}
+
+#label {
+    max-width: 50%;
+
+}
+
+#remove {
+    color: red;
+
+}
+
+.li #span-remove {
+    background-color: white;
+    text-align: center;
+    display: inline-block;
+    width: 0;
+    opacity: 0;
+    margin-right: 2px;
+    transition: 0.2s linear;
+
+
+}
+
+#selectedFood-div li:hover #span-remove {
+    width: 5%;
+    opacity: 1;
+}
+
+
+
+#selectedFood-div li {
+    list-style-type: none;
+
+}
+
+#selectedFood-div li .desc-food-name {
+    outline: none;
+    border: none;
+    max-width: 30%;
+    text-align: center;
+    display: inline;
+    background-color: rgba(227, 125, 95, .2);
+
+
+}
+
+#selectedFood-div li .desc-serving {
+    margin: .5%;
+    display: inline;
+    font-size: .8rem;
+}
+
+#k-qty {
+    max-width: 10%;
+    /* font-size: .8rem; */
+    padding: 0;
+    padding-bottom: .2rem;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #ADADAD;
+}
+
+
+
+#selectedFood-div li .myfood-measure {
+    max-width: 30%;
+    padding: 0;
+}
+
+#selectedFood-div li .desc-food-weight {
+    max-width: 10%;
+    padding: 0;
+    padding-bottom: .2rem;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #ADADAD;
+}
+
+
+
+#user-food-list {
+    width:50%;
+
+    box-sizing: border-box;
+    background-clip: content-box;
+    background-color: rgba(227, 125, 95, .2);
+    height:50vh;
+    overflow: auto;
+   
+    
+}
+
+#user-food-list .flex-fill {
+
+    width: 100%;
+    font-size: 1.2rem;
+    color: #F2F9FB;
+    font-weight: 300;
+    box-sizing: border-box;
+    border: .2rem solid rgba(227, 125, 95, 1);
+    background-color: rgba(227, 125, 95);
+    text-align: center;
+}
+
+#user-food-list li {
+    list-style-type: none;
+    /* color: rgba(227, 125, 95); */
+    cursor: pointer;
+
+}
+
+/* Instant block */
+#search {
+    width: 80%;
+}
+
+/* .autocomplete {
+    max-width: 40%;
+    min-width: 50%;
+}  */
+
+#cb-toggle {
+  width: 80%;
+
+}
+
+#results .ui-menu {
+    margin-top: 0;
+    max-width: 80%;
+}
+
+#instant-form {
+    display: none;
+    margin-top: 10%;
+    max-width: 100%;
+    /* box-sizing: border-box; */
+    /* border: 1px solid #ADADAD; */
+}
+
+#nix-item-id {
+    visibility: hidden;
+    position: absolute;
+}
+
+#instant-form input {
+    max-width: 10%;
+    font-size: .8rem;
+    padding: 0;
+    padding-bottom: .2rem;
+    text-align: center;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #ADADAD;
+
+
+}
+
+#instant-form #food {
+    outline: none;
+    border: none;
+    background-color: #E27D60;
+    color: #F2F9FB;
+    max-width: 80%;
+    text-align: center;
+    font-size: 1rem;
+}
+
+#select {
+    margin-top: 2%;
+    min-width: 55%;
+ width:55%;
+    font-size: .8rem;
+}
+
+#instant-select-measure {
+    width: 30%;
+    min-width: 40%;
+    padding: 0;
+
+}
+
+#instant-form .serving {
+    /* max-width: 30%; */
+    display: inline;
+    font-size: .8rem;
+    font-weight: bold;
+}
+#hr1{
+    max-width: 80%;
+}
+
+#add-instant {
+   margin-left: 25%;
+    background-color: #E27D60;
+    color: #F2F9FB
+}
+
+.user-food .btn {
+    background-color: #E27D60;
+    color: #F2F9FB
+}
+
+.add-pulse {
+    animation: radial-pulse 1.5s infinite;
+
+}
+
+/* .instant div {
+    margin: 0;
+} */
+   @media (max-width: 575.98px) {
+    #user-food-list {
+        width: 75%;
+    }
+   .user-food{
+       margin-top: 10%;
+       margin-left: 20%;
+   }
+   #search,#cb-toggle{
+     width:100%
+   }
+   }
+
+   @media (min-width: 576px) and (max-width: 767.98px) {
+       
+   }
+
+   @media (min-width: 768px) and (max-width: 991.98px) {}
+
+   @media (min-width: 992px) and (max-width: 1199.98px) {}
+
+   @media (min-width: 1200px) {}

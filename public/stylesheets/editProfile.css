@@ -1,0 +1,19 @@
+#body,
+#general {
+    max-width: 60%;
+}
+
+#general,
+#targets {
+    border: .1rem solid rgb(180, 180, 180, 0.2);
+}
+
+.container .form-control {
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+div {
+    overflow: hidden;
+}

@@ -1,0 +1,209 @@
+<!-- <%=calorieinfo.macroNutrientInfo%> -->
+
+
+<div class="container">
+    <div class="alert py-2" style="background-color: rgba(227, 125, 95,.2);" role="alert" id="date-absence">
+      No records are added !!
+    </div>
+     <div class="alert py-2" style="background-color: rgba(227, 125, 95,.2);" role="alert" id="range-absence">
+      No records are found in this range !!
+    </div>
+    <div class="chart-container">
+    <canvas id="calorieChart"  class="m-0" ></canvas>
+    </div>
+</div>
+
+<script>
+ 
+  <% let fromIndex=0;%>
+  <% let toIndex=0; %>
+         
+ consumedArray=[];
+ burnedArray=[];
+ dates=[];
+ macro=[];
+type=<%-JSON.stringify(type)%> 
+
+$("#date-absence").hide();
+
+$("#range-absence").hide();
+
+		length = <%-calorieinfo.macroNutrientInfo.length%>;
+
+var ctx = document.getElementById("calorieChart").getContext("2d");
+
+
+	if(<%-JSON.stringify(selected)%> == "today"){
+            let today_dates  ;
+            let info_date;
+            let count=0;
+
+      <%calorieinfo.macroNutrientInfo.forEach(function(info){%>
+        today_dates=today.toLocaleDateString();
+        info_date=<%-JSON.stringify((new Date(info.createdAt)).toLocaleDateString())%>;
+                  if(  today_dates === info_date){
+                    dates.push('<%-(new Date(info.createdAt)).toLocaleDateString()%>');
+
+                    if(<%-JSON.stringify(type)%>=="calories"){
+                       
+                        consumedArray.push('<%-info.totalCaloriesConsumed%>');
+                        burnedArray.push('<%-info.totalCaloriesBurned%>')
+                    }
+                    else{
+                      macro.push(<%-JSON.stringify(info)%>[type])
+                     
+                    }
+                     count++;
+                   }
+                 
+                   
+             <%})%>
+             if(!count){
+               $("#date-absence").show();
+             }
+		}
+	
+
+		else if(<%-JSON.stringify(selected)%> == "yesterday"){           
+            let count=0;
+            <%calorieinfo.macroNutrientInfo.forEach(function(info){%>
+                   if( yesterday.toLocaleDateString() == '<%-(new Date(info.createdAt)).toLocaleDateString()%>'){
+                       dates.push('<%-(new Date(info.createdAt)).toLocaleDateString()%>');
+		        
+                    if(<%-JSON.stringify(type)%>=="calories"){
+                       	consumedArray.push('<%-info.totalCaloriesConsumed%>');
+                         burnedArray.push('<%-info.totalCaloriesBurned%>')
+                    }
+                    else{
+                         macro.push(<%-JSON.stringify(info)%>[type])
+                    }
+                     count++;
+            }
+          <%})%>
+            if(!count){
+               $("#date-absence").show();
+             }
+			      
+      }
+      else if(<%-JSON.stringify(selected)%> == "custom" && <%-JSON.stringify(from)%> && <%-JSON.stringify(to)%>){
+            from_date=new Date(<%-JSON.stringify(from)%>).getTime();
+        to_date=new Date(<%-JSON.stringify(to)%>).setHours(23,59,59,999);
+        <% for(let i=0 ; i<calorieinfo.macroNutrientInfo.length  ; i++){ %>
+     
+        this_date=new Date(<%-JSON.stringify(calorieinfo.macroNutrientInfo[i]["createdAt"].toLocaleDateString())%>).getTime();
+
+        // alert(new Date(this_date))
+        //alert(from_date<=this_date+"    "+to_date>=this_date)
+        if(from_date<=this_date && to_date>=this_date){
+          dates.push(<%-JSON.stringify((new Date(calorieinfo.macroNutrientInfo[i]["createdAt"]).toLocaleDateString()))%>);
+                if(<%-JSON.stringify(type)%>=="calories"){
+                    consumedArray.push(<%-JSON.stringify(calorieinfo.macroNutrientInfo[i]["totalCaloriesConsumed"])%>);
+                    burnedArray.push(<%-JSON.stringify(calorieinfo.macroNutrientInfo[i]["totalCaloriesBurned"])%>)
+                    }
+                    else{
+                       macro.push(<%-JSON.stringify(calorieinfo.macroNutrientInfo[i])%>[type])
+                    }
+        }
+        <%}%>
+         if(!dates.length){
+               $("#range-absence").show();
+        }
+
+              
+      	}
+
+else{
+    <%calorieinfo.macroNutrientInfo.forEach(function(info){%>
+			        dates.push('<%-(new Date(info.createdAt)).toLocaleDateString()%>');
+		        	
+                 if(<%-JSON.stringify(type)%>=="calories"){
+                   
+                     consumedArray.push('<%-info.totalCaloriesConsumed%>');
+                      burnedArray.push('<%-info.totalCaloriesBurned%>');
+                    }
+                    else{
+                        macro.push(<%-JSON.stringify(info)%>[type])
+                    }
+                 
+		<%})%>
+    }
+if(<%-JSON.stringify(type)%>=="calories"){    
+var data = {
+  labels:dates,
+  datasets: [{
+    label: "calories consumed",
+    backgroundColor: "#FF652F",
+    data:consumedArray
+  }, {
+    label: "Burned calories",
+    backgroundColor: "#14A76C",
+    data: burnedArray
+  }]
+};
+var myBarChart = new Chart(ctx, {
+  type: 'bar',
+  data: data,
+  options: {
+    responsive:true,
+    maintainAspectRatio: false,
+    scales: {
+       xAxes: [{
+         	scaleLabel: {
+					display: true,
+					labelString: 'Dates'
+				},
+            barThickness : 40
+        }],
+      yAxes: [{
+          	scaleLabel: {
+					display: true,
+					labelString: 'Calories in KCal'
+				},
+        ticks: {
+          min: 0,
+          max:3500
+        }
+      }]
+    }
+  }
+});
+}else{
+  var myBarChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: dates,
+        datasets: [{
+            label: <%-JSON.stringify(type_obj)%>[type], // Name the series
+            data:macro,
+            fill: false,
+            borderColor: "#FF652F", // Add custom color border (Line)
+            backgroundColor: "#FF652F", // Add custom color background (Points and Fill)
+            borderWidth: 1 // Specify bar border width
+        }]
+    },
+    options: {
+      responsive: true,// Instruct chart js to respond nicely.
+        maintainAspectRatio:false, // Add to prevent default behaviour of full-width/height 
+          scales: {
+       xAxes: [{
+         	scaleLabel: {
+					display: true,
+					labelString: 'Dates'
+				}
+        }],
+      yAxes: [{
+          	scaleLabel: {
+					display: true,
+					labelString: <%-JSON.stringify(type_obj)%>[type]+" in grams"
+				},
+        ticks: {
+          min: 0
+        }
+      }]
+    }
+    }
+});
+}
+</script>
+
+

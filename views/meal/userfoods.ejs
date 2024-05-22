@@ -1,0 +1,159 @@
+<%- include ("../partials/mealHeader") %>
+<link rel="stylesheet" href="/stylesheets/userFoods.css"/>
+
+
+<div class="container row">
+  <div class="col-lg-9 col-md-12 mt-5">
+    <div id="add">
+    <h4 class="mb-4 ">Add custom foods and recipies. </h4>
+    <form  action="/customFoods" method="POST">
+      <div class="row">
+       <div class="col-md-6 col-sm-12">
+        <div class="form-group row">
+           <label for="food_name" class="col-sm-4 col-form-label">Food Name</label>
+           <div class="col-sm-8">
+           <input type="text"  name="info[food_name]" class="form-control" id="food_name" placeholder="jhunka/bhakar/thecha" required  >
+           </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="calories" class="col-sm-4 col-form-label">Energy</label>
+           <div class="col-sm-8">
+          <input type="number" name="info[calories]" class="form-control" id="calories"placeholder="kcal"  step="0.01"required  >
+           </div>
+        </div>
+        
+        <div class="form-group row">
+          <label for="protiens"class="col-sm-4 col-form-label">Protiens</label>
+          <div class="col-sm-8">
+          <input type="number" id="protiens"  class="form-control" name="info[protiens]" placeholder="grams" step="0.01" required  >
+          </div>
+        </div>
+
+        <div class="form-group row">
+           <label for="carbohydrates" class="col-sm-4 col-form-label">Carbohydrates</label>
+           <div class="col-sm-8">
+               <input type="number" id="carbohydrates" class="form-control" name="info[carbs]" placeholder="grams" step="0.01" required >
+           </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="fibre" class="col-sm-4 col-form-label">Fibre</label>
+          <div class="col-sm-8">
+              <input type="number" id="fibre" name="info[fibres]" class="form-control" placeholder="grams" step="0.01" required >
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="fat" class="col-sm-4 col-form-label">Fats</label>
+          <div class="col-sm-8">
+                <input type="number" id="fat" name="info[fats]" class="form-control" placeholder="grams" step="0.01" required >
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="cholestrol" class="col-sm-4 col-form-label">Cholestrol</label>
+          <div class="col-sm-8">
+             <input type="number" id="cholestrol" name="info[cholestrol]" class="form-control" placeholder="mg" step="0.01" required >
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 mt-5 pl-0 ">
+        <div id="icon" class="mt-5 d-flex justify-content-between rounded mr-0 pr-0 ">
+       
+        <i class="fas fa-plus-circle p-1" style="cursor:pointer;" id="add-icon"></i>
+           <span id="label">Add serving sizes</span>
+        <i class="fas fa-minus-circle p-1" style="cursor:pointer;" id="remove-icon"></i>
+      </div>  
+        <div id="servingDiv" class="d-flex flex-wrap justify-content start py-2 ">
+           <label for="qty" class="text-center">Qty
+              <div id="qty"class="qty d-flex-column">
+                <div id="qinput"><input type="number" class="input0 p-1 mt-1" name="qty[] " placeholder="qty" required></div>
+              </div>
+           </label>
+            <label for="measure" class="text-center">Measure
+              <div id="measure"class="measure  d-flex-column">
+                <div id="minput"><input type="text" class="input0 p-1 mt-1" name="serving_unit[]" placeholder="cup/tbps/pieces" required></div>
+              </div>
+            </label>
+            <label for="weight" class="text-center">Weight
+              <div id="weight"class="weight d-flex-column">
+                <div id="winput"><input type="number" class="input0 p-1 mt-1" name="serving_weight[]" placeholder="g" required></div>
+              </div>
+            </label>
+        </div>
+      </div>
+      </div>
+      <div class="row w-100" >
+        <button type="submit"id="add-btn" class="btn mx-auto my-0 " >Add to custom</button>
+    </div>
+    </form>
+  </div>
+</div>
+  <div class="col-lg-3 col-md-4 col-sm-4 border mt-5" id="kitchen-list">
+    <h4 class="text-center py-3" style="color: rgba(227, 125, 95);">Custom foods</h4>
+          <%myfoods.userfood.forEach(function(food){%>
+        <div class="food-name text-center ">
+            <%=food.food_name%>
+        </div>
+    
+    <%})%>
+  </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+ $('form').submit(function(){
+    $('button[type=submit]', this).attr('disabled', 'disabled');
+});
+$(document).ready(function(){
+
+    let i = 0;
+
+    $("#add").on('click','#add-icon',function () {
+      let qInputField = $(document.createElement('div'))
+       .attr("id", "qinput");
+       let mInputField = $(document.createElement('div'))
+       .attr("id", "minput");
+       let wInputField = $(document.createElement('div'))
+	     .attr("id", "winput");
+
+	qInputField.after().append(
+       '<input type="number"  class="input'+i+' p-1 mt-1" name="qty[] " placeholder="qty" required>'
+       );
+
+    qInputField.appendTo("#qty");
+
+	mInputField.after().append(
+       '<input type="text"  class="input'+i+' p-1 mt-1"name="serving_unit[]" placeholder="cup/tbps/pieces" required>'
+       );
+
+    mInputField.appendTo("#measure");
+   
+  wInputField.after().append(
+       '<input  type="number" class="input'+i+' p-1 mt-1"name="serving_weight[]" placeholder="g" required>'
+       );
+    wInputField.appendTo("#weight");
+    i++;
+     });
+
+     $("#remove-icon").on('click',(function () {
+	if(i==0){
+          alert("No more textbox to remove");
+          return false;
+       }
+       let selector="#qty .input" + (i-1)
+      $("#qty .input" + (i-1)).remove();
+      $("#measure .input" + (i-1)).remove();
+      $("#weight .input" + (i-1)).remove();
+
+        	i--;
+
+     }));
+    
+  });
+</script>    
+ 
+ <%- include ("../partials/footer") %>
+ 

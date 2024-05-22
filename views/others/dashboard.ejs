@@ -1,0 +1,48 @@
+<%-include ("../partials/header")%>
+<div class="container">
+<a href="/addMeal">Add meal</a><br>
+<a href="/showCalorie">show my todays calorie consumption</a><br>
+<a href="/showCaloriePast">show my calorie consumption for past dates</a><br>
+<a href="/addExercise">Add Exercise</a><br>
+<a href="/searchInstant">Instant Search</a>
+<a href="/viewProfile">View Profile</a><br>
+<a href="/bmr">know ur calorie requirment</a>
+<a href="/showKitchen">your local dishes and recipies</a>
+<a href="/targets">Get ur macronutrient targets</a><br>
+<% if(!currentUser.isme){%>
+  <button class="btn large" data-toggle="modal" data-target="#suggestion-modal" style="background-color: rgba(227, 125, 95);color:white">Suggestions</button>
+<%}%>
+
+<%if(currentUser.isme){%>
+    <form action="/appsuggestion" method="get">
+          <button class="btn" style="background-color: rgba(227, 125, 95);color:white">Look suggestions</button>
+    </form>
+<%}%>
+
+<!-- Modal -->
+<div class="modal fade" id="suggestion-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Suggest Befit :)</h5>
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form action="/appsuggestion" method="POST">
+            <textarea name="suggestion" id="ta-suggestion" cols="30" rows="10" class="form-control" placeholder="Enter your suggestion here"></textarea>
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light border" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn" style="background-color: rgba(227, 125, 95);color:white">submit</button>
+     </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<%-include ("../partials/footer")%>
+

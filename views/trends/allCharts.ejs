@@ -1,0 +1,300 @@
+<%- include ("../partials/header") %>
+    <link rel="stylesheet" href="/stylesheets/trend_calendar.css"/>
+    <link rel="stylesheet" href="/stylesheets/allCharts.css"/>
+
+
+<div class="container mt-5">
+<div class="alert py-2 "style="background-color: rgba(227, 125, 95,.2);" role="alert" id="no-record">
+  No records added   <a href="/addMeal" >   Add Meal </a>  <a href="/addExercise" > / Add Exercise</a> 
+</div>
+
+<div class="row">
+        <div id="type-graph-div" class="col-sm-6 col-6 col-md-4">
+              <select id="type-graph-select" class="form-control" name="typeGraph"  placeholder="0"> 
+                <option value="energy">Energy</option>
+                 <option value="carbs">Carbohydrtaes</option>
+                  <option value="protiens">Protiens</option>
+                   <option value="fats">Fats</option>
+                <option value="weight">Weight</option>
+                <option value="height">Height</option>
+                <option value="bodyfat">Body-fat</option>
+                <option value="neck">Neck</option>
+                <option value="waist">Waist</option>
+                <option value="hip">Hip</option>
+              </select>
+        </div>
+          <!-- calendar range -->
+        <div id="range-div" class="col-sm-6 col-6 col-md-4">
+              <select id="range-select"  class="form-control" name="range"  placeholder="0">
+                <option value="allDate">All dates</option>
+                <option value="today">Today</option>
+                <option value="yesterday">Yesterday</option>
+                <option data-toggle="modal" data-target="#exampleModal" id="custom" value="custom">Custom duration</option>
+              </select>
+        </div>
+           <div id="custom-range" class="col-md-4">
+      <button id="range-btn" class="btn" style="background-color: rgba(227, 125, 95);color:white">Get range</button>
+    </div>
+    </div>
+ 
+    <div class="modal fade" id="from-to" tabindex="-1" role="dialog" aria-labelledby="from-to" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Choose any particular range </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body row">
+              <div id="first" class="col-6">
+                  <div class=" calender px-0">
+                            <div class="date d-flex justify-content-between align-items-center ">
+                                    <i class="prev-date fa fa-angle-left  ml-3" aria-hidden="true"></i>
+                                      <div class="dateString">
+                                      </div> 
+                                    <i class="next-date fa fa-angle-right  mr-3" aria-hidden="true"></i>
+                            </div>
+                            <div class="showCalender">
+                              <div class="year-month d-flex justify-content-between align-items-center" >
+                                <div>
+                                      <i class="prev-year fas fa-angle-double-left ml-3"></i>
+                                      <i class="prev-month fas fa-angle-left "></i>
+                                 </div>
+                                  <div class="myString">
+                                      
+                                  </div>
+                                    <div>
+                                      <i class="next-month fas fa-angle-right "></i>
+                                      <i class="next-year fas fa-angle-double-right mr-3"></i>
+                                    </div>
+                                  
+                              </div>
+                              <div class="weekdays d-flex justify-content-around ">
+                                  <div>Sun</div> 
+                                  <div>Mon</div>
+                                  <div>Tue</div>
+                                  <div>Wed</div>
+                                  <div>Thu</div>
+                                  <div>Fri</div>
+                                  <div>Sat</div>
+                               </div>
+                                
+                                <div class="days d-flex flex-wrap">
+                                  
+                                </div> 
+                                
+                            </div>
+                     </div>
+               
+                </div>
+                
+                 <div id="second" class="col-6">
+
+                 </div>
+                 
+                       
+          </div>
+          <div class="d-inline-flex justify-content-around from-to-date">
+            <span id="from"  class="rounded p-1" style="border: .08rem solid rgba(227, 125, 95) ;"></span>
+            <span>To</span>
+            <span id="to" class="rounded p-1" style="border: .08rem solid rgba(227, 125, 95) ;"></span>
+          </div>
+           <div class="alert m-2 p-0 w-50 " style="background-color: rgba(227, 125, 95); color: whitesmoke;"role="alert" id="err-mssg">
+              This duration is senseless!!
+           </div>
+           <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"style="background-color:white;color:Black;">Close</button>
+            <button type="button" id="save" class="btn "style="background-color:rgba(227, 125, 95);color:white;">Save</button>
+           </div>
+        </div>
+      </div>
+    </div>
+   
+    <div id="show-graph" class="mt-5 mr-5"> 
+           
+    </div>
+   
+  </div>
+
+ <script>
+     $("#no-record").hide()
+  
+          let length;//for length in calorie-date file
+          let consumedArray=[];
+          let burnedArray=[];
+          let dates=[];
+          let dataset=[];
+          let type;
+          const today = new Date()
+          const yesterday = new Date(today)
+          yesterday.setDate(yesterday.getDate() - 1)
+        let type_o_graph="energy";       
+        let selected="allDate";
+        let from="";
+        let to="";
+        let valid_from;
+        let valid_to;
+        let from_date;
+        let to_date;
+        let this_date;
+        let unit={};
+    
+$(document).ready(function(){
+        getchart("showCalorie",selected,from,to,"calories")//onload calorie grpah in showg-graph
+         $("#custom-range").hide();
+         })
+
+         function switchTypeOGraph(){
+                $("#range-div").hide();
+
+              switch(type_o_graph) {
+              case "energy":
+                  // alert("energy")
+                  $("#range-div").show();
+                  getchart("showCalorie",selected,from,to,"calories")
+                  break;
+
+              case "protiens":  
+                $("#range-div").show();
+                  getchart("showCalorie",selected,from,to,"total_pro")
+                  break;  
+
+             case "carbs":  
+                $("#range-div").show();
+                  getchart("showCalorie",selected,from,to,"total_carbs")
+                  break;
+
+             case "fats":  
+                $("#range-div").show();
+                  getchart("showCalorie",selected,from,to,"total_fats")
+                  break; 
+
+              case "weight":
+                  // alert("weight")
+                   getchart("graphOdate",selected,from,to,"weight")
+                  break;
+              case "height":
+                  // alert("height")
+                  getchart("graphOdate",selected,from,to,"height")
+                  break; 
+              case "bodyfat":
+                  // alert("body-fat")
+                  getchart("graphOdate",selected,from,to,"bodyfat")
+                  break;
+              case "waist":
+                  // alert("waist")
+                  getchart("graphOdate",selected,from,to,"waist") 
+                  break;
+              case "hip":
+                  // alert("hip")
+                  getchart("graphOdate",selected,from,to,"hip")
+                  break;
+
+                case "neck":
+                  // alert("neck")
+                  getchart("graphOdate",selected,from,to,"neck")
+                  break;  
+
+                default:
+            }
+
+        }
+      
+
+        $("#type-graph-select").on('change',(function(){
+
+          type_o_graph=$(this).val()
+          switchTypeOGraph();
+          }))
+          
+        $("#range-select").on('change',(function(){
+          selected= $(this).val();
+          // alert(selected)
+        
+        if( selected=="custom"){
+          $("#from").text(today.toLocaleDateString());
+           $("#to").text(today.toLocaleDateString());
+            $("#from-to").modal('show');
+            $("#custom-range").show();
+            $("#custom-range").click(function(){
+              $("#from-to").modal('show');
+            })            
+        }
+       else{
+          from="";
+          to="";
+          $("#custom-range").hide();
+        }   
+             switchTypeOGraph()
+        }));
+        
+            
+
+   $(".modal-content #err-mssg").hide();
+   let m0,m1,d0,d1,y0,y1;
+          $("#second").append($("#first").html());
+
+       function extractWithDate(mm, dd, yy,k) {
+            $(".modal-content #err-mssg").hide();
+
+          if(k==0){
+             $("#from").text(mm+1 +"/"+dd+"/"+yy);
+             m0=mm;
+             d0=dd;
+             y0=yy
+          }
+          else if(k==1) 
+          {
+            $("#to").text(mm+1 +"/"+dd+"/"+yy)
+            m1=mm;
+            d1=dd;
+            y1=yy;
+          }
+           
+          from=$("#from").text();
+           to=$("#to").text();
+           $("#save").unbind().click( function () {
+            
+                       $("#from-to").modal('hide');
+                                 switchTypeOGraph();
+                                
+           })
+             if((m0 == m1 && d0 > d1)   ||  y0>y1 &&(selected=="custom") ){
+                $(".modal-content #err-mssg").show();
+             }
+             }
+             function getchart(value0,value1,value2,value3,value4){
+
+               if(<%-findeduser.macroNutrientInfo.length%>){
+                 $("#show-graph").html("<div class='d-flex justify-content-center align-items-center'> <img id='gif' src='images/spinner.gif' width='7%'height='7%'> </div>")
+              $.ajax({
+
+                    type: "GET", 
+                    url: "/"+value0,
+                    data:{selected:value1,from:value2,to:value3,type:value4},
+                    
+                    //dataType: "html",
+                    success: function (result) {
+                      $('#show-graph').html(result);
+                    },
+                    error: function (xhr, status) {
+                        alert("Sorry, there was a problem :(");
+                    },
+                
+                });
+            }else{
+              $("#no-record").show();
+             }
+  }
+
+</script>
+                             
+
+ <script src="/script/calender.js"></script>
+
+<script>
+        getCalendar(0);
+        getCalendar(1);
+</script>
+<%- include ("../partials/footer") %>

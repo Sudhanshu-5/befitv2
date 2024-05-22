@@ -1,0 +1,38 @@
+<%- include ("./header") %>
+		  
+<nav class="navbar child-nav navbar-expand">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-profile">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar-profile">
+            <ul class="navbar-nav nav-tabs nav-fill mx-auto navbar-profile">
+                <li class="nav-item">
+                  <a class="tab nav-link"   id="view"   href= "/viewProfile">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link"    id="edit" href= "/editProfile">Edit Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="tab nav-link"   id="ratio" href="/editRatios" >Edit Ratios</a>
+                </li>
+                
+               
+            </ul>
+        </div>
+    </div>
+</nav>
+     <script>
+
+
+	 var setDefaultActive4 = function() {
+    var path4 = window.location.pathname;
+
+    var element4 = $("#navbar-profile a[href='" + path4 + "']");
+    element4.addClass("active-profile");
+ }
+ setDefaultActive4();
+ $(".activenav").removeClass("activenav");
+ $("#h-profile").addClass("activenav");
+        
+	</script>
