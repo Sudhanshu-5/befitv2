@@ -36,7 +36,7 @@ mongoose.set("useUnifiedTopology", true);
 
 //!mongo atlas connection String
 mongoose
-  .connect(process.env.Mongo_URL, {
+  .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
   })
