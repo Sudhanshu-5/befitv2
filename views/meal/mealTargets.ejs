@@ -1,49 +1,52 @@
 <div class="row">
-     <div class="my-1 col-3 ">Energy</div> <div id="cal-label" class="small col-9 pt-2 text-right"> </div>
-     <div id="calProgress" class="progress col p-0 ml-3"></div>
-</div>  
+  <div class="my-1 col-3">Energy</div>
+  <div id="cal-label" class="small col-9 pt-2 text-right"></div>
+  <div id="calProgress" class="progress col p-0 ml-3"></div>
+</div>
 <div class="row">
-     <div class="my-1 col-3 ">Carbs</div> <div id="carb-label" class="small col-9 pt-2 text-right"> </div>
-     <div id="carbProgress" class="progress col p-0 ml-3"></div>
-</div>    
+  <div class="my-1 col-3">Carbs</div>
+  <div id="carb-label" class="small col-9 pt-2 text-right"></div>
+  <div id="carbProgress" class="progress col p-0 ml-3"></div>
+</div>
 <div class="row">
-     <div class="my-1 col-3 ">Fats</div> <div id="fats-label" class="small col-9 pt-2 text-right"> </div>
-     <div id="fatsProgress" class="progress col p-0 ml-3"></div>
-</div> 
+  <div class="my-1 col-3">Fats</div>
+  <div id="fats-label" class="small col-9 pt-2 text-right"></div>
+  <div id="fatsProgress" class="progress col p-0 ml-3"></div>
+</div>
 <div class="row">
-     <div class="my-1 col-3 ">Protiens</div> <div id="protiens-label" class="small col-9 pt-2 text-right"> </div>
-      <div id="protiensProgress" class="progress col p-0 ml-3"></div>
-</div> 
+  <div class="my-1 col-3">Protiens</div>
+  <div id="protiens-label" class="small col-9 pt-2 text-right"></div>
+  <div id="protiensProgress" class="progress col p-0 ml-3"></div>
+</div>
 
 <script>
-          
-         
-          conTarget=<%-energy%>
+  console.log(totals);
 
-               caloriePer = ( (<%-totals['totalCaloriesConsumed']%>/conTarget )*100).toFixed(2);
-               carbPer=( (<%-totals['totalCarbs']%>/<%-targets['cTarget']%> )*100).toFixed(2);
-               fatsPer=( (<%-totals['totalFats']%>/<%-targets['fTarget']%>)*100).toFixed(2);
-               protienPer = ( (<%- totals['totalProtiens']%>/<%-targets['pTarget']%>)*100).toFixed(2);
-               
-                    //console.log(caloriePer+" "+protienPer+" "+fatsPer+" "+carbPer)
+  conTarget=<%-energy%>
 
-          calp="<div class='progress-bar bg-success' role='progressbar' aria-valuenow=" +caloriePer+ " aria-valuemin='0' aria-valuemax='100'"+ 
-          "style='width:"+caloriePer+"%;' ></div>";
-          carbp= "<div class='progress-bar bg-warning' role='progressbar' aria-valuenow="+carbPer+" aria-valuemin='0' aria-valuemax='100'"+ 
-          "style='width:"+carbPer+"%;'></div>";
-          fatsp= "<div class='progress-bar bg-info' role='progressbar' aria-valuenow="+fatsPer+" aria-valuemin='0' aria-valuemax='100'"+
-          "style='width:"+fatsPer+"%'></div>";
-          protiensp="<div class='progress-bar bg-danger' role='progressbar' aria-valuenow="+protienPer+" aria-valuemin='0' aria-valuemax='100'"+
-          "style='width:"+protienPer+"%'></div>";
+       caloriePer = ( (<%-totals['totalCaloriesConsumed']%>/conTarget )*100).toFixed(2);
+       carbPer=( (<%-totals['totalCarbs']%>/<%-targets['cTarget']%> )*100).toFixed(2);
+       fatsPer=( (<%-totals['totalFats']%>/<%-targets['fTarget']%>)*100).toFixed(2);
+       protienPer = ( (<%- totals['totalProtiens']%>/<%-targets['pTarget']%>)*100).toFixed(2);
 
-          $("#calProgress").append(calp);
-          $("#carbProgress").append(carbp);
-          $("#fatsProgress").append(fatsp);
-          $("#protiensProgress").append(protiensp); 
+            //console.log(caloriePer+" "+protienPer+" "+fatsPer+" "+carbPer)
 
-          $("#cal-label").html((<%-totals['totalCaloriesConsumed']%>).toFixed(2)+" kcal"+" / "+conTarget.toFixed(2)+" kcal"+" ("+caloriePer+"%"+")");
-          $("#carb-label").html((<%- totals['totalCarbs'] %>).toFixed(2)+" g "+" / " +(<%-targets['cTarget'] %> ).toFixed(2)+" g "+" ("+carbPer+"%"+")")
-          $("#fats-label").html((<%- totals['totalFats'] %>).toFixed(2)+" g "+" / "+(<%-targets['fTarget'] %> ).toFixed(2)+" g "+" ("+fatsPer+"%"+")")
-          $("#protiens-label").html((<%- totals['totalProtiens']%>).toFixed(2)+" g "+" / "+(<%-targets['pTarget']%>).toFixed(2)+" g "+" ("+protienPer+"%"+")")
+  calp="<div class='progress-bar bg-success' role='progressbar' aria-valuenow=" +caloriePer+ " aria-valuemin='0' aria-valuemax='100'"+
+  "style='width:"+caloriePer+"%;' ></div>";
+  carbp= "<div class='progress-bar bg-warning' role='progressbar' aria-valuenow="+carbPer+" aria-valuemin='0' aria-valuemax='100'"+
+  "style='width:"+carbPer+"%;'></div>";
+  fatsp= "<div class='progress-bar bg-info' role='progressbar' aria-valuenow="+fatsPer+" aria-valuemin='0' aria-valuemax='100'"+
+  "style='width:"+fatsPer+"%'></div>";
+  protiensp="<div class='progress-bar bg-danger' role='progressbar' aria-valuenow="+protienPer+" aria-valuemin='0' aria-valuemax='100'"+
+  "style='width:"+protienPer+"%'></div>";
 
+  $("#calProgress").append(calp);
+  $("#carbProgress").append(carbp);
+  $("#fatsProgress").append(fatsp);
+  $("#protiensProgress").append(protiensp);
+
+  $("#cal-label").html((<%-totals['totalCaloriesConsumed']%>).toFixed(2)+" kcal"+" / "+conTarget.toFixed(2)+" kcal"+" ("+caloriePer+"%"+")");
+  $("#carb-label").html((<%- totals['totalCarbs'] %>).toFixed(2)+" g "+" / " +(<%-targets['cTarget'] %> ).toFixed(2)+" g "+" ("+carbPer+"%"+")")
+  $("#fats-label").html((<%- totals['totalFats'] %>).toFixed(2)+" g "+" / "+(<%-targets['fTarget'] %> ).toFixed(2)+" g "+" ("+fatsPer+"%"+")")
+  $("#protiens-label").html((<%- totals['totalProtiens']%>).toFixed(2)+" g "+" / "+(<%-targets['pTarget']%>).toFixed(2)+" g "+" ("+protienPer+"%"+")")
 </script>
