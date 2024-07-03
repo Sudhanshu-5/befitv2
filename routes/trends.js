@@ -43,7 +43,6 @@ router.get("/trends", middleware.isLoggedIn, async (req, res) => {
 router.get("/targets", middleware.isLoggedIn, async (req, res) => {
   try {
     var dc = new Date(req.query.dc);
-    console.log("dc ", req.query.dc, " ", dc);
     let totals = {};
     let targets = {};
 
@@ -117,17 +116,6 @@ router.get("/targets", middleware.isLoggedIn, async (req, res) => {
       }
       findeduser.macroNutrientInfo.forEach(function (info) {
         // console.log(info)
-        console.log(
-          "condition ",
-          new Date(info.createdAt)
-            .toLocaleDateString()
-            .localeCompare(dc.toLocaleDateString())
-        );
-
-        console.log(
-          new Date(info.createdAt).toLocaleDateString(),
-          dc.toLocaleDateString()
-        );
 
         if (
           new Date(info.createdAt)
