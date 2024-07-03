@@ -205,7 +205,7 @@
             <%findedUser.mealinfo.forEach(function (meals){%>
 
                  dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
-                 console.log('compare ',dateFromDatabase,dateSelectedFromCalender)
+                 console.log('compare ',dateFromDatabase,dateSelectedFromCalender,dateFromDatabase.localeCompare(dateSelectedFromCalender))
                 if (dateSelectedFromCalender === dateFromDatabase) {
                                        if(<%-JSON.stringify(meals.label)%>==="Breakfast"){
                                         // getMealDetails(0,breakfastFoodItems,breakfast-items,b,bNutri,bcalorieArray,b-foods,b-nutrients)
