@@ -42,8 +42,8 @@ router.get("/trends", middleware.isLoggedIn, async (req, res) => {
 //!targsts
 router.get("/targets", middleware.isLoggedIn, async (req, res) => {
   try {
-    var dc = new Date(+req.query.milliForTargets);
-    console.log("dc ", req.query.milliForTargets, " ", dc);
+    var dc = req.query.dc;
+    console.log("dc ", req.query.dc, " ", dc);
     let totals = {};
     let targets = {};
 

@@ -161,396 +161,394 @@
 </div>
 
 <script>
-    var findedUser = <%- JSON.stringify(findedUser) %>;
-          let dc;
-          let bcalorieArray=[]; // to check uniqness of food if food name and qty are same
-          let lcalorieArray=[];
-          let dcalorieArray=[];
-          let scalorieArray=[];
+  var findedUser = <%- JSON.stringify(findedUser) %>;
+        let dc;
+        let bcalorieArray=[]; // to check uniqness of food if food name and qty are same
+        let lcalorieArray=[];
+        let dcalorieArray=[];
+        let scalorieArray=[];
 
-    function extractWithDate(mm, dd, yy) {
+  function extractWithDate(mm, dd, yy) {
 
-                 //alert(mm+"/"+dd+"/"+yy)
-            let dateFromDatabase;
+               //alert(mm+"/"+dd+"/"+yy)
+          let dateFromDatabase;
 
-            let breakfastFoodItems="";
-            let lunchFoodItems="";
-            let dinnerFoodItems="";
-            let snacksFoodItems="";
+          let breakfastFoodItems="";
+          let lunchFoodItems="";
+          let dinnerFoodItems="";
+          let snacksFoodItems="";
 
-            let bNutri="";
-            let lNutri="";
-            let dNutri="";
-            let sNutri="";
-            let totalCalorie="";
-            let dateSelectedFromCalender= (mm+1) + "/" + (dd) + "/" + yy;
-                  bcalorieArray=[]; // to check uniqness of food if food name and qty are same
-              lcalorieArray=[];
-            dcalorieArray=[];
-              scalorieArray
+          let bNutri="";
+          let lNutri="";
+          let dNutri="";
+          let sNutri="";
+          let totalCalorie="";
+          let dateSelectedFromCalender= (mm+1) + "/" + (dd) + "/" + yy;
+                bcalorieArray=[]; // to check uniqness of food if food name and qty are same
+            lcalorieArray=[];
+          dcalorieArray=[];
+            scalorieArray
 
-          let b=0,l=0,d=0,s=0;
-            dc=dateSelectedFromCalender;
-          let caloriePer;
-          let conTarget;
-          let carbPer;
-          let fatsPer;
-          let protienPer ;
-          let calp;
-          let carbp;
-          let fatsp;
-          let protiensp;
+        let b=0,l=0,d=0,s=0;
+          dc=dateSelectedFromCalender;
+        let caloriePer;
+        let conTarget;
+        let carbPer;
+        let fatsPer;
+        let protienPer ;
+        let calp;
+        let carbp;
+        let fatsp;
+        let protiensp;
 
-            <%findedUser.mealinfo.forEach(function (meals){%>
+          <%findedUser.mealinfo.forEach(function (meals){%>
 
-                 dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
-                if (dateSelectedFromCalender === dateFromDatabase) {
-                                       if(<%-JSON.stringify(meals.label)%>==="Breakfast"){
-                                        // getMealDetails(0,breakfastFoodItems,breakfast-items,b,bNutri,bcalorieArray,b-foods,b-nutrients)
+               dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
+              if (dateSelectedFromCalender === dateFromDatabase) {
+                                     if(<%-JSON.stringify(meals.label)%>==="Breakfast"){
+                                      // getMealDetails(0,breakfastFoodItems,breakfast-items,b,bNutri,bcalorieArray,b-foods,b-nutrients)
 
-                                         let label=0;
+                                       let label=0;
 
-                                                 let millisecondsTilldate=new Date(<%-JSON.stringify(meals.createdAt)%>).getTime();
-                                                // alert(new Date(millisecondsTilldate))
+                                               let millisecondsTilldate=new Date(<%-JSON.stringify(meals.createdAt)%>).getTime();
+                                              // alert(new Date(millisecondsTilldate))
 
-                                           <% for(var i=0; i < meals.foodItems.length; i++) {%>
+                                         <% for(var i=0; i < meals.foodItems.length; i++) {%>
 
-                                            if(<%-JSON.stringify(meals.foodItems[i])%>){
-                                                breakfastFoodItems+="<div id='<%-meals.foodItems[i]%>' class='item breakfast-items  "+<%-i%>+"b-"+b+"' onclick='func(this.id,"+b+","+label+","+millisecondsTilldate+")'><i class='far fa-times-circle "+millisecondsTilldate+"'></i><%-meals.foodItems[i]%></div>";
-                                                //<%-i%>+"b-"+b+=====i(forIndex)+b+b(Bindex)
-                                                  //alert(millisecondsTilldate)
-                                                bNutri +=  "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.calories[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.carbs[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.cholestrol[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.fats[i])%></div>"+
-                                                            "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.fibres[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.protiens[i])%></div>";
-
-
-                                            }
-                                            bcalorieArray.push(<%-JSON.stringify(meals.calories[i])%>);
-                                            b++;
-                                           <%}%>
-                                           document.getElementById("b-foods").innerHTML=breakfastFoodItems;
-                                           document.getElementById("b-nutrients").innerHTML=bNutri;
-
-                                            }
-
-                                        else if(<%-JSON.stringify(meals.label)%>==="Lunch"){
-
-                                          let label=1;
-                                          let millisecondsTilldate=new Date(<%-JSON.stringify(meals.createdAt)%>).getTime();
+                                          if(<%-JSON.stringify(meals.foodItems[i])%>){
+                                              breakfastFoodItems+="<div id='<%-meals.foodItems[i]%>' class='item breakfast-items  "+<%-i%>+"b-"+b+"' onclick='func(this.id,"+b+","+label+","+millisecondsTilldate+")'><i class='far fa-times-circle "+millisecondsTilldate+"'></i><%-meals.foodItems[i]%></div>";
+                                              //<%-i%>+"b-"+b+=====i(forIndex)+b+b(Bindex)
+                                                //alert(millisecondsTilldate)
+                                              bNutri +=  "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.calories[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.carbs[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.cholestrol[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.fats[i])%></div>"+
+                                                          "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.fibres[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"b-"+b+"'><%-JSON.stringify(meals.protiens[i])%></div>";
 
 
-                                           <% for(var i=0; i < meals.foodItems.length; i++) {%>
-                                             if(<%-JSON.stringify(meals.foodItems[i])%>){
-                                            lunchFoodItems+="<div id='<%-meals.foodItems[i]%>' class='item lunch-items "+<%-i%>+"l-"+l+"' onclick='func(this.id,"+l+","+label+","+millisecondsTilldate+")'><i class='far fa-times-circle "+millisecondsTilldate+"'></i><%-meals.foodItems[i]%></div>";
+                                          }
+                                          bcalorieArray.push(<%-JSON.stringify(meals.calories[i])%>);
+                                          b++;
+                                         <%}%>
+                                         document.getElementById("b-foods").innerHTML=breakfastFoodItems;
+                                         document.getElementById("b-nutrients").innerHTML=bNutri;
+
+                                          }
+
+                                      else if(<%-JSON.stringify(meals.label)%>==="Lunch"){
+
+                                        let label=1;
+                                        let millisecondsTilldate=new Date(<%-JSON.stringify(meals.createdAt)%>).getTime();
 
 
-                                                lNutri +=  "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.calories[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.carbs[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.cholestrol[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.fats[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.fibres[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.protiens[i])%></div>";
+                                         <% for(var i=0; i < meals.foodItems.length; i++) {%>
+                                           if(<%-JSON.stringify(meals.foodItems[i])%>){
+                                          lunchFoodItems+="<div id='<%-meals.foodItems[i]%>' class='item lunch-items "+<%-i%>+"l-"+l+"' onclick='func(this.id,"+l+","+label+","+millisecondsTilldate+")'><i class='far fa-times-circle "+millisecondsTilldate+"'></i><%-meals.foodItems[i]%></div>";
 
-                                             }
-                                             lcalorieArray.push(<%-JSON.stringify(meals.calories[i])%>);
-                                             l++;
 
-                                           <%}%>
-                                           document.getElementById("l-foods").innerHTML=lunchFoodItems;
-                                           document.getElementById("l-nutrients").innerHTML=lNutri;
-
+                                              lNutri +=  "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.calories[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.carbs[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.cholestrol[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.fats[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.fibres[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"l-"+l+"'><%-JSON.stringify(meals.protiens[i])%></div>";
 
                                            }
+                                           lcalorieArray.push(<%-JSON.stringify(meals.calories[i])%>);
+                                           l++;
+
+                                         <%}%>
+                                         document.getElementById("l-foods").innerHTML=lunchFoodItems;
+                                         document.getElementById("l-nutrients").innerHTML=lNutri;
 
 
-                                           else if(<%-JSON.stringify(meals.label)%>==="Dinner"){
+                                         }
 
-                                             let label=2;
-                                           let millisecondsTilldate=new Date(<%-JSON.stringify(meals.createdAt)%>).getTime();
 
-                                           <% for(var i=0; i < meals.foodItems.length; i++) {%>
+                                         else if(<%-JSON.stringify(meals.label)%>==="Dinner"){
+
+                                           let label=2;
+                                         let millisecondsTilldate=new Date(<%-JSON.stringify(meals.createdAt)%>).getTime();
+
+                                         <% for(var i=0; i < meals.foodItems.length; i++) {%>
+                                           if(<%-JSON.stringify(meals.foodItems[i])%>){
+                                             dinnerFoodItems+="<div id='<%-meals.foodItems[i]%>' class='item dinner-items "+<%-i%>+"d-"+d+"' onclick='func(this.id,"+d+","+label+","+millisecondsTilldate+")'><i class='far fa-times-circle "+millisecondsTilldate+"'></i><%-meals.foodItems[i]%></div>";
+
+
+                                              dNutri +=  "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.calories[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.carbs[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.cholestrol[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.fats[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.fibres[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.protiens[i])%></div>";
+
+                                           }
+                                                         dcalorieArray.push(<%-JSON.stringify(meals.calories[i])%>);
+                                                         d++;
+
+                                         <%}%>
+                                         document.getElementById("d-foods").innerHTML=dinnerFoodItems;
+                                         document.getElementById("d-nutrients").innerHTML=dNutri;
+
+
+                                      }
+
+                                      else if(<%-JSON.stringify(meals.label)%>==="Snacks"){
+                                        let label=3;
+                                        let millisecondsTilldate=new Date(<%-JSON.stringify(meals.createdAt)%>).getTime();
+
+
+                                         <% for(var i=0; i < meals.foodItems.length; i++) {%>
                                              if(<%-JSON.stringify(meals.foodItems[i])%>){
-                                               dinnerFoodItems+="<div id='<%-meals.foodItems[i]%>' class='item dinner-items "+<%-i%>+"d-"+d+"' onclick='func(this.id,"+d+","+label+","+millisecondsTilldate+")'><i class='far fa-times-circle "+millisecondsTilldate+"'></i><%-meals.foodItems[i]%></div>";
+                                             snacksFoodItems+="<div id='<%-meals.foodItems[i]%>' class='item snacks-items "+<%-i%>+"s-"+s+"' onclick='func(this.id,"+s+","+label+","+millisecondsTilldate+")'><i class='far fa-times-circle "+millisecondsTilldate+"'></i><%-meals.foodItems[i]%></div>";
 
-
-                                                dNutri +=  "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.calories[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.carbs[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.cholestrol[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.fats[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.fibres[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"d-"+d+"'><%-JSON.stringify(meals.protiens[i])%></div>";
+                                              sNutri +=  "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.calories[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.carbs[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.cholestrol[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.fats[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.fibres[i])%></div>"+
+                                                         "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.protiens[i])%></div>";
 
                                              }
-                                                           dcalorieArray.push(<%-JSON.stringify(meals.calories[i])%>);
-                                                           d++;
-
-                                           <%}%>
-                                           document.getElementById("d-foods").innerHTML=dinnerFoodItems;
-                                           document.getElementById("d-nutrients").innerHTML=dNutri;
-
-
-                                        }
-
-                                        else if(<%-JSON.stringify(meals.label)%>==="Snacks"){
-                                          let label=3;
-                                          let millisecondsTilldate=new Date(<%-JSON.stringify(meals.createdAt)%>).getTime();
+                                             scalorieArray.push(<%-JSON.stringify(meals.calories[i])%>);
+                                                          s++;
+                                         <%}%>
+                                         document.getElementById("s-foods").innerHTML=snacksFoodItems;
+                                         document.getElementById("s-nutrients").innerHTML=sNutri;
 
 
-                                           <% for(var i=0; i < meals.foodItems.length; i++) {%>
-                                               if(<%-JSON.stringify(meals.foodItems[i])%>){
-                                               snacksFoodItems+="<div id='<%-meals.foodItems[i]%>' class='item snacks-items "+<%-i%>+"s-"+s+"' onclick='func(this.id,"+s+","+label+","+millisecondsTilldate+")'><i class='far fa-times-circle "+millisecondsTilldate+"'></i><%-meals.foodItems[i]%></div>";
-
-                                                sNutri +=  "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.calories[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.carbs[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.cholestrol[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.fats[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.fibres[i])%></div>"+
-                                                           "<div class='"+<%-i%>+"s-"+s+"'><%-JSON.stringify(meals.protiens[i])%></div>";
-
-                                               }
-                                               scalorieArray.push(<%-JSON.stringify(meals.calories[i])%>);
-                                                            s++;
-                                           <%}%>
-                                           document.getElementById("s-foods").innerHTML=snacksFoodItems;
-                                           document.getElementById("s-nutrients").innerHTML=sNutri;
-
-
-                             }
+                           }
 
 
 
 
+              }
+              <%})%>
+                   getTargetProgress(dc,"meal");
+
+
+              let labelArray =[];
+             <%findedUser.mealinfo.forEach(function (meals){%>
+
+               dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
+                  if (dateSelectedFromCalender === dateFromDatabase) {
+                       labelArray.push(<%-JSON.stringify(meals.label)%>)
+                       }
+              <%})%>
+              let labelFrequency={};
+
+              for(key of labelArray ){
+                labelFrequency[key]=(labelFrequency[key]||0)+1;
+              }
+
+              // console.log("labelFrequency"+JSON.stringify(labelFrequency));
+                if(!labelFrequency.Breakfast) {
+                  document.getElementById("b-foods").innerHTML="";
+                  document.getElementById("b-nutrients").innerHTML="";
                 }
-                <%})%>
-      let milliForTargets=(new Date(dc)).getTime();
-  console.log(milliForTargets,dc)
-                     getTargetProgress(milliForTargets,"meal");
-
-
-                let labelArray =[];
-               <%findedUser.mealinfo.forEach(function (meals){%>
-
-                 dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
-                    if (dateSelectedFromCalender === dateFromDatabase) {
-                         labelArray.push(<%-JSON.stringify(meals.label)%>)
-                         }
-                <%})%>
-                let labelFrequency={};
-
-                for(key of labelArray ){
-                  labelFrequency[key]=(labelFrequency[key]||0)+1;
+                if(!labelFrequency.Lunch){
+                  document.getElementById("l-foods").innerHTML=""
+                   document.getElementById("l-nutrients").innerHTML="";
                 }
+                if(!labelFrequency.Dinner){
+                  document.getElementById("d-foods").innerHTML="";
+                  document.getElementById("d-nutrients").innerHTML="";
+                }
+                if(!labelFrequency.Snacks){
 
-                // console.log("labelFrequency"+JSON.stringify(labelFrequency));
-                  if(!labelFrequency.Breakfast) {
-                    document.getElementById("b-foods").innerHTML="";
-                    document.getElementById("b-nutrients").innerHTML="";
-                  }
-                  if(!labelFrequency.Lunch){
-                    document.getElementById("l-foods").innerHTML=""
-                     document.getElementById("l-nutrients").innerHTML="";
-                  }
-                  if(!labelFrequency.Dinner){
-                    document.getElementById("d-foods").innerHTML="";
-                    document.getElementById("d-nutrients").innerHTML="";
-                  }
-                  if(!labelFrequency.Snacks){
-
-                   document.getElementById("s-foods").innerHTML="";
-                   document.getElementById("s-nutrients").innerHTML="";
-                  }
-                 // alert(new Date(dc).getTime())
+                 document.getElementById("s-foods").innerHTML="";
+                 document.getElementById("s-nutrients").innerHTML="";
+                }
+               // alert(new Date(dc).getTime())
 
 
-    }
-    //show qty time unit weight
+  }
+  //show qty time unit weight
 
-     function func(foodname,index,label,millisecondsTilldate){
-       let date= new Date(millisecondsTilldate);
-       let time=date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
+   function func(foodname,index,label,millisecondsTilldate){
+     let date= new Date(millisecondsTilldate);
+     let time=date.getHours()+":"+date.getMinutes()+":"+date.getSeconds();
 
-       //alert(date +" "+ time);
+     //alert(date +" "+ time);
 
-       let count=1;
-      // console.log("index-------"+index)
+     let count=1;
+    // console.log("index-------"+index)
 
-       switch(label) {
-      case 0:
+     switch(label) {
+    case 0:
 
-        calorieCheck=bcalorieArray[index];
-
-
-      let bfoodName=foodname;
-      <%findedUser.mealinfo.forEach(function (meals){%>
-                 dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
-                if (dateFromDatabase=== dc){
-                // alert(dateFromDatabase+"---------"+dc)
-                      if(<%-JSON.stringify(meals.label)%>==="Breakfast"){
+      calorieCheck=bcalorieArray[index];
 
 
+    let bfoodName=foodname;
+    <%findedUser.mealinfo.forEach(function (meals){%>
+               dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
+              if (dateFromDatabase=== dc){
+              // alert(dateFromDatabase+"---------"+dc)
+                    if(<%-JSON.stringify(meals.label)%>==="Breakfast"){
+
+
+                        <% for(var i=0; i < meals.foodItems.length; i++) { %>
+
+                                    if(<%-JSON.stringify(meals.foodItems[i])%>==bfoodName && <%-JSON.stringify(meals.calories[i])%>==calorieCheck)
+                                    {
+                                      //  console.log(<%-JSON.stringify(meals.foodItems[i])%>+calorieCheck);
+
+                                    document.getElementById("qty").textContent=<%-JSON.stringify(meals.qty[i])%>
+                                    document.getElementById("weight").textContent=<%-JSON.stringify(meals.servingWeight[i])%>
+                                    document.getElementById("unit").textContent=<%-JSON.stringify(meals.servingUnit[i])%>
+                                    document.getElementById("time").textContent=time;
+                                   break;
+                               }
+
+                             <%}%>
+
+                    }
+              }
+    <%})%>
+      break;
+    case 1:
+     calorieCheck=lcalorieArray[index];
+
+    let lfoodName=foodname;
+    // console.log(dc);
+    <%findedUser.mealinfo.forEach(function (meals){%>
+               dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
+              if (dateFromDatabase=== dc){
+                    if(<%-JSON.stringify(meals.label)%>==="Lunch"){
                           <% for(var i=0; i < meals.foodItems.length; i++) { %>
+                            // console.log(<%-JSON.stringify(meals.foodItems.length)%>)
+                                    if(<%-JSON.stringify(meals.foodItems[i])%>==lfoodName && <%-JSON.stringify(meals.calories[i])%>==calorieCheck && count<2)
+                                    {
+                                    // console.log("calorieCheck"+<%-JSON.stringify(meals.foodItems[i])%>+calorieCheck);
+                                    // console.log("qty "+<%-JSON.stringify(meals.qty[i])%>)
+                                     document.getElementById("qty").textContent=<%-JSON.stringify(meals.qty[i])%>
+                                    document.getElementById("weight").textContent=<%-JSON.stringify(meals.servingWeight[i])%>
+                                    document.getElementById("unit").textContent=<%-JSON.stringify(meals.servingUnit[i])%>
+                                    document.getElementById("time").textContent=time;
+                                          count++;
+                          }
 
-                                      if(<%-JSON.stringify(meals.foodItems[i])%>==bfoodName && <%-JSON.stringify(meals.calories[i])%>==calorieCheck)
-                                      {
-                                        //  console.log(<%-JSON.stringify(meals.foodItems[i])%>+calorieCheck);
+                             <%}%>
+                    }
+              }
+    <%})%>
+      break;
+      case 2:
+    calorieCheck=dcalorieArray[index];
+    let dfoodName=foodname
+    <%findedUser.mealinfo.forEach(function (meals){%>
+               dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
+              if (dateFromDatabase=== dc){
+                    if(<%-JSON.stringify(meals.label)%>==="Dinner"){
+                          <% for(var i=0; i < meals.foodItems.length; i++) { %>
+                            // console.log(<%-JSON.stringify(meals.foodItems.length)%>)
+                                    if(<%-JSON.stringify(meals.foodItems[i])%>==dfoodName && <%-JSON.stringify(meals.calories[i])%>==calorieCheck && count<2)
+                                    {
+                                    // console.log(<%-JSON.stringify(meals.foodItems[i])%>+calorieCheck);
+                                     document.getElementById("qty").textContent=<%-JSON.stringify(meals.qty[i])%>
+                                    document.getElementById("weight").textContent=<%-JSON.stringify(meals.servingWeight[i])%>
+                                    document.getElementById("unit").textContent=<%-JSON.stringify(meals.servingUnit[i])%>
+                                    document.getElementById("time").textContent=time;
+                                     count++;
+                          }
 
-                                      document.getElementById("qty").textContent=<%-JSON.stringify(meals.qty[i])%>
-                                      document.getElementById("weight").textContent=<%-JSON.stringify(meals.servingWeight[i])%>
-                                      document.getElementById("unit").textContent=<%-JSON.stringify(meals.servingUnit[i])%>
-                                      document.getElementById("time").textContent=time;
-                                     break;
-                                 }
-
-                               <%}%>
-
-                      }
-                }
-      <%})%>
-        break;
-      case 1:
-       calorieCheck=lcalorieArray[index];
-
-      let lfoodName=foodname;
-      // console.log(dc);
-      <%findedUser.mealinfo.forEach(function (meals){%>
-                 dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
-                if (dateFromDatabase=== dc){
-                      if(<%-JSON.stringify(meals.label)%>==="Lunch"){
-                            <% for(var i=0; i < meals.foodItems.length; i++) { %>
-                              // console.log(<%-JSON.stringify(meals.foodItems.length)%>)
-                                      if(<%-JSON.stringify(meals.foodItems[i])%>==lfoodName && <%-JSON.stringify(meals.calories[i])%>==calorieCheck && count<2)
-                                      {
-                                      // console.log("calorieCheck"+<%-JSON.stringify(meals.foodItems[i])%>+calorieCheck);
-                                      // console.log("qty "+<%-JSON.stringify(meals.qty[i])%>)
-                                       document.getElementById("qty").textContent=<%-JSON.stringify(meals.qty[i])%>
-                                      document.getElementById("weight").textContent=<%-JSON.stringify(meals.servingWeight[i])%>
-                                      document.getElementById("unit").textContent=<%-JSON.stringify(meals.servingUnit[i])%>
-                                      document.getElementById("time").textContent=time;
-                                            count++;
-                            }
-
-                               <%}%>
-                      }
-                }
-      <%})%>
-        break;
-        case 2:
-      calorieCheck=dcalorieArray[index];
-      let dfoodName=foodname
-      <%findedUser.mealinfo.forEach(function (meals){%>
-                 dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
-                if (dateFromDatabase=== dc){
-                      if(<%-JSON.stringify(meals.label)%>==="Dinner"){
-                            <% for(var i=0; i < meals.foodItems.length; i++) { %>
-                              // console.log(<%-JSON.stringify(meals.foodItems.length)%>)
-                                      if(<%-JSON.stringify(meals.foodItems[i])%>==dfoodName && <%-JSON.stringify(meals.calories[i])%>==calorieCheck && count<2)
-                                      {
-                                      // console.log(<%-JSON.stringify(meals.foodItems[i])%>+calorieCheck);
-                                       document.getElementById("qty").textContent=<%-JSON.stringify(meals.qty[i])%>
-                                      document.getElementById("weight").textContent=<%-JSON.stringify(meals.servingWeight[i])%>
-                                      document.getElementById("unit").textContent=<%-JSON.stringify(meals.servingUnit[i])%>
-                                      document.getElementById("time").textContent=time;
-                                       count++;
-                            }
-
-                               <%}%>
-                      }
-                }
-      <%})%>
-        break;
-
-      case 3:
-    calorieCheck=scalorieArray[index];
-
-      let sfoodName=foodname;
-      <%findedUser.mealinfo.forEach(function (meals){%>
-                 dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
-                if (dateFromDatabase=== dc){
-                      if(<%-JSON.stringify(meals.label)%>==="Snacks"){
-                            <% for(var i=0; i < meals.foodItems.length; i++) { %>
-                              // console.log(<%-JSON.stringify(meals.foodItems.length)%>)
-                                      if(<%-JSON.stringify(meals.foodItems[i])%>==sfoodName && <%-JSON.stringify(meals.calories[i])%>==calorieCheck && count<2)
-                                      {
-                                      // console.log(<%-JSON.stringify(meals.foodItems[i])%>+calorieCheck);
-                                       document.getElementById("qty").textContent=<%-JSON.stringify(meals.qty[i])%>
-                                      document.getElementById("weight").textContent=<%-JSON.stringify(meals.servingWeight[i])%>
-                                      document.getElementById("unit").textContent=<%-JSON.stringify(meals.servingUnit[i])%>
-                                      document.getElementById("time").textContent=time;
-                                       count++;
-                            }
-
-                               <%}%>
-                      }
-                }
-      <%})%>
+                             <%}%>
+                    }
+              }
+    <%})%>
       break;
 
+    case 3:
+  calorieCheck=scalorieArray[index];
 
-      default:
-       return;
-    }
+    let sfoodName=foodname;
+    <%findedUser.mealinfo.forEach(function (meals){%>
+               dateFromDatabase = <%-JSON.stringify(meals.createdAt.toLocaleDateString())%>
+              if (dateFromDatabase=== dc){
+                    if(<%-JSON.stringify(meals.label)%>==="Snacks"){
+                          <% for(var i=0; i < meals.foodItems.length; i++) { %>
+                            // console.log(<%-JSON.stringify(meals.foodItems.length)%>)
+                                    if(<%-JSON.stringify(meals.foodItems[i])%>==sfoodName && <%-JSON.stringify(meals.calories[i])%>==calorieCheck && count<2)
+                                    {
+                                    // console.log(<%-JSON.stringify(meals.foodItems[i])%>+calorieCheck);
+                                     document.getElementById("qty").textContent=<%-JSON.stringify(meals.qty[i])%>
+                                    document.getElementById("weight").textContent=<%-JSON.stringify(meals.servingWeight[i])%>
+                                    document.getElementById("unit").textContent=<%-JSON.stringify(meals.servingUnit[i])%>
+                                    document.getElementById("time").textContent=time;
+                                     count++;
+                          }
 
-      $(".item i").unbind().click(function () {
-        let millisecondsOfItemsToBeRemoved=$(this).prop('className').split(' ').pop();//get last classname
-        let classOfItemsToBeRemoved=$(this).parent().prop('className').split(' ').pop();//get last classname
-        // alert(classOfItemsToBeRemoved)
-        let deleteThisIndexMeal=classOfItemsToBeRemoved.split('-').pop();//get n from b-n
-         //alert(indexOfItemsToBeRemoved)
-        let labelOfItemsToBeRemoved=classOfItemsToBeRemoved.slice(1,2);//get b from b-n
-        // alert(labelOfItemsToBeRemoved)
-        let indexOfItemsToBeRemoved=classOfItemsToBeRemoved.slice(0,1);
-       //alert(indexOfItemsToBeRemoved)
-        //alert(indexOfItemsToBeRemoved)
-        millisecondsOfItemsToBeRemoved=parseInt(millisecondsOfItemsToBeRemoved)
-
-       // alert(new Date(millisecondsOfItemsToBeRemoved))
-
-      $("."+classOfItemsToBeRemoved).hide();
-      removeFromDatabse(millisecondsOfItemsToBeRemoved,parseInt(indexOfItemsToBeRemoved));
-
-              function removeFromDatabse(millisecondsOfItemsToBeRemoved,indexOfItemsToBeRemoved){
-
-               $.ajax({
-                    type: "DELETE",
-                    url: "/deleteMeal"+ '?' + $.param({"millisecondsOfItemsToBeRemoved":millisecondsOfItemsToBeRemoved, "indexOfItemsToBeRemoved":indexOfItemsToBeRemoved}),
-
-
-                    success: function (result, status, xhr) {
-                     if(result){
-                      getTargetProgress(result);
-                     }
-
-                    },
-                    error: function (xhr, status, error) {
-                        // alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                             <%}%>
                     }
-                });
               }
+    <%})%>
+    break;
 
-      })
 
-     }
-     function getTargetProgress(milliForTargets){
-                 //$('.container #showresults').append()
-                 console.log(milliForTargets);
+    default:
+     return;
+  }
+
+    $(".item i").unbind().click(function () {
+      let millisecondsOfItemsToBeRemoved=$(this).prop('className').split(' ').pop();//get last classname
+      let classOfItemsToBeRemoved=$(this).parent().prop('className').split(' ').pop();//get last classname
+      // alert(classOfItemsToBeRemoved)
+      let deleteThisIndexMeal=classOfItemsToBeRemoved.split('-').pop();//get n from b-n
+       //alert(indexOfItemsToBeRemoved)
+      let labelOfItemsToBeRemoved=classOfItemsToBeRemoved.slice(1,2);//get b from b-n
+      // alert(labelOfItemsToBeRemoved)
+      let indexOfItemsToBeRemoved=classOfItemsToBeRemoved.slice(0,1);
+     //alert(indexOfItemsToBeRemoved)
+      //alert(indexOfItemsToBeRemoved)
+      millisecondsOfItemsToBeRemoved=parseInt(millisecondsOfItemsToBeRemoved)
+
+     // alert(new Date(millisecondsOfItemsToBeRemoved))
+
+    $("."+classOfItemsToBeRemoved).hide();
+    removeFromDatabse(millisecondsOfItemsToBeRemoved,parseInt(indexOfItemsToBeRemoved));
+
+            function removeFromDatabse(millisecondsOfItemsToBeRemoved,indexOfItemsToBeRemoved){
+
              $.ajax({
-                    type: "GET",
-                    url: "/targets",
-                     data:{milliForTargets:milliForTargets,type:"meal"},
-                     //dataType: "html",
-                      success: function (data) {
-                    //  var result = $('<div />').append(data).find('#showresults').html();
-                     $('.container #showresults').html(data);
-                      },
-                      error: function (xhr, status) {
-                          alert("Sorry, there was a problem! Please reload the page");
-                      },
+                  type: "DELETE",
+                  url: "/deleteMeal"+ '?' + $.param({"millisecondsOfItemsToBeRemoved":millisecondsOfItemsToBeRemoved, "indexOfItemsToBeRemoved":indexOfItemsToBeRemoved}),
 
-                });
-              }
+
+                  success: function (result, status, xhr) {
+                   if(result){
+                    getTargetProgress(result);
+                   }
+
+                  },
+                  error: function (xhr, status, error) {
+                      // alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+                  }
+              });
+            }
+
+    })
+
+   }
+   function getTargetProgress(dc){
+               //$('.container #showresults').append()
+               console.log(dc);
+           $.ajax({
+                  type: "GET",
+                  url: "/targets",
+                   data:{dc:dc,type:"meal"},
+                   //dataType: "html",
+                    success: function (data) {
+                  //  var result = $('<div />').append(data).find('#showresults').html();
+                   $('.container #showresults').html(data);
+                    },
+                    error: function (xhr, status) {
+                        alert("Sorry, there was a problem! Please reload the page");
+                    },
+
+              });
+            }
 </script>
 
 <script src="/script/calender.js"></script>
